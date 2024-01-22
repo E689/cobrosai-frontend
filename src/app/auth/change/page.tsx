@@ -1,9 +1,19 @@
-import { AuthFormProps } from '@/app/types/types'
+'use client'
+
+import { IAuthFormProps, IAuthContext } from '@/app/types/types'
 import AuthForm from '@/components/reusable/AuthForm'
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from "@/providers/AuthProvider"
+import { redirect } from "next/navigation"
 
 const Change = () => {
-  const AUTH_FORM_PROPS: AuthFormProps = {
+  const { isLoggedIn } = useContext(AuthContext) as IAuthContext
+
+  if (!isLoggedIn) {
+    return (redirect("/"))
+  }
+
+  const AUTH_FORM_PROPS: IAuthFormProps = {
     submitText: "Cambiar contraseña",
     formType: "change"
   }

@@ -1,24 +1,25 @@
 // Auth types
-export interface SignInParams {
+export interface ISignInParams {
   email: string,
-  password: string
+  password: string,
+  jwt?: string
 }
 
-export interface SignOutParams {
+export interface ISignOutParams {
   jwt: string
 }
 
-export interface RegisterParams {
+export interface IRegisterParams {
   email: string,
   password: string,
   file?: string
 }
 
-export interface RecoverParams {
+export interface IRecoverParams {
   email: string,
 }
 
-export interface ChangeParams {
+export interface IChangeParams {
   password: string,
   passwordMatch: string
 }
@@ -32,7 +33,7 @@ export interface IAuthContext {
 }
 
 // General types
-export interface UserAccount {
+export interface IUserAccount {
   email: string,
   jwt: string | undefined,
   type: string,
@@ -40,7 +41,7 @@ export interface UserAccount {
 }
 
 // Auth Form 
-export interface AuthFormProps {
+export interface IAuthFormProps {
   submitText: string,
   formType: "signin" | "signout" | "register" | "change" | "recover"
 }

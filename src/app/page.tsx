@@ -6,35 +6,47 @@ export default function Home() {
       <div className="flex grow">
         Subir tu archivo (incompleto...)
       </div>
-      <div className="flex flex-col grow">
-        <p>Vistas disponibles:</p>
-        <ul className="flex-1 px-3">
-          <li>
-            <Link href={'/auth/change'}>
-              Cambio Contraseña
-            </Link>
-          </li>
-          <li>
-            <Link href={'/auth/recover'}>
-              Recuperar Contraseña
-            </Link>
-          </li>
-          <li>
-            <Link href={'/auth/register'}>
-              Registrarse
-            </Link>
-          </li>
-          <li>
-            <Link href={'/auth/signin'}>
-              Iniciar Sesión
-            </Link>
-          </li>
-          <li>
-            <Link href={'/auth/signout'}>
-              Cerrar Sesion
-            </Link>
-          </li>
-        </ul>
+      <div>
+        <div className="flex flex-col items-start justify-center gap-2">
+          <p>Vistas disponibles:</p>
+          <ul className="flex-1 px-3">
+            <li>
+              <Link href={'/auth/change'}>
+                Cambio Contraseña
+              </Link>
+            </li>
+            <li>
+              <Link href={'/auth/recover'}>
+                Recuperar Contraseña
+              </Link>
+            </li>
+            <li>
+              <Link href={'/auth/register'}>
+                Registrarse
+              </Link>
+            </li>
+            <li>
+              <Link href={'/auth/signin'}>
+                Iniciar Sesión
+              </Link>
+            </li>
+            <li>
+              <Link href={'/auth/signout'}>
+                Cerrar Sesion
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="flex flex-col grow">
+          <p>Vistas en progreso:</p>
+          <ul className="flex-1 px-3">
+            <li>
+              <Link href={'/dashboard/bills'}>
+                Facturas
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </main>
   );

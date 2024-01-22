@@ -21,8 +21,9 @@ import LoaderSpiner from "@/components/reusable/LoaderSpiner"
 
 // Requests imports
 import { SignIn, SignOut } from "@/lib/authCalls"
-import { AuthFormProps } from "@/app/types/types"
-import { useEffect, useState } from "react"
+import { IAuthContext, IAuthFormProps } from "@/app/types/types"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "@/providers/AuthProvider"
 
 const formSchema = z.object({
   password: z.string().min(2).max(50),
@@ -30,16 +31,17 @@ const formSchema = z.object({
   confirm: z.string().min(2).max(50)
 })
 
-const AuthForm = ({ submitText, formType }: AuthFormProps) => {
+const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
   const [isMounted, setIsMounted] = useState(false)
+  const { setIsLoggedIn, setAuthUser } = useContext(AuthContext) as IAuthContext
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      password: "",
-      email: "",
-      confirm: ""
+      password: "1234",
+      email: "test@cobros.ia",
+      confirm: "1234"
     },
   })
 
@@ -49,10 +51,19 @@ const AuthForm = ({ submitText, formType }: AuthFormProps) => {
     switch (formType) {
       case "signin":
         SignIn({ email: values.email, password: values.password })
+        .then((res) => {
+          setIsLoggedIn(true)
+          setAuthUser(res.email)
+        })
         break;
       case "signout":
         const JWT = "test-jwt"
         SignOut({ jwt: JWT })
+        .then((res) => {
+          setIsLoggedIn(false)
+          setAuthUser(null)
+        })
+        break;
       default:
         console.log("What are you doing user? STAP!")
     }
