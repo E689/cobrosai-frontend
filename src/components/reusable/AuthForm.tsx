@@ -68,7 +68,7 @@ const AuthForm = ({ submitText, formType, file }: IAuthFormProps) => {
       case "quick":
         // TODO: Add quick register call
         console.log("Got this file: ", file)
-        window.location.replace(process.env.NEXT_PUBLIC_BASE_URL + "/auth/signin")
+        window.location.href = process.env.NEXT_PUBLIC_BASE_URL + "/auth/signin"
       default:
         console.log("What are you doing user? STAP!")
     }
