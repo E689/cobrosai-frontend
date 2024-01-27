@@ -1,10 +1,10 @@
-import { ISignInParams, ISignOutParams, IRecoverParams, IChangeParams, IAuthContext } from "@/app/types/types"
+import { ISignInParams, ISignOutParams, IRecoverParams, IChangeParams, IAuthContext, IUserAccount } from "@/app/types/types"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-export const SignIn = async ({ email, password }: ISignInParams): Promise<ISignInParams> => {
-  return await new Promise<ISignInParams>(r => {
-    const credentials: ISignInParams = { email, password, jwt: 'test-jwt' }
+export const SignIn = async ({ email, password }: ISignInParams): Promise<IUserAccount> => {
+  return await new Promise<IUserAccount>(r => {
+    const credentials: IUserAccount = { email, jwt: 'test-jwt', type: 'user' }
     /**
     const res = await fetch(API_URL + "/users/login", {
       method: 'POST',

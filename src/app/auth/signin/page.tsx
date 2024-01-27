@@ -2,21 +2,21 @@
 
 import { IAuthFormProps, IAuthContext } from '@/app/types/types'
 import AuthForm from '@/components/reusable/AuthForm'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AuthContext } from "@/providers/AuthProvider"
 import { redirect } from "next/navigation"
 
 const SignIn = () => {
   const { isLoggedIn } = useContext(AuthContext) as IAuthContext
 
-  if (isLoggedIn) {
-    return (redirect("/dashboard/bills"))
-  }
-
   const AUTH_FORM_PROPS: IAuthFormProps = {
     submitText: "Inicio Sesión",
     formType: "signin"
   }
+
+  useEffect(() => {
+    if (isLoggedIn) return (redirect("/dashboard/bills"))
+  }, [isLoggedIn])
 
   return (
     <div className='m-auto bg-slate-400/60 dark:bg-blue-950/50 rounded-lg shadow-md p-10'>

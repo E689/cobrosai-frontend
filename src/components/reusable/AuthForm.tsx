@@ -53,7 +53,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
         SignIn({ email: values.email, password: values.password })
         .then((res) => {
           setIsLoggedIn(true)
-          setAuthUser(res.email)
+          setAuthUser(res)
         })
         break;
       case "signout":

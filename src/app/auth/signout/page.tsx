@@ -2,21 +2,21 @@
 
 import { IAuthFormProps, IAuthContext } from '@/app/types/types'
 import AuthForm from '@/components/reusable/AuthForm'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AuthContext } from "@/providers/AuthProvider"
 import { redirect } from "next/navigation"
 
 const SignOut = () => {
   const { isLoggedIn } = useContext(AuthContext) as IAuthContext
 
-  if (!isLoggedIn) {
-    return (redirect("/"))
-  }
-
   const AUTH_FORM_PROPS: IAuthFormProps = {
     submitText: "Cerrar Sesión",
     formType: "signout"
   }
+
+  useEffect(() => {
+    if (!isLoggedIn) return (redirect("/"))
+  }, [isLoggedIn])
 
   return (
     <div className='m-auto bg-slate-400/60 dark:bg-blue-950/50 rounded-lg shadow-md p-10'>

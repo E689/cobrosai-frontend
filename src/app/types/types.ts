@@ -26,7 +26,7 @@ export interface IChangeParams {
 
 // AuthContext 
 export interface IAuthContext {
-  authUser: string | null,
+  authUser: IUserAccount | null,
   setAuthUser: Function,
   isLoggedIn: Boolean | null,
   setIsLoggedIn: Function
@@ -36,12 +36,16 @@ export interface IAuthContext {
 export interface IUserAccount {
   email: string,
   jwt: string | undefined,
-  type: string,
-  id: string
+  type: string
 }
 
 // Auth Form 
 export interface IAuthFormProps {
   submitText: string,
   formType: "signin" | "signout" | "register" | "change" | "recover"
+}
+
+// DropZone component
+export interface IDropZoneProps {
+  setFile: Function
 }
