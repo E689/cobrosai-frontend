@@ -15,8 +15,8 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-[80vh] min-w-[100vw] flex-col items-center justify-between p-24 h-full w-full gap-5">
-      <div className="flex grow w-full h-screen">
+    <main className="flex min-h-[80vh] min-w-[100vw] flex-col items-center justify-between p-10 h-full w-full gap-5">
+      <div className="flex grow w-full h-[80vh]">
         {
           !file ? (
             <DropZoneFile setFile={setFile} />

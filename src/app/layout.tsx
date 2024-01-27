@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={inter.className}>
+      <body className={inter.className + ` max-w-screen min-h-[100vh] overflow-x-hidden`}>
         <AuthProvider>
           <ThemeProvider
             attribute="class"

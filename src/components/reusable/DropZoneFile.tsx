@@ -7,7 +7,7 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 const DropZoneFile = ({ setFile }: IDropZoneProps) => {
 
   useEffect(() => {
-    
+
     document.getElementById("dropArea")?.addEventListener("dragover", 
     (e: Event) => {
       e.preventDefault()
@@ -19,7 +19,7 @@ const DropZoneFile = ({ setFile }: IDropZoneProps) => {
       const dropFile: FileList | undefined = e.dataTransfer?.files
       setFile(dropFile![0])
     })
-  }, [])
+  }, [setFile])
 
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
     const target = e.target as HTMLInputElement & {
