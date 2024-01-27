@@ -11,7 +11,7 @@ export interface ISignOutParams {
 
 export interface IRegisterParams {
   email: string,
-  password: string,
+  password?: string,
   file?: string
 }
 
@@ -42,7 +42,8 @@ export interface IUserAccount {
 // Auth Form 
 export interface IAuthFormProps {
   submitText: string,
-  formType: "signin" | "signout" | "register" | "change" | "recover"
+  file?: File,
+  formType: "signin" | "signout" | "register" | "change" | "recover" | "quick"
 }
 
 // DropZone component

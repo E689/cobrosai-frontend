@@ -7,10 +7,12 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 const DropZoneFile = ({ setFile }: IDropZoneProps) => {
 
   useEffect(() => {
+    
     document.getElementById("dropArea")?.addEventListener("dragover", 
     (e: Event) => {
       e.preventDefault()
     })
+
     document.getElementById("dropArea")?.addEventListener("drop", 
     (e: DragEvent) => {
       e.preventDefault()
@@ -26,6 +28,7 @@ const DropZoneFile = ({ setFile }: IDropZoneProps) => {
 
     setFile(target.files[0])
   }
+
   return (
     <div className="grid w-full h-full p-2 max-h-[60vh]">
       <label 

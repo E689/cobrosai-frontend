@@ -24,6 +24,7 @@ import { SignIn, SignOut } from "@/lib/authCalls"
 import { IAuthContext, IAuthFormProps } from "@/app/types/types"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "@/providers/AuthProvider"
+import { redirect } from "next/navigation"
 
 const formSchema = z.object({
   password: z.string().min(2).max(50),
@@ -31,7 +32,7 @@ const formSchema = z.object({
   confirm: z.string().min(2).max(50)
 })
 
-const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
+const AuthForm = ({ submitText, formType, file }: IAuthFormProps) => {
   const [isMounted, setIsMounted] = useState(false)
   const { setIsLoggedIn, setAuthUser } = useContext(AuthContext) as IAuthContext
 
@@ -64,6 +65,10 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
           setAuthUser(null)
         })
         break;
+      case "quick":
+        // TODO: Add quick register call
+        console.log("Got this file: ", file)
+        window.location.replace(process.env.NEXT_PUBLIC_BASE_URL + "/auth/signin")
       default:
         console.log("What are you doing user? STAP!")
     }
@@ -79,7 +84,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="p-5 flex flex-col gap-3" suppressHydrationWarning>
         {
-          formType === "signin" || formType === "register" || formType === "recover" ? (
+          ["signin", "register", "recover", "quick"].includes(formType) ? (
             <FormField
               control={form.control}
               name="email"
@@ -99,7 +104,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
           ) : (<></>)
         }
         {
-          formType === "signin" || formType === "register" || formType === "change" ? (
+          ["signin", "register", "change"].includes(formType) ? (
             <FormField
               control={form.control}
               name="password"
@@ -119,7 +124,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
           ) : (<></>)
         }
         {
-          formType === "register" || formType === "change" ? (
+          ["register", "change"].includes(formType) ? (
             <FormField
               control={form.control}
               name="confirm"
