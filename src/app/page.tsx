@@ -3,14 +3,21 @@
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { useContext } from "react";
+import { AuthContext } from "@/providers/AuthProvider";
+import { IAuthContext } from "./types/types";
 
 export default function Home() {
+  const { authUser } = useContext(AuthContext) as IAuthContext
 
   return (
     <main className="flex min-h-[80vh] min-w-[100vw] flex-col items-center justify-between p-10 h-full w-full gap-5">
       <div>
         <ThemeToggle />
         <div className="flex flex-col items-start justify-center gap-2">
+          <div>
+          <p>El usuario: {`${authUser?.email}`} esta registrado</p>
+          </div>
           <p>Vistas Auth: </p>
           <Tabs className="w-full">
             <TabsList>
@@ -59,6 +66,16 @@ export default function Home() {
               <TabsTrigger value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
                 <Link href={'/dashboard/bills'}>
                   Facturas
+                </Link>
+              </TabsTrigger>
+              <TabsTrigger value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+                <Link href={'/dashboard/clients'}>
+                  Empresas
+                </Link>
+              </TabsTrigger>
+              <TabsTrigger value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+                <Link href={'/dashboard/flows'}>
+                  Flujos
                 </Link>
               </TabsTrigger>
             </TabsList>

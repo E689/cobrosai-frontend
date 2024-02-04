@@ -66,3 +66,15 @@ export interface IDropZoneBillForm extends IDropZoneViewElements {
 export interface IDropZoneEmailForm extends IDropZoneViewElements {
   setEmail: Function
 }
+
+// Bills interfaces
+export interface IBillsTable {
+  date: string,
+  clientName: string,
+  clientNit: number,
+  billId: string,
+  amount: number,
+  status: "AIOff" | "Human" | "Paid" | "Process",
+  dueDays: number,
+  logs: string
+}
