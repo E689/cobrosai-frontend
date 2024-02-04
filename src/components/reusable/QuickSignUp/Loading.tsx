@@ -7,7 +7,7 @@ const Loading = ({ setStep }: IDropZoneViewElements) => {
     setTimeout(() => {
       setStep("finish")
     }, 3000)
-  }, [])
+  }, [setStep])
 
   return (
     <div className='flex w-screen h-screen text-md'>

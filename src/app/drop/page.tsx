@@ -8,7 +8,7 @@ import Loading from '@/components/reusable/QuickSignUp/Loading'
 import Select from '@/components/reusable/QuickSignUp/Select'
 import React, { useEffect, useState } from 'react'
 
-const page = () => {
+const Drop = () => {
   // General fields for this form
   const [file, setFile] = useState<File | undefined>(undefined)
   const [step, setStep] = useState<"select" | "loadFile" | "billForm" | "emailForm" | "loading" | "finish">("select")
@@ -65,7 +65,7 @@ const page = () => {
       }, 600000) // After 10 minutes refresh all 600000ms
     }
 
-  }, [step])
+  }, [step, file])
 
   if (step === "select") return (<Select setFile={setFile} setStep={setStep} />)
   if (step === "loadFile") return (<LoadFile setStep={setStep} />)
@@ -75,4 +75,4 @@ const page = () => {
   if (step === "finish") return (<Finish />)
 }
 
-export default page
+export default Drop

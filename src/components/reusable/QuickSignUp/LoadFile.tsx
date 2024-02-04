@@ -6,7 +6,7 @@ const LoadFile = ({ setStep }: IDropZoneViewElements) => {
     setTimeout(() => {
       setStep("emailForm")
     }, 3000)
-  }, [])
+  }, [setStep])
 
   return (
     <div className='flex w-screen h-screen text-xl font-bold'>
