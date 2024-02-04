@@ -1,65 +1,68 @@
 'use client'
 
-import DropZoneFile from "@/components/reusable/DropZoneFile";
 import Link from "next/link";
-import { useState } from "react";
-import { IAuthFormProps } from "./types/types";
-import AuthForm from "@/components/reusable/AuthForm";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export default function Home() {
-
-  const AUTH_FORM_PROPS: IAuthFormProps = {
-    submitText: "Registrarme",
-    formType: "quick"
-  }
 
   return (
     <main className="flex min-h-[80vh] min-w-[100vw] flex-col items-center justify-between p-10 h-full w-full gap-5">
       <div>
+        <ThemeToggle />
         <div className="flex flex-col items-start justify-center gap-2">
-          <p>Vistas disponibles:</p>
-          <ul className="flex-1 px-3">
-            <li>
-              <Link href={'/auth/change'}>
-                Cambio Contraseña
-              </Link>
-            </li>
-            <li>
-              <Link href={'/auth/recover'}>
-                Recuperar Contraseña
-              </Link>
-            </li>
-            <li>
-              <Link href={'/auth/register'}>
-                Registrarse
-              </Link>
-            </li>
-            <li>
-              <Link href={'/auth/signin'}>
-                Iniciar Sesión
-              </Link>
-            </li>
-            <li>
-              <Link href={'/auth/signout'}>
-                Cerrar Sesion
-              </Link>
-            </li>
-            <li>
-              <Link href={'/drop'}>
-                Quick register flow
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="flex flex-col grow">
-          <p>Vistas en progreso:</p>
-          <ul className="flex-1 px-3">
-            <li>
-              <Link href={'/dashboard/bills'}>
-                Facturas
-              </Link>
-            </li>
-          </ul>
+          <p>Vistas Auth: </p>
+          <Tabs className="w-full">
+            <TabsList>
+              <TabsTrigger value="cambio" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+                <Link href={'/auth/change'}>
+                  Cambio Contraseña
+                </Link>
+              </TabsTrigger>
+              <TabsTrigger value="recuperar" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+                <Link href={'/auth/recover'}>
+                  Recuperar Contraseña
+                </Link>
+              </TabsTrigger>
+              <TabsTrigger value="register" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+                <Link href={'/auth/register'}>
+                  Registrarse
+                </Link>
+              </TabsTrigger>
+              <TabsTrigger value="signin" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+                <Link href={'/auth/signin'}>
+                  Iniciar Sesión
+                </Link>
+              </TabsTrigger>
+              <TabsTrigger value="signout" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+                <Link href={'/auth/signout'}>
+                  Cerrar Sesion
+                </Link>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+
+          <p>Vistas quick flow: </p>
+          <Tabs className="w-full">
+            <TabsList>
+              <TabsTrigger value="quickregister" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+                <Link href={'/drop'}>
+                  Quick register flow
+                </Link>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+
+          <p>Vistas dashboard: </p>
+          <Tabs className="w-full">
+            <TabsList>
+              <TabsTrigger value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+                <Link href={'/dashboard/bills'}>
+                  Facturas
+                </Link>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
       </div>
     </main>
