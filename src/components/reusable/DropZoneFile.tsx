@@ -30,18 +30,18 @@ const DropZoneFile = ({ setFile }: IDropZoneProps) => {
   }
 
   return (
-    <div className="grid w-full h-full p-2 max-h-[60vh]">
+    <div className="grid max-w-[30%] h-[50%] p-2 mx-auto">
       <label 
         htmlFor="billFile" 
         className='grid w-full h-full bg-slate-400/60 dark:bg-blue-950/50 text-center 
           rounded-lg border-4 border-dashed border-black/50 dark:border-white/50
-          gap-0 justify-center'
+          gap-0 justify-center px-4'
         id='dropArea'
       >
         <input hidden={true} id="billFile" type="file" onChange={handleOnChange} accept='application/*'/>
-        <IoCloudUploadOutline className='text-[20vh] md:text-[40vh] m-auto'/>
-        <p className='text-[3vh] md:text-[4vh] font-bold'>Haz click o suelta un archivo en esta zona para iniciar.</p>
-        <span className='text-[1vh] md:text-[3vh] text-black/60'>Puedes descargar el archivo .xlx desde tu Portal SAT.</span>
+        <IoCloudUploadOutline className='text-[10vh] md:text-[20vh] m-auto'/>
+        <p className='text-[2vh] font-bold'>Haz click o suelta un archivo en esta zona para iniciar.</p>
+        <span className='text-[2vh] text-black/60 dark:text-white/60'>Puedes descargar el archivo .xlx desde tu Portal SAT.</span>
       </label>
     </div>
   )

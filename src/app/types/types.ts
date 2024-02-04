@@ -47,6 +47,22 @@ export interface IAuthFormProps {
 }
 
 // DropZone component
-export interface IDropZoneProps {
+export interface IDropZoneViewElements {
+  setStep: Function,
+}
+
+export interface IDropZoneProps extends IDropZoneViewElements {
   setFile: Function
+}
+
+export interface IDropZoneBillForm extends IDropZoneViewElements {
+  setDate: Function,
+  setInvoiceNo: Function,
+  setNIT: Function,
+  setAmount: Function,
+  setCompanyName: Function
+}
+
+export interface IDropZoneEmailForm extends IDropZoneViewElements {
+  setEmail: Function
 }

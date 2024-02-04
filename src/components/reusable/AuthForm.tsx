@@ -24,7 +24,6 @@ import { SignIn, SignOut } from "@/lib/authCalls"
 import { IAuthContext, IAuthFormProps } from "@/app/types/types"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "@/providers/AuthProvider"
-import { redirect } from "next/navigation"
 
 const formSchema = z.object({
   password: z.string().min(2).max(50),
