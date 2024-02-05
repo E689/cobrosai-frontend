@@ -5,7 +5,7 @@ const Loading = ({ setStep }: IDropZoneViewElements) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setStep("finish")
+      true
     }, 3000)
   }, [setStep])
 

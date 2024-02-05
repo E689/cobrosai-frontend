@@ -77,12 +77,12 @@ const BillForm = ({ setDate, setInvoiceNo, setNIT, setAmount, setCompanyName, se
             name="date"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className='font-bold'>Fecha Emisión</FormLabel>
+                <FormLabel className='font-bold'>Fecha Emision</FormLabel>
                 <FormControl>
                   <Input type="date" placeholder="" {...field} />
                 </FormControl>
                 <FormDescription>
-                  Fecha en la que se emitio la factura.
+                  Fecha donde se emitio la factura.
                 </FormDescription>
                 <FormMessage />
               </FormItem>

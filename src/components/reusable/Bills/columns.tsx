@@ -90,7 +90,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     cell: ({ row }) => <div className="uppercase">{row.getValue("clientName")}</div>,
   },
   {
-    accessorKey: "clientNit",
+    accessorKey: "clientId",
     header: ({ column }) => {
       return (
         <Button
@@ -102,7 +102,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="uppercase">{row.getValue("clientNit")}</div>,
+    cell: ({ row }) => <div>{row.getValue("clientId")}</div>,
   },
   {
     accessorKey: "billId",
@@ -168,7 +168,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     </div>,
   },
   {
-    accessorKey: "dueDays",
+    accessorKey: "creditDays",
     header: ({ column }) => {
       return (
         <Button
@@ -180,12 +180,12 @@ export const columns: ColumnDef<IBillsParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("dueDays"))}`}>
-      <p>{row.getValue("dueDays")}</p>
+    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
+      <p>{row.getValue("creditDays")}</p>
     </div>,
   },
   {
-    accessorKey: "logs",
+    id: "log",
     header: ({ column }) => {
       return (
         <Button

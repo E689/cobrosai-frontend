@@ -79,10 +79,10 @@ export interface IAIStatsProps {
 export interface IBillsParams {
   date: string | undefined,
   clientName: string | undefined,
-  clientNit: number | undefined,
+  clientId: number | undefined,
   billId: string | undefined,
   amount: number | undefined,
   status: "AIOff" | "Human" | "Paid" | "Process",
-  dueDays: number | undefined,
-  logs: string | undefined
+  creditDays: number | undefined,
+  logs?: string | undefined
 }

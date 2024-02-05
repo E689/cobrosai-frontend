@@ -42,8 +42,12 @@ const Drop = () => {
           const params: IRegisterParams = {email: email, file: file}
           RegisterFile(params)
           .then((res) => {
-            console.log(res)
-            setTimeout(() => true, 2000)
+            if (res.code === "ERR_BAD_REQUEST") {
+              setFile(undefined)
+              setStep("select") // Send the user back to the start.
+            } else if (res.statusText === "OK") {
+              setTimeout(() => setStep("finish"), 2000)
+            }
           })
         } else {
           // Else I know the user did manual flow.
@@ -52,30 +56,35 @@ const Drop = () => {
             bill: {
               date: date,
               clientName: companyName,
-              clientNit: NIT,
+              clientId: NIT,
               billId: invoiceNo,
               amount: amount,
               status: "AIOff",
-              dueDays: 0,
-              logs: ""
+              creditDays: 30,
+              logs: undefined
             }
           }
           RegisterBill(params)
           .then((res) => {
-            console.log(res)
-            setTimeout(() => true, 2000)
+            console.info(res)
+            if (res.code === "ERR_BAD_REQUEST" || res.code === "INTERNAL_SERVER_ERROR") {
+              setStep("select") // Send the user back to the start.
+            } else if (res.statusText === "OK" || res.statusText === "Created") {
+              setTimeout(() => setStep("finish"), 2000)
+            }
           })
         }
       } catch (err) {
-        console.log(err)
+        console.log("Error: ", err)
         setFile(undefined)
         setStep("select") // Send the user back to the start.
-      } finally {
-        setStep("finish") // if nothig goes wrong, finish.
       }
     }
+  }, [step, file, date, NIT, amount, companyName, email, invoiceNo])
 
+  useEffect(() => {
     if (step === "finish") {
+      console.log("Returning to start...")
       setTimeout(() => {
         // Clean file
         setFile(undefined)
@@ -87,10 +96,9 @@ const Drop = () => {
         setNIT(undefined)
         setAmount(undefined)
         setCompanyName(undefined)
-      }, 600000) // After 10 minutes refresh all 600000ms
+      }, 6000) // After 1 minutes refresh all 6000ms
     }
-
-  }, [step, file, date, NIT, amount, companyName, email, invoiceNo])
+  }, [step])
 
   if (step === "select") return (<Select setFile={setFile} setStep={setStep} />)
   if (step === "loadFile") return (<LoadFile setStep={setStep} />)

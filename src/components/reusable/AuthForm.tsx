@@ -53,10 +53,10 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      password: "1234",
+      password: "dInwODCr",
       email: "ale.crts1996@gmail.com",
-      confirm: "1234",
-      newPassword: "12345"
+      confirm: "dInwODCr",
+      newPassword: "e31sFhmY"
     },
   })
 
@@ -87,7 +87,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
             setLoading(false)
             if (res.statusText === "OK") {
               setIsLoggedIn(true)
-              setAuthUser(res)
+              setAuthUser(localStorage.getItem("user")) // Fix this
             } else if (res?.code === "ERR_BAD_REQUEST") {
               setError("formerror", { type: "Mismatch", message: res.response.data?.error })
             }

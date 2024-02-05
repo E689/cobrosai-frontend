@@ -1,4 +1,10 @@
-import { ISignInParams, IRecoverParams, IChangeParams, IUserAccount, IRegisterParams } from "@/app/types/types"
+import { 
+  ISignInParams, 
+  IRecoverParams, 
+  IChangeParams, 
+  IUserAccount, 
+  IRegisterParams 
+} from "@/app/types/types"
 
 import axios from 'axios'
 const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -83,8 +89,8 @@ export const Recover = async ({ email }: IRecoverParams): Promise<any> => {
 
 export const ChangePassword = async ({ email, oldPassword, newPassword }: IChangeParams): Promise<any> => {
   const credentials = {
-    email: email, 
-    oldPassword: oldPassword, 
+    email: email,
+    oldPassword: oldPassword,
     newPassword: newPassword
   }
   return await new Promise<any>(async r => {
@@ -106,17 +112,17 @@ export const ChangePassword = async ({ email, oldPassword, newPassword }: IChang
 
 // Quick register flows
 export const RegisterFile = async ({ email, file }: IRegisterParams): Promise<any> => {
-  const credentials = {
-    "email": email,
-    "file": file
-  }
+  let body = new FormData()
+  body.append("email", email!)
+  body.append("file", file!)
+
   return await new Promise<any>(async r => {
     await axios.post(
       API_URL + '/users/register/file',
-      credentials,
+      body,
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'multipart/form-data'
         }
       }
     ).then((res) => {
@@ -128,14 +134,18 @@ export const RegisterFile = async ({ email, file }: IRegisterParams): Promise<an
 }
 
 export const RegisterBill = async ({ email, bill }: IRegisterParams): Promise<any> => {
-  const credentials = {
+  const body = {
+    "date": bill?.date,
     "email": email,
-    "bill": bill
+    "billId": bill?.billId,
+    "amount": bill?.amount!.toString(),
+    "clientId": bill?.clientId!.toString(),
+    "clientName": bill?.clientName
   }
   return await new Promise<any>(async r => {
     await axios.post(
       API_URL + '/users/register/bill',
-      credentials,
+      body,
       {
         headers: {
           'Content-Type': 'application/json'
