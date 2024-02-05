@@ -4,6 +4,7 @@ import React from 'react'
 import { BillsDataTable } from '@/components/reusable/Bills/data-table'
 import { columns } from '@/components/reusable/Bills/columns'
 import { IBillsParams } from '@/app/types/types'
+import AIStats from '@/components/reusable/AIStats'
 
 async function getData(): Promise<IBillsParams[]> {
   // Fetch data from your API here.
@@ -15,7 +16,7 @@ async function getData(): Promise<IBillsParams[]> {
       billId: "0003",
       amount: 4759.50,
       status: "AIOff",
-      dueDays: 25,
+      dueDays: 14,
       logs: "/log"
     },
     {
@@ -24,7 +25,7 @@ async function getData(): Promise<IBillsParams[]> {
       clientNit: 586575,
       billId: "0002",
       amount: 8756.50,
-      status: "AIOff",
+      status: "Human",
       dueDays: -25,
       logs: "/log"
     },
@@ -34,8 +35,18 @@ async function getData(): Promise<IBillsParams[]> {
       clientNit: 586575,
       billId: "0002",
       amount: 789.50,
-      status: "AIOff",
-      dueDays: -5,
+      status: "Paid",
+      dueDays: 25,
+      logs: "/log"
+    },
+    {
+      date: "08-03-2024",
+      clientName: "UIM",
+      clientNit: 586575,
+      billId: "0005",
+      amount: 789.50,
+      status: "Process",
+      dueDays: 60,
       logs: "/log"
     }
     // ...
@@ -56,7 +67,7 @@ const Bills = async () => {
           <p>Ingreso manual</p>
         </div>
         <div className='flex w-[20vw] h-full m-auto'>
-          Estadisticas
+          <AIStats automatedQty={0} automatedMax={data.length} />
         </div>
       </div>
       <div className='flex w-full'>

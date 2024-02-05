@@ -11,7 +11,7 @@ const NavBar = () => {
   const router = useRouter()
 
   return (
-    <nav className='absolute w-screen h-[5vh] bg-blue-950/60 dark:bg-slate-400/60 shadow-lg px-4 flex flex-row gap-4'>
+    <nav className='absolute w-screen h-[5vh] bg-slate-100 dark:bg-blue-700/60 shadow-lg px-4 flex flex-row gap-4'>
       <div
         className='h-full hover:cursor-pointer p-2 mr-10'
         onClick={() => router.back()}

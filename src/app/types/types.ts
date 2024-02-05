@@ -69,6 +69,12 @@ export interface IDropZoneEmailForm extends IDropZoneViewElements {
   setEmail: Function
 }
 
+// AIStats interface
+export interface IAIStatsProps {
+  automatedQty: number,
+  automatedMax: number
+}
+
 // Bills interfaces
 export interface IBillsParams {
   date: string | undefined,
