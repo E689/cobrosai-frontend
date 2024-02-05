@@ -10,9 +10,10 @@ export interface ISignOutParams {
 }
 
 export interface IRegisterParams {
-  email: string,
+  email: string | undefined,
   password?: string,
-  file?: string
+  file?: File | undefined,
+  bill?: IBillsParams
 }
 
 export interface IRecoverParams {
@@ -20,8 +21,9 @@ export interface IRecoverParams {
 }
 
 export interface IChangeParams {
-  password: string,
-  passwordMatch: string
+  email: string,
+  oldPassword: string,
+  newPassword: string,
 }
 
 // AuthContext 
@@ -36,13 +38,13 @@ export interface IAuthContext {
 export interface IUserAccount {
   email: string,
   jwt: string | undefined,
-  type: string
+  type: number,
+  id: string
 }
 
 // Auth Form 
 export interface IAuthFormProps {
   submitText: string,
-  file?: File,
   formType: "signin" | "signout" | "register" | "change" | "recover" | "quick"
 }
 
@@ -68,13 +70,13 @@ export interface IDropZoneEmailForm extends IDropZoneViewElements {
 }
 
 // Bills interfaces
-export interface IBillsTable {
-  date: string,
-  clientName: string,
-  clientNit: number,
-  billId: string,
-  amount: number,
+export interface IBillsParams {
+  date: string | undefined,
+  clientName: string | undefined,
+  clientNit: number | undefined,
+  billId: string | undefined,
+  amount: number | undefined,
   status: "AIOff" | "Human" | "Paid" | "Process",
-  dueDays: number,
-  logs: string
+  dueDays: number | undefined,
+  logs: string | undefined
 }

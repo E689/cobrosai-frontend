@@ -8,7 +8,36 @@ import { IBillsTable } from '@/app/types/types'
 async function getData(): Promise<IBillsTable[]> {
   // Fetch data from your API here.
   return [
-    
+    {
+      date: "15-02-2024",
+      clientName: "Perry",
+      clientNit: 4083042,
+      billId: "0003",
+      amount: 4759.50,
+      status: "AIOff",
+      dueDays: 25,
+      logs: "/log"
+    },
+    {
+      date: "18-02-2024",
+      clientName: "UIM",
+      clientNit: 586575,
+      billId: "0002",
+      amount: 8756.50,
+      status: "AIOff",
+      dueDays: -25,
+      logs: "/log"
+    },
+    {
+      date: "28-02-2024",
+      clientName: "UIM",
+      clientNit: 586575,
+      billId: "0002",
+      amount: 789.50,
+      status: "AIOff",
+      dueDays: -5,
+      logs: "/log"
+    }
     // ...
   ]
 }

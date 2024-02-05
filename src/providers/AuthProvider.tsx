@@ -15,8 +15,8 @@ export function AuthProvider({ children }: Props) {
 
   useEffect(() => {
     const user: IUserAccount = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : undefined
+
     if (user) {
-      console.log("Auth provider set the user: ", user)
       setIsLoggedIn(true)
       setAuthUser(user)
     } else {

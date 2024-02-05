@@ -6,7 +6,10 @@ import Finish from '@/components/reusable/QuickSignUp/Finish'
 import LoadFile from '@/components/reusable/QuickSignUp/LoadFile'
 import Loading from '@/components/reusable/QuickSignUp/Loading'
 import Select from '@/components/reusable/QuickSignUp/Select'
+import { RegisterBill, RegisterFile } from '@/lib/authCalls'
 import React, { useEffect, useState } from 'react'
+
+import {IRegisterParams} from '@/app/types/types'
 
 const Drop = () => {
   // General fields for this form
@@ -21,7 +24,7 @@ const Drop = () => {
   const [companyName, setCompanyName] = useState(undefined)
 
   // email value
-  const [email, setEmail] = useState(undefined)
+  const [email, setEmail] = useState<string | undefined>(undefined)
 
   // This use effect will change step if a file is properly loaded.
   useEffect(() => {
@@ -36,10 +39,32 @@ const Drop = () => {
       try {
         if (file) {
           // File is a required param of the file flow
-          // Here insert the API call to create a user with file flow
+          const params: IRegisterParams = {email: email, file: file}
+          RegisterFile(params)
+          .then((res) => {
+            console.log(res)
+            setTimeout(() => true, 2000)
+          })
         } else {
           // Else I know the user did manual flow.
-          // Here insert the API call to create a user with manual flow.
+          const params: IRegisterParams = {
+            email: email, 
+            bill: {
+              date: date,
+              clientName: companyName,
+              clientNit: NIT,
+              billId: invoiceNo,
+              amount: amount,
+              status: "AIOff",
+              dueDays: 0,
+              logs: ""
+            }
+          }
+          RegisterBill(params)
+          .then((res) => {
+            console.log(res)
+            setTimeout(() => true, 2000)
+          })
         }
       } catch (err) {
         console.log(err)

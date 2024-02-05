@@ -1,45 +1,150 @@
-import { ISignInParams, ISignOutParams, IRecoverParams, IChangeParams, IAuthContext, IUserAccount } from "@/app/types/types"
+import { ISignInParams, IRecoverParams, IChangeParams, IUserAccount, IRegisterParams } from "@/app/types/types"
 
+import axios from 'axios'
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-export const SignIn = async ({ email, password }: ISignInParams): Promise<IUserAccount> => {
-  return await new Promise<IUserAccount>(r => {
-    const credentials: IUserAccount = { email, jwt: 'test-jwt', type: 'user' }
-    /**
-    const res = await fetch(API_URL + "/users/login", {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-      headers: { "Content-Type": "application/json" }
-    })
-    // TODO: Add logic to handdle exceptions on wrong request or incorrect credentials.
-    // throw new Error();
-  
-    const user = await res.json()
-    */
-    // Here I should set JWT cookie and user info as localstorage.
-    localStorage.setItem('user', JSON.stringify(credentials))
+export const SignIn = async ({ email, password }: ISignInParams): Promise<any> => {
+  return await new Promise<any>(async r => {
+    const credentials = { email: email, password: password }
+    let user: IUserAccount = { email: "", jwt: undefined, type: 0, id: "" }
 
-    setTimeout(() => r(credentials), 1000)
+    await axios.post(
+      API_URL + '/users/login',
+      credentials,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then((res) => {
+      if (res.statusText === "OK") {
+        user.email = res.data.email
+        user.id = res.data.id
+        user.jwt = res.data.jwt
+        user.type = res.data.type
+
+        localStorage.setItem('user', JSON.stringify(user))
+      }
+      r(res)
+    }).catch((err => {
+      r(err)
+    }))
   })
 }
 
-export const SignOut = async ({ jwt }: ISignOutParams): Promise<any> => {
-  console.log("SignOut with: (", jwt, ")")
+export const SignOut = (): string => {
+  localStorage.removeItem('user')
 
-  return await new Promise<ISignOutParams>(r => {
-    localStorage.removeItem('user')
+  return "OK"
+}
 
-    setTimeout(() => r({ jwt }), 1000)
+export const Register = async ({ email, password }: IRegisterParams): Promise<any> => {
+  const credentials = {
+    "email": email,
+    "password": password
+  }
+  return await new Promise<any>(async r => {
+    await axios.post(
+      API_URL + '/users/register',
+      credentials,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then((res) => {
+      r(res)
+    }).catch((err => {
+      r(err)
+    }))
   })
-  /**
-  const res = await fetch(API_URL + "/users/logout", {
-    method: 'POST',
-    body: JSON.stringify(credentials),
-    headers: { "Content-Type": "application/json" }
-  })
-  // TODO: Add logic to handdle exceptions on wrong request or incorrect credentials.
-  // throw new Error();
+}
 
-  */
-  // Here I should remove JWT cookie and user info from localstorage.
+export const Recover = async ({ email }: IRecoverParams): Promise<any> => {
+  const credentials = {
+    "email": email
+  }
+  return await new Promise<any>(async r => {
+    await axios.post(
+      API_URL + '/users/forgot-password',
+      credentials,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then((res) => {
+      r(res)
+    }).catch((err => {
+      r(err)
+    }))
+  })
+}
+
+export const ChangePassword = async ({ email, oldPassword, newPassword }: IChangeParams): Promise<any> => {
+  const credentials = {
+    email: email, 
+    oldPassword: oldPassword, 
+    newPassword: newPassword
+  }
+  return await new Promise<any>(async r => {
+    await axios.put(
+      API_URL + '/users/change-password',
+      credentials,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then((res) => {
+      r(res)
+    }).catch((err => {
+      r(err)
+    }))
+  })
+}
+
+// Quick register flows
+export const RegisterFile = async ({ email, file }: IRegisterParams): Promise<any> => {
+  const credentials = {
+    "email": email,
+    "file": file
+  }
+  return await new Promise<any>(async r => {
+    await axios.post(
+      API_URL + '/users/register/file',
+      credentials,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then((res) => {
+      r(res)
+    }).catch((err => {
+      r(err)
+    }))
+  })
+}
+
+export const RegisterBill = async ({ email, bill }: IRegisterParams): Promise<any> => {
+  const credentials = {
+    "email": email,
+    "bill": bill
+  }
+  return await new Promise<any>(async r => {
+    await axios.post(
+      API_URL + '/users/register/bill',
+      credentials,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then((res) => {
+      r(res)
+    }).catch((err => {
+      r(err)
+    }))
+  })
 }
