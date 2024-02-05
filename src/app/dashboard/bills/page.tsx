@@ -32,7 +32,6 @@ const Bills = () => {
 
   useEffect(() => {
     if (authUser) {
-      console.info("AuthUser: ", authUser)
       getData(authUser!.id).then((res) => {
         //console.info("Data for user: ", res)
         setData(res!)
@@ -40,7 +39,7 @@ const Bills = () => {
         console.log("Error")
       })
     }
-  }, [])
+  }, [authUser])
 
   useEffect(() => {
     setIsMounted(true)
