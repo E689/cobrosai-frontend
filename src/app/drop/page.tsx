@@ -90,7 +90,7 @@ const Drop = () => {
       }, 600000) // After 10 minutes refresh all 600000ms
     }
 
-  }, [step, file])
+  }, [step, file, date, NIT, amount, companyName, email, invoiceNo])
 
   if (step === "select") return (<Select setFile={setFile} setStep={setStep} />)
   if (step === "loadFile") return (<LoadFile setStep={setStep} />)

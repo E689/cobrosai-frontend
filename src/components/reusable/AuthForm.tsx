@@ -33,7 +33,7 @@ const formSchema = z.object({
   newPassword: z.string().min(2).max(50),
 })
 
-const AuthForm = ({ submitText, formType, file }: IAuthFormProps) => {
+const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
   // 0. Get Error hooks and set router
   const {
     setError,
@@ -129,10 +129,6 @@ const AuthForm = ({ submitText, formType, file }: IAuthFormProps) => {
           setError("formerror", { type: "Mismatch", message: "Las contraseñas muevas no coinciden." })
         }
         break;
-      case "quick":
-        // TODO: Add quick register call
-        console.log("Got this file: ", file)
-        window.location.href = process.env.NEXT_PUBLIC_BASE_URL + "/auth/signin"
       default:
         console.log("What are you doing user? STAP!")
         setLoading(true)

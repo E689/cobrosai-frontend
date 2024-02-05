@@ -3,9 +3,9 @@ import React from 'react'
 // Data table stuff
 import { BillsDataTable } from '@/components/reusable/Bills/data-table'
 import { columns } from '@/components/reusable/Bills/columns'
-import { IBillsTable } from '@/app/types/types'
+import { IBillsParams } from '@/app/types/types'
 
-async function getData(): Promise<IBillsTable[]> {
+async function getData(): Promise<IBillsParams[]> {
   // Fetch data from your API here.
   return [
     {
