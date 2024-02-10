@@ -13,7 +13,7 @@ const AIStats = ({automatedQty, automatedMax}: IAIStatsProps) => {
   if (automatedPercentage >= 75 ) percentageClassName += "text-green-400"
 
   return (
-    <div className='w-full h-full rounded-md shadow-lg flex flex-row gap-4 p-4 bg-slate-100 dark:bg-blue-700/60'>
+    <div className='w-full h-full rounded-md shadow-lg flex flex-row gap-4 p-4 bg-slate-100 dark:bg-blue-950/60'>
       <div className='flex flex-col grow'>
         <div className='flex mt-auto'>
           <p className='m-auto text-sm'>Facturas Automatizadas </p>

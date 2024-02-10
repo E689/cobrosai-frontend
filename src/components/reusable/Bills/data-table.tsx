@@ -73,10 +73,10 @@ export function BillsDataTable<TData, TValue>({
             onChange={(event) =>
               table.getColumn("clientName")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm bg-slate-100 dark:bg-blue-700/60"
+            className="max-w-sm bg-slate-100 dark:bg-blue-950/60"
           />
         </div>
-        <div className="rounded-md border w-full bg-slate-100 dark:bg-blue-700/60">
+        <div className="rounded-md border w-full bg-slate-100 dark:bg-blue-950/60">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (

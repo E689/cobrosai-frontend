@@ -50,7 +50,7 @@ const Bills = () => {
     return (<LoaderSpiner />)
   } else {
     return (
-      <div className='flex flex-col w-screen h-screen pt-[7vh] px-8 bg-slate-200 dark:bg-blue-950/50'>
+      <div className='flex flex-col w-screen min-h-screen h-full pt-[7vh] px-8 bg-slate-200 dark:bg-blue-950/20'>
         <div className='flex w-full h-[10vh]'>
           <p className='text-4xl font-bold mb-auto mr-auto'>COBROS | Facturas</p>
         </div>

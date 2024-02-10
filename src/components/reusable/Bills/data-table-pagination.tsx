@@ -25,7 +25,7 @@ export function DataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-between px-2 py-2 mt-2 rounded-md bg-slate-100 dark:bg-blue-700/60">
+    <div className="flex items-center justify-between px-2 py-2 mt-2 rounded-md bg-slate-100 dark:bg-blue-950/60">
       <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} de{" "}
         {table.getFilteredRowModel().rows.length} fila(s) seleccionada(s).

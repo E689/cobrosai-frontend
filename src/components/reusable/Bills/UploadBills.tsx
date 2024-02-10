@@ -83,7 +83,7 @@ const UploadBills = () => {
       </div>
       <div className="flex">
         <Dialog>
-          <DialogTrigger className="h-[80%] my-auto bg-white/80 dark:bg-blue-900/80 px-2 rounded-lg">Ingreso manual</DialogTrigger>
+          <DialogTrigger className="h-[80%] my-auto bg-white/80 dark:bg-blue-950 dark:hover:bg-blue-950/70 px-2 rounded-lg">Ingreso manual</DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogDescription>
