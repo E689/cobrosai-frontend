@@ -15,14 +15,14 @@ const AIStats = ({automatedQty, automatedMax}: IAIStatsProps) => {
   return (
     <div className='w-full h-full rounded-md shadow-lg flex flex-row gap-4 p-4 bg-slate-100 dark:bg-blue-700/60'>
       <div className='flex flex-col grow'>
-        <div className='flex'>
+        <div className='flex mt-auto'>
           <p className='m-auto text-sm'>Facturas Automatizadas </p>
         </div>
-        <div className='flex'>
+        <div className='flex mb-auto'>
           <p className={percentageClassName}>{`${automatedQty} / ${automatedMax} - ${automatedPercentage}%`}</p>
         </div>
       </div>
-      <div className='flex w-10 h-10'>
+      <div className='flex w-10 h-10 m-auto'>
         <FaCoins className='w-full h-full m-auto' />
       </div>
     </div>

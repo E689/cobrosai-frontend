@@ -54,7 +54,7 @@ const BillForm = ({ setDate, setInvoiceNo, setNIT, setAmount, setCompanyName, se
     setAmount(values.amount)
     setCompanyName(values.companyName)
 
-    setStep("emailForm")
+    if (setStep) setStep("emailForm")
   }
 
   useEffect(() => {
@@ -64,11 +64,9 @@ const BillForm = ({ setDate, setInvoiceNo, setNIT, setAmount, setCompanyName, se
   if (!isMounted) return (<LoaderSpiner />)
 
   return (
-    <div className="w-full max-h-screen p-3 overflow-y-auto">
-      <div className='bg-slate-400/60 dark:bg-blue-950/50 rounded-lg shadow-md p-10 w-[30%] m-auto'>
+    <div>
       <div className="flex flex-col gap-3 items-center">
         <h3 className="text-3xl font-bold text-center ">Datos Factura</h3>
-        <p className="text-muted-foreground max-w-[25ch] text-center">Ingresa los datos de tu primera factura</p>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="p-5 flex flex-col gap-3" suppressHydrationWarning>
@@ -155,7 +153,6 @@ const BillForm = ({ setDate, setInvoiceNo, setNIT, setAmount, setCompanyName, se
           <Button type="submit">Crear factura</Button>
         </form>
       </Form>
-    </div>
     </div>
   )
 }

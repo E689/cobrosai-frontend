@@ -50,7 +50,7 @@ export interface IAuthFormProps {
 
 // DropZone component
 export interface IDropZoneViewElements {
-  setStep: Function,
+  setStep?: Function,
 }
 
 export interface IDropZoneProps extends IDropZoneViewElements {

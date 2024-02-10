@@ -10,13 +10,14 @@ import AIStats from '@/components/reusable/AIStats'
 import { GetBills } from '@/lib/billsCalls'
 import { AuthContext } from '@/providers/AuthProvider'
 import LoaderSpiner from '@/components/reusable/LoaderSpiner'
+import UploadBills from '@/components/reusable/Bills/UploadBills'
 
 async function getData(id: string): Promise<IBillsParams[] | undefined> {
   // Fetch data from your API here.
   let data: IBillsParams[] = []
 
   return await GetBills(id).then((res) => {
-    console.info("Data from req: ", res)
+    //console.info("Data from req: ", res)
     if (res.status == 200) {
       data = res.data.bills
       return data
@@ -33,7 +34,7 @@ const Bills = () => {
   useEffect(() => {
     if (authUser) {
       getData(authUser!.id).then((res) => {
-        //console.info("Data for user: ", res)
+        //console.info("Data for user: ", authUser)
         setData(res!)
       }).catch((err) => {
         console.log("Error")
@@ -54,10 +55,7 @@ const Bills = () => {
           <p className='text-4xl font-bold mb-auto mr-auto'>COBROS | Facturas</p>
         </div>
         <div className='flex flex-row gap-1 w-full h-[10vh]'>
-          <div className='flex flex-row gap-3 grow m-auto'>
-            <p>Subir archivo</p>
-            <p>Ingreso manual</p>
-          </div>
+          <UploadBills />
           <div className='flex w-[20vw] h-full m-auto'>
             <AIStats automatedQty={0} automatedMax={data ? data.length : 0} />
           </div>

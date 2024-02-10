@@ -87,7 +87,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
             setLoading(false)
             if (res.statusText === "OK") {
               setIsLoggedIn(true)
-              setAuthUser(localStorage.getItem("user")) // Fix this
+              setAuthUser(res.data)
             } else if (res?.code === "ERR_BAD_REQUEST") {
               setError("formerror", { type: "Mismatch", message: res.response.data?.error })
             }

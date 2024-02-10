@@ -9,7 +9,7 @@ import Select from '@/components/reusable/QuickSignUp/Select'
 import { RegisterBill, RegisterFile } from '@/lib/authCalls'
 import React, { useEffect, useState } from 'react'
 
-import {IRegisterParams} from '@/app/types/types'
+import { IRegisterParams } from '@/app/types/types'
 
 const Drop = () => {
   // General fields for this form
@@ -39,20 +39,20 @@ const Drop = () => {
       try {
         if (file) {
           // File is a required param of the file flow
-          const params: IRegisterParams = {email: email, file: file}
+          const params: IRegisterParams = { email: email, file: file }
           RegisterFile(params)
-          .then((res) => {
-            if (res.code === "ERR_BAD_REQUEST") {
-              setFile(undefined)
-              setStep("select") // Send the user back to the start.
-            } else if (res.statusText === "OK") {
-              setTimeout(() => setStep("finish"), 2000)
-            }
-          })
+            .then((res) => {
+              if (res.code === "ERR_BAD_REQUEST") {
+                setFile(undefined)
+                setStep("select") // Send the user back to the start.
+              } else if (res.statusText === "OK") {
+                setTimeout(() => setStep("finish"), 2000)
+              }
+            })
         } else {
           // Else I know the user did manual flow.
           const params: IRegisterParams = {
-            email: email, 
+            email: email,
             bill: {
               date: date,
               clientName: companyName,
@@ -65,14 +65,14 @@ const Drop = () => {
             }
           }
           RegisterBill(params)
-          .then((res) => {
-            console.info(res)
-            if (res.code === "ERR_BAD_REQUEST" || res.code === "INTERNAL_SERVER_ERROR") {
-              setStep("select") // Send the user back to the start.
-            } else if (res.statusText === "OK" || res.statusText === "Created") {
-              setTimeout(() => setStep("finish"), 2000)
-            }
-          })
+            .then((res) => {
+              console.info(res)
+              if (res.code === "ERR_BAD_REQUEST" || res.code === "INTERNAL_SERVER_ERROR") {
+                setStep("select") // Send the user back to the start.
+              } else if (res.statusText === "OK" || res.statusText === "Created") {
+                setTimeout(() => setStep("finish"), 2000)
+              }
+            })
         }
       } catch (err) {
         console.log("Error: ", err)
@@ -102,7 +102,13 @@ const Drop = () => {
 
   if (step === "select") return (<Select setFile={setFile} setStep={setStep} />)
   if (step === "loadFile") return (<LoadFile setStep={setStep} />)
-  if (step === "billForm") return (<BillForm setDate={setDate} setInvoiceNo={setInvoiceNo} setNIT={setNIT} setAmount={setAmount} setCompanyName={setCompanyName} setStep={setStep} />)
+  if (step === "billForm") return (
+    <div className="w-full max-h-screen p-3 overflow-y-auto">
+      <div className='bg-slate-400/60 dark:bg-blue-950/50 rounded-lg shadow-md p-10 w-[30%] m-auto'>
+        <BillForm setDate={setDate} setInvoiceNo={setInvoiceNo} setNIT={setNIT} setAmount={setAmount} setCompanyName={setCompanyName} setStep={setStep} />
+      </div>
+    </div>
+  )
   if (step === "emailForm") return (<EmailForm setEmail={setEmail} setStep={setStep} />)
   if (step === "loading") return (<Loading setStep={setStep} />)
   if (step === "finish") return (<Finish />)
