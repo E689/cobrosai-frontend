@@ -28,11 +28,11 @@ async function getData(id: string): Promise<IBillsParams[] | undefined> {
 
 const Bills = () => {
   const [data, setData] = useState<IBillsParams[]>([])
-  const { authUser } = useContext(AuthContext) as IAuthContext
+  const { authUser, loading } = useContext(AuthContext) as IAuthContext
   const [isMounted, setIsMounted] = useState<Boolean>(false)
 
   useEffect(() => {
-    if (authUser) {
+    if (!loading && authUser) {
       getData(authUser!.id).then((res) => {
         console.info("User: ", authUser)
         console.info("Response: ", res)
@@ -41,7 +41,7 @@ const Bills = () => {
         console.log("Error")
       })
     }
-  }, [authUser])
+  }, [authUser, loading])
 
   useEffect(() => {
     setIsMounted(true)

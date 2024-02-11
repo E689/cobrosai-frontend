@@ -28,30 +28,17 @@ import { TbMessageSearch } from "react-icons/tb";
 import ClientsForm from "../Clients/ClientsForm"
 import AISelector from "./AISelector"
 
-const getAIColor = (value: string): string => {
-  switch (value) {
-    case "AIOff":
-      return "bg-gray-400"
-    case "Human":
-      return "bg-blue-400"
-    case "Paid":
-      return "bg-green-400"
-    case "Process":
-      return "bg-yellow-400"
-    default:
-      return ""
-  }
-}
-
 const getDueDaysColor = (value: number): string => {
   if (value < 0) {
     return "text-green-400"
-  } else if (value >= 0 && value < 15) {
+  } else if (value >= 0 && value < 30) {
     return "text-yellow-400"
-  } else if (value >= 15 && value < 30) {
+  } else if (value >= 30 && value < 60) {
     return "text-orange-400"
-  } else {
+  } else if (value >= 60 && value < 90) {
     return "text-red-400"
+  } else {
+    return "text-red-800"
   }
 }
 
@@ -198,7 +185,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
       )
     },
     cell: ({ row }) => <div className="flex">
-      <AISelector 
+      <AISelector
         defaultValue={row.getValue("status")}
         billId={row.getValue("billId")}
         clientId={row.getValue("clientId")}

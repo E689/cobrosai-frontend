@@ -11,7 +11,8 @@ interface Props {
 
 export function AuthProvider({ children }: Props) {
   const [authUser, setAuthUser] = useState<null | IUserAccount>(null)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const [loading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const user: IUserAccount = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : undefined
@@ -19,10 +20,12 @@ export function AuthProvider({ children }: Props) {
     if (user) {
       setIsLoggedIn(true)
       setAuthUser(user)
+      setIsLoading(false)
     } else {
       console.log("Auth provider didn't found a user.")
       setIsLoggedIn(false)
       setAuthUser(null)
+      setIsLoading(false)
     }
   }, [])
 
@@ -30,7 +33,8 @@ export function AuthProvider({ children }: Props) {
     authUser,
     setAuthUser,
     isLoggedIn,
-    setIsLoggedIn
+    setIsLoggedIn,
+    loading
   }
 
   return (

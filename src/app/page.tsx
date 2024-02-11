@@ -1,14 +1,17 @@
 'use client'
 
-import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useContext } from "react";
 import { AuthContext } from "@/providers/AuthProvider";
 import { IAuthContext } from "./types/types";
+import { useRouter } from "next/navigation"
 
 export default function Home() {
   const { authUser } = useContext(AuthContext) as IAuthContext
+
+  // Router
+  const router = useRouter()
 
   return (
     <main className="flex min-h-[80vh] min-w-[100vw] flex-col items-center justify-between p-10 h-full w-full gap-5">
@@ -21,30 +24,20 @@ export default function Home() {
           <p>Vistas Auth: </p>
           <Tabs className="w-full">
             <TabsList>
-              <TabsTrigger value="cambio" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
-                <Link href={'/auth/change'}>
-                  Cambio Contraseña
-                </Link>
+              <TabsTrigger onClick={() => router.push("/auth/change")} value="cambio" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
+              Cambio Contraseña
               </TabsTrigger>
-              <TabsTrigger value="recuperar" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
-                <Link href={'/auth/recover'}>
+              <TabsTrigger onClick={() => router.push("/auth/recover")} value="recuperar" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
                   Recuperar Contraseña
-                </Link>
               </TabsTrigger>
-              <TabsTrigger value="register" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
-                <Link href={'/auth/register'}>
+              <TabsTrigger onClick={() => router.push("/auth/register")} value="register" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
                   Registrarse
-                </Link>
               </TabsTrigger>
-              <TabsTrigger value="signin" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
-                <Link href={'/auth/signin'}>
+              <TabsTrigger onClick={() => router.push("/auth/signin")} value="signin" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
                   Iniciar Sesión
-                </Link>
               </TabsTrigger>
-              <TabsTrigger value="signout" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
-                <Link href={'/auth/signout'}>
+              <TabsTrigger onClick={() => router.push("/auth/signout")} value="signout" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
                   Cerrar Sesion
-                </Link>
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -52,10 +45,8 @@ export default function Home() {
           <p>Vistas quick flow: </p>
           <Tabs className="w-full">
             <TabsList>
-              <TabsTrigger value="quickregister" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
-                <Link href={'/drop'}>
+              <TabsTrigger onClick={() => router.push("/drop")} value="quickregister" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
                   Quick register flow
-                </Link>
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -63,20 +54,14 @@ export default function Home() {
           <p>Vistas dashboard: </p>
           <Tabs className="w-full">
             <TabsList>
-              <TabsTrigger value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
-                <Link href={'/dashboard/bills'}>
+              <TabsTrigger onClick={() => router.push("/dashboard/bills")} value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
                   Facturas
-                </Link>
               </TabsTrigger>
-              <TabsTrigger value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
-                <Link href={'/dashboard/clients'}>
+              <TabsTrigger onClick={() => router.push("/dashboard/clients")} value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
                   Empresas
-                </Link>
               </TabsTrigger>
-              <TabsTrigger value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
-                <Link href={'/dashboard/flows'}>
+              <TabsTrigger onClick={() => router.push("/dashboard/flows")} value="dashboard" className="hover:bg-slate-400/60 dark:hover:bg-blue-950/50">
                   Flujos
-                </Link>
               </TabsTrigger>
             </TabsList>
           </Tabs>

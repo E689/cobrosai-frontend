@@ -1,30 +1,38 @@
 'use client'
 
 import { AuthContext } from "@/providers/AuthProvider"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { IAuthContext } from "../types/types"
 import { useContext, useEffect } from "react"
 import NavBar from "@/components/reusable/NavBar"
+import LoaderSpiner from "@/components/reusable/LoaderSpiner"
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { authUser } = useContext(AuthContext) as IAuthContext
+  const { authUser, loading } = useContext(AuthContext) as IAuthContext
 
-  useEffect(()=> {
-    if (!authUser) return (redirect("/auth/signin"))
-  }, [authUser])
+  // Router
+  const router = useRouter()
 
-  return (
-    <div>
-      <NavBar />
-      <div className="min-h-[80vh] w-full h-full flex flex-col items-center justify-between">
-        <div className="m-auto">
-          {children}
+  useEffect(() => {
+    if (!loading && !authUser) return (router.push("/auth/signin"))
+  }, [authUser, loading, router])
+
+  if (loading) {
+    return (<LoaderSpiner />)
+  } else {
+    return (
+      <div>
+        <NavBar />
+        <div className="min-h-[80vh] w-full h-full flex flex-col items-center justify-between">
+          <div className="m-auto">
+            {children}
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }

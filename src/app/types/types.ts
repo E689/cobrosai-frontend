@@ -33,7 +33,8 @@ export interface IAuthContext {
   authUser: IUserAccount | null,
   setAuthUser: Function,
   isLoggedIn: Boolean | null,
-  setIsLoggedIn: Function
+  setIsLoggedIn: Function,
+  loading: boolean
 }
 
 // General types
@@ -111,6 +112,18 @@ export interface IClientParams {
   email?: string,
   phone?: number,
   aIToggle?: boolean
+}
+
+export interface IClientExtendedParams extends IClientParams {
+  expired: number,
+  lowExpired: number,
+  mediumExpired: number,
+  highExpired: number,
+  criticalExpired: number,
+  lastMessage: string,
+  ignoredMsgs: number,
+  brokenPromises: number,
+  collectionFlow: string
 }
 
 export interface IClientsFormParams {
