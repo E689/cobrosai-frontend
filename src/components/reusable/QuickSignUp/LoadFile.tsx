@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 const LoadFile = ({ setStep }: IDropZoneViewElements) => {
   useEffect(() => {
     setTimeout(() => {
-      setStep("emailForm")
+      if (setStep) setStep("loading")
     }, 3000)
   }, [setStep])
 

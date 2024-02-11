@@ -39,7 +39,7 @@ const Select = ({ setFile, setStep }: IDropZoneProps) => {
 
         <Button
           className='w-full h-full text-md lg:text-lg xl:text-xl'
-          onClick={() => setStep("billForm")}
+          onClick={() => {if (setStep) setStep("loading")}}
         >
           Ingreso Manual
         </Button>

@@ -42,7 +42,7 @@ const EmailForm = ({ setEmail, setStep }: IDropZoneEmailForm) => {
     // ✅ This will be type-safe and validated.
     setEmail(values.email)
 
-    setStep("loading")
+    if (setStep) setStep("loading") 
   }
 
   useEffect(() => {
