@@ -102,5 +102,6 @@ export interface IClientParams {
 
 export interface IClientsFormParams {
   UID: string,
+  action: "edit" | "create",
   client?: IClientParams | undefined
 }

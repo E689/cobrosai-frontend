@@ -115,6 +115,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
           <DialogContent className="min-w-[60%]">
             <ClientsForm
               UID={`blablabla`}
+              action="edit"
               client={
                 {
                   clientName: row.getValue("clientName"),

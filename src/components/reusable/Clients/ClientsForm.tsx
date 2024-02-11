@@ -34,7 +34,7 @@ const formSchema = z.object({
   aIToggle: z.coerce.boolean(),
 })
 
-const ClientsForm = ({ UID, client }: IClientsFormParams) => {
+const ClientsForm = ({ UID, client, action }: IClientsFormParams) => {
   const [isMounted, setIsMounted] = useState(false)
 
   // 1. Define your form.
@@ -56,6 +56,7 @@ const ClientsForm = ({ UID, client }: IClientsFormParams) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    // Do something base on the action provided.
     console.log(UID)
   }
 
