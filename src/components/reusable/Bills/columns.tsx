@@ -4,11 +4,28 @@ import { ColumnDef } from "@tanstack/react-table"
 
 // This type is used to define the shape of our data.
 import { IBillsParams } from "@/app/types/types"
+// Dialog imports
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+// Sheet imports
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+// General UI components
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 
 import { ArrowUpDown } from "lucide-react"
 import { TbMessageSearch } from "react-icons/tb";
+import ClientsForm from "../Clients/ClientsForm"
 
 const getAIColor = (value: string): string => {
   switch (value) {
@@ -87,7 +104,27 @@ export const columns: ColumnDef<IBillsParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="uppercase">{row.getValue("clientName")}</div>,
+    cell: ({ row }) => {
+      return (
+        <Dialog>
+          <DialogTrigger
+            className="h-[80%] my-auto px-2 rounded-lg"
+          >
+            {row.getValue("clientName")}
+          </DialogTrigger>
+          <DialogContent className="min-w-[60%]">
+            <ClientsForm
+              UID={`blablabla`}
+              client={
+                {
+                  clientName: row.getValue("clientName"),
+                  nit: row.getValue("clientId")
+                }
+              }
+            />
+          </DialogContent>
+        </Dialog>)
+    },
   },
   {
     accessorKey: "clientId",
@@ -186,22 +223,35 @@ export const columns: ColumnDef<IBillsParams>[] = [
   },
   {
     id: "log",
-    header: ({ column }) => {
+    header: "Historial",
+    cell: ({ row }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Historial
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <Sheet>
+          <SheetTrigger className="flex w-full">
+            <TbMessageSearch
+              size={20}
+              className="m-auto cursor-pointer"
+              onClick={() => { console.log(row.getValue("logs")) }} />
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Are you absolutely sure?</SheetTitle>
+              <SheetDescription>
+                This action cannot be undone. This will permanently delete your account
+                and remove your data from our servers.
+              </SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
       )
     },
-    cell: ({ row }) => <div className="flex">
-      <TbMessageSearch 
-      size={20} 
-      className="m-auto cursor-pointer" 
-      onClick={() => {console.log(row.getValue("logs"))}}/>
-    </div>,
   },
 ]
+
+/**
+ * <TbMessageSearch
+        size={20}
+        className="m-auto cursor-pointer"
+        onClick={() => { console.log(row.getValue("logs")) }} />
+ */

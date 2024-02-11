@@ -34,7 +34,8 @@ const Bills = () => {
   useEffect(() => {
     if (authUser) {
       getData(authUser!.id).then((res) => {
-        //console.info("Data for user: ", authUser)
+        console.info("User: ", authUser)
+        console.info("Response: ", res)
         setData(res!)
       }).catch((err) => {
         console.log("Error")

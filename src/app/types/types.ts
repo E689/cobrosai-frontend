@@ -86,3 +86,21 @@ export interface IBillsParams {
   creditDays: number | undefined,
   logs?: string | undefined
 }
+
+// Clients interfaces
+export interface IClientParams {
+  clientName: string,
+  nit: number,
+  creditDays?: number,
+  clientCollectionSchedule?: string,
+  contactName?: string,
+  contactlastName?: string,
+  email?: string,
+  phone?: number,
+  aIToggle?: boolean
+}
+
+export interface IClientsFormParams {
+  UID: string,
+  client?: IClientParams | undefined
+}
