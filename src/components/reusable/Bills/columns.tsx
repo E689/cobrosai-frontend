@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowUpDown } from "lucide-react"
 import { TbMessageSearch } from "react-icons/tb";
 import ClientsForm from "../Clients/ClientsForm"
+import AISelector from "./AISelector"
 
 const getAIColor = (value: string): string => {
   switch (value) {
@@ -65,6 +66,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        className="m-auto"
       />
     ),
     cell: ({ row }) => (
@@ -195,14 +197,12 @@ export const columns: ColumnDef<IBillsParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="uppercase flex">
-      <p
-        className={
-          `m-auto p-1 rounded-md w-full text-black font-medium text-center hover:cursor-pointer
-           ${getAIColor(row.getValue("status"))} `
-        }>
-        {row.getValue("status")}
-      </p>
+    cell: ({ row }) => <div className="flex">
+      <AISelector 
+        defaultValue={row.getValue("status")}
+        billId={row.getValue("billId")}
+        clientId={row.getValue("clientId")}
+      />
     </div>,
   },
   {
@@ -223,7 +223,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     </div>,
   },
   {
-    id: "log",
+    id: "logs",
     header: "Historial",
     cell: ({ row }) => {
       return (
@@ -249,10 +249,3 @@ export const columns: ColumnDef<IBillsParams>[] = [
     },
   },
 ]
-
-/**
- * <TbMessageSearch
-        size={20}
-        className="m-auto cursor-pointer"
-        onClick={() => { console.log(row.getValue("logs")) }} />
- */

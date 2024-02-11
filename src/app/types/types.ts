@@ -1,3 +1,5 @@
+import { inherits } from "util"
+
 // Auth types
 export interface ISignInParams {
   email: string,
@@ -69,20 +71,31 @@ export interface IDropZoneEmailForm extends IDropZoneViewElements {
   setEmail: Function
 }
 
+// AI Statuses
+export interface IAIStatuses {
+  status: "AIOff" | "Human" | "Paid" | "Process" | "Anulada"
+}
+
 // AIStats interface
 export interface IAIStatsProps {
   automatedQty: number,
   automatedMax: number
 }
 
+// AI Selector interface
+export interface IAISelector {
+  defaultValue: IAIStatuses,
+  billId: string,
+  clientId: string
+}
+
 // Bills interfaces
-export interface IBillsParams {
+export interface IBillsParams extends IAIStatuses {
   date: string | undefined,
   clientName: string | undefined,
   clientId: number | undefined,
   billId: string | undefined,
   amount: number | undefined,
-  status: "AIOff" | "Human" | "Paid" | "Process",
   creditDays: number | undefined,
   logs?: string | undefined
 }
