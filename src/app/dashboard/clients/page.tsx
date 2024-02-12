@@ -31,7 +31,9 @@ const Clients = () => {
   const [isMounted, setIsMounted] = useState<Boolean>(false)
 
   useEffect(() => {
-    if (!loading && authUser) {
+    // I make sure to just make 1 getData.
+    // Has to be mounted, not loading and with a valid user.
+    if (isMounted && !loading && authUser) {
       getData(authUser!.id).then((res) => {
         console.info("User: ", authUser)
         console.info("Response: ", res)
@@ -40,7 +42,7 @@ const Clients = () => {
         console.log("Error")
       })
     }
-  }, [authUser, loading])
+  }, [authUser, loading, isMounted])
 
   useEffect(() => {
     setIsMounted(true)

@@ -1,12 +1,11 @@
 'use client'
 
-import { IAISelector, IAIStatuses, IAuthContext } from "@/app/types/types"
+import { IAISelector, IAuthContext } from "@/app/types/types"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select"
 import { AuthContext } from "@/providers/AuthProvider"
 

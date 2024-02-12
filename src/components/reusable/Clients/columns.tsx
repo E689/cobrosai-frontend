@@ -17,6 +17,8 @@ import { ArrowUpDown } from "lucide-react"
 import { TbMessageSearch } from "react-icons/tb";
 import ClientsForm from "../Clients/ClientsForm"
 import { redirect } from "next/navigation"
+import ClientDetailButton from "./ClientDetailButton"
+import ClientFlowSelector from "./ClientFlowSelector"
 
 const getMsgColor = (value: string): string => {
   switch (value) {
@@ -260,27 +262,15 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
       )
     },
     cell: ({ row }) => <div className="flex">
-      {/**
-       * TODO: Make a component to show existing Flows and select one.
-       * <FlowSelector
+       <ClientFlowSelector
         defaultValue={row.getValue("collectionFlow")}
         clientId={row.getValue("clientId")}
       />
-       */}
     </div>,
   },
   {
     id: "details",
     header: "Detalle",
-    cell: ({ row }) => <>
-    {/**
-     * TODO: Make a component to send to the proper Client details page.
-     * <TbMessageSearch
-          size={20}
-          className="m-auto cursor-pointer"
-          onClick={() => redirect(`/dashboard/clients/${row.getValue("clientId")}`)}
-        />
-     */}
-    </>,
+    cell: ({ row }) => <ClientDetailButton clientId={row.getValue("clientId")} />,
   },
 ]

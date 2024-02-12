@@ -131,3 +131,9 @@ export interface IClientsFormParams {
   action: "edit" | "create",
   client?: IClientParams | undefined
 }
+
+// Client Flow Selector interface
+export interface IClientFlowSelector {
+  defaultValue: string,
+  clientId: string
+}

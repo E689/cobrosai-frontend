@@ -22,7 +22,11 @@ export default function DashboardLayout({
   }, [authUser, loading, router])
 
   if (loading) {
-    return (<LoaderSpiner />)
+    return (
+      <div className="w-screen h-screen">
+        <LoaderSpiner />
+      </div>
+    )
   } else {
     return (
       <div>
