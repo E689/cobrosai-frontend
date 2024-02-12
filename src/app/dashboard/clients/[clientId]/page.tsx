@@ -43,7 +43,7 @@ const ClientDetail = ({ params }: { params: { clientId: string } }) => {
         console.log("Error")
       })
     }
-  }, [authUser, loading, isMounted])
+  }, [authUser, loading, isMounted, params.clientId])
 
   useEffect(() => {
     setIsMounted(true)
