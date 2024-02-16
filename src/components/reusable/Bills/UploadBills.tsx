@@ -9,8 +9,20 @@ import {
 } from "@/components/ui/dialog"
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import BillForm from "../QuickSignUp/BillForm"
+import { CreateBillsFromXls } from "@/lib/billsCalls"
+import LoaderSpiner from "../LoaderSpiner"
 
-const UploadBills = () => {
+const UploadBills = ({
+  id,
+  setHasDataChange
+}: {
+  id: string | undefined,
+  setHasDataChange: Function
+}) => {
+  // File loading state.
+  const [isUploadin, setIsUploading] = useState<boolean>(false)
+
+  // File state
   const [file, setFile] = useState<undefined | File>(undefined)
 
   // Manual form values
@@ -45,8 +57,15 @@ const UploadBills = () => {
   // File hook.
   useEffect(() => {
     if (file) {
+      setIsUploading(true)
       // TODO: Add upload file EP call here...
-
+      CreateBillsFromXls(id!, file).then((res) => {
+        console.info(res)
+        setHasDataChange(true)
+        return res
+      }).finally(() => {
+        setIsUploading(false)
+      })
       // Clean file
       setFile(undefined)
     }
@@ -66,40 +85,42 @@ const UploadBills = () => {
     }
   }, [date, invoiceNo, NIT, amount, companyName])
 
-  return (
-    <div className='w-full h-full flex flex-row gap-2'>
-      <div className="grid max-w-[40%] h-full p-2">
-        <label
-          htmlFor="billFile"
-          className='w-full h-full bg-slate-400/60 dark:bg-blue-950/50 text-center 
+  if (isUploadin) {
+    <div className='w-full h-full flex'>
+      <LoaderSpiner />
+    </div>
+  } else {
+    return (
+      <div className='w-full h-full flex flex-row gap-2'>
+        <div className="grid max-w-[40%] h-full p-2">
+          <label
+            htmlFor="billFile"
+            className='w-full h-full bg-slate-400/60 dark:bg-blue-950/50 text-center 
           rounded-lg border-4 border-dashed border-black/50 dark:border-white/50
           gap-0 justify-center flex px-4'
-          id='dropArea'
-        >
-          <input hidden={true} id="billFile" type="file" onChange={handleOnChange} accept='application/*' />
-          <p className='text-md font-bold m-auto'>Haz click o suelta un archivo en esta zona para cargar facturas.</p>
-        </label>
+            id='dropArea'
+          >
+            <input hidden={true} id="billFile" type="file" onChange={handleOnChange} accept='application/*' />
+            <p className='text-md font-bold m-auto'>Haz click o suelta un archivo en esta zona para cargar facturas.</p>
+          </label>
+        </div>
+        <div className="flex">
+          <Dialog>
+            <DialogTrigger className="h-[80%] my-auto bg-white/80 dark:bg-blue-950 dark:hover:bg-blue-950/70 px-2 rounded-lg">Ingreso manual</DialogTrigger>
+            <DialogContent>
+              <BillForm
+                setDate={setDate}
+                setInvoiceNo={setInvoiceNo}
+                setNIT={setNIT}
+                setAmount={setAmount}
+                setCompanyName={setCompanyName}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
-      <div className="flex">
-        <Dialog>
-          <DialogTrigger className="h-[80%] my-auto bg-white/80 dark:bg-blue-950 dark:hover:bg-blue-950/70 px-2 rounded-lg">Ingreso manual</DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogDescription>
-                <BillForm
-                  setDate={setDate}
-                  setInvoiceNo={setInvoiceNo}
-                  setNIT={setNIT}
-                  setAmount={setAmount}
-                  setCompanyName={setCompanyName}
-                />
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default UploadBills

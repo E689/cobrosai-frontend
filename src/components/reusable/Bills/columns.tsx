@@ -207,7 +207,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     },
     cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
       <p>{row.getValue("creditDays")}</p>
-    </div>,
+    </div>
   },
   {
     id: "logs",

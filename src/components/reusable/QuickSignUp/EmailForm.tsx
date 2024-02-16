@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -46,6 +45,7 @@ const EmailForm = ({ setEmail, setStep }: IDropZoneEmailForm) => {
   }
 
   useEffect(() => {
+    console.log("Email mounted!")
     setIsMounted(true)
   }, [])
 

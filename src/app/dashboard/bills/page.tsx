@@ -28,13 +28,15 @@ async function getData(id: string): Promise<IBillsParams[] | undefined> {
 
 const Bills = () => {
   const [data, setData] = useState<IBillsParams[]>([])
-  const { authUser, loading } = useContext(AuthContext) as IAuthContext
   const [isMounted, setIsMounted] = useState<Boolean>(false)
+  const [hasDataChange, setHasDataChange] = useState<Boolean>(true)
+
+  const { authUser, loading } = useContext(AuthContext) as IAuthContext
 
   useEffect(() => {
     // I make sure to just make 1 getData.
     // Has to be mounted, not loading and with a valid user.
-    if (isMounted && !loading && authUser) {
+    if (isMounted && !loading && authUser && hasDataChange) {
       getData(authUser!.id).then((res) => {
         console.info("User: ", authUser)
         console.info("Response: ", res)
@@ -42,8 +44,10 @@ const Bills = () => {
       }).catch((err) => {
         console.log("Error")
       })
+
+      setHasDataChange(false)
     }
-  }, [authUser, loading, isMounted])
+  }, [authUser, loading, isMounted, hasDataChange])
 
   useEffect(() => {
     setIsMounted(true)
@@ -58,7 +62,7 @@ const Bills = () => {
           <p className='text-4xl font-bold mb-auto mr-auto'>COBROS | Facturas</p>
         </div>
         <div className='flex flex-row gap-1 w-full h-[10vh]'>
-          <UploadBills />
+          <UploadBills id={authUser?.id} setHasDataChange={setHasDataChange}/>
           <div className='flex w-[20vw] h-full m-auto'>
             <AIStats automatedQty={0} automatedMax={data ? data.length : 0} />
           </div>

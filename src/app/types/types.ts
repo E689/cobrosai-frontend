@@ -1,5 +1,3 @@
-import { inherits } from "util"
-
 // Auth types
 export interface ISignInParams {
   email: string,
@@ -136,4 +134,39 @@ export interface IClientsFormParams {
 export interface IClientFlowSelector {
   defaultValue: string,
   clientId: string
+}
+
+// Flow Interfaces
+export interface IFlowPreCollection {
+  days: number,
+  actionTime: string,
+  channel: string,
+  instruction: string
+}
+
+export interface IFlowCollectionPaymentConfirmation {
+  confirmationMessage: string,
+  confirmationDate: string,
+  confirmationProof: string,
+  after: string
+}
+
+export interface IFlowCollectionPaymentDelay {
+  delayMessage: string,
+  delayDate: string,
+  after: string
+}
+
+export interface IFlowCollectionIgnore {
+  waitTime: number,
+  after: string,
+  maxIgnoreCount: number
+}
+
+export interface IFlowParams {
+  name: string,
+  preCollection?: IFlowPreCollection[],
+  paymentConfirmation?: IFlowCollectionPaymentConfirmation,
+  paymentDelay?: IFlowCollectionPaymentDelay,
+  collectionIgnored?: IFlowCollectionIgnore
 }

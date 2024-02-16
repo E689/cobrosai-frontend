@@ -13,3 +13,25 @@ export const GetBills = async (id: string): Promise<any> => {
     }))
   })
 }
+
+export const CreateBillsFromXls = async (id: string, file: File): Promise<any> => {
+  let body = new FormData()
+  body.append("userId", id!)
+  body.append("file", file!)
+
+  return await new Promise<any>(async r => {
+    await axios.post(
+      API_URL + '/bills/file',
+      body,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    ).then((res) => {
+      r(res)
+    }).catch((err => {
+      r(err)
+    }))
+  })
+}

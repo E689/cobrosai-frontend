@@ -28,11 +28,12 @@ export default function DashboardLayout({
       </div>
     )
   } else {
+    console.clear() // Dumb 'fix' for ThemeProvider Warning.
     return (
       <div>
         <NavBar />
-        <div className="min-h-[80vh] w-full h-full flex flex-col items-center justify-between">
-          <div className="m-auto">
+        <div className="min-w-screen min-h-screen w-full h-full flex flex-col items-center justify-between">
+          <div className="w-full min-h-screen">
             {children}
           </div>
         </div>

@@ -3,7 +3,6 @@
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -23,40 +22,36 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { useEffect, useState } from "react"
-import { DataTablePagination } from "./data-table-pagination"
+// import { DataTablePagination } from "./data-table-pagination" // Maybe later we'l need this...
 import LoaderSpiner from "../LoaderSpiner"
+import { Button } from "@/components/ui/button"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  selectFlow: Function
 }
 
-export function BillsDataTable<TData, TValue>({
+export function FlowsDataTable<TData, TValue>({
   columns,
   data,
+  selectFlow
 }: DataTableProps<TData, TValue>) {
-  // Sorting Rows
-  const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     []
   )
-  const [rowSelection, setRowSelection] = useState({})
   const [isMounted, setIsMounted] = useState<Boolean>(false)
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    onRowSelectionChange: setRowSelection,
     state: {
-      sorting,
       columnFilters,
-      rowSelection,
     },
   })
 
@@ -68,20 +63,19 @@ export function BillsDataTable<TData, TValue>({
     return (<LoaderSpiner />)
   } else {
     return (
-      <div className="w-full">
-        <div className="flex flex-row-reverse items-center py-4">
+      <div className="w-full px-2 flex flex-col gap-2">
+        <div className="flex flex-row gap-2 items-center">
           <Input
-            placeholder="Buscar por empresa..."
-            value={(table.getColumn("clientName")?.getFilterValue() as string) ?? ""}
+            placeholder="Buscar..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("clientName")?.setFilterValue(event.target.value)
+              table.getColumn("name")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm bg-slate-100 dark:bg-blue-950/60"
+            className="bg-slate-100 dark:bg-blue-950/60 grow"
           />
-          <div className="flex-1 text-sm text-muted-foreground grow">
-            {table.getFilteredSelectedRowModel().rows.length} de{" "}
-            {table.getFilteredRowModel().rows.length} fila(s) seleccionada(s).
-          </div>
+          <Button>
+            Agregar
+          </Button>
         </div>
         <div className="rounded-md border w-full bg-slate-100 dark:bg-blue-950/60">
           <Table>
@@ -108,7 +102,10 @@ export function BillsDataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow
                     key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
+                    onClick={() => {
+                      selectFlow(row.index)
+                    }}
+                    className="cursor-pointer"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
@@ -120,15 +117,16 @@ export function BillsDataTable<TData, TValue>({
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} className="h-24 text-center">
-                    No se encontraron facturas...
+                    No se encontraron flujos...
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
         </div>
-        {/** Pagination stuff... */}
+        {/** Pagination stuff... 
         <DataTablePagination table={table} />
+        */}
       </div>
     )
   }
