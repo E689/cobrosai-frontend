@@ -93,7 +93,7 @@ return await GetFlows(id).then((res) => {
   return data
 }
 
-const page = () => {
+const Page = () => {
   const [data, setData] = useState<IFlowParams[]>([])
   const { authUser, loading } = useContext(AuthContext) as IAuthContext
   const [isMounted, setIsMounted] = useState<Boolean>(false)
@@ -150,4 +150,4 @@ const page = () => {
   }
 }
 
-export default page
+export default Page

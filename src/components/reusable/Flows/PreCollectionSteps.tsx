@@ -29,7 +29,7 @@ const PreCollectionSteps = ({ preCollection, setPreCollectionData }: IPrecollect
   useEffect(() => {
     setIsMounted(true)
     setPreCollectionData(preCollection)
-  }, [])
+  }, [preCollection, setPreCollectionData])
 
   if (!isMounted) {
     return (<></>)

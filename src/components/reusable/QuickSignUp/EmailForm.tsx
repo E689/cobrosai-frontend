@@ -45,7 +45,6 @@ const EmailForm = ({ setEmail, setStep }: IDropZoneEmailForm) => {
   }
 
   useEffect(() => {
-    console.log("Email mounted!")
     setIsMounted(true)
   }, [])
 

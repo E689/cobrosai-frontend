@@ -69,7 +69,7 @@ const UploadBills = ({
       // Clean file
       setFile(undefined)
     }
-  }, [file])
+  }, [file, id, setHasDataChange])
 
   // Manual single bill hook.
   useEffect(() => {
