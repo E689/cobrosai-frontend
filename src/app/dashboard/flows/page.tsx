@@ -14,36 +14,20 @@ async function getData(id: string): Promise<IFlowParams[] | undefined> {
   // Fetch data from your API here.
   let data: IFlowParams[] = [
     {
-      id: "sdfasdfasfee",
+      flowId: "sdfasdfasfee",
       name: "Default",
-      preCollection: {
-        instruction: "string"
-      },
-      paymentConfirmation: {
-        instruction: "string"
-      },
-      paymentDelay: {
-        instruction: "string"
-      },
-      collectionIgnored: {
-        instruction: "string"
-      }
+      preCollection: "string",
+      paymentConfirmation: "string",
+      paymentDelay: "string",
+      collectionIgnored: "string"
     },
     {
-      id: "siouhfiouhnfw",
-      name: "Not Default",
-      preCollection: {
-        instruction: "string"
-      },
-      paymentConfirmation: {
-        instruction: "string"
-      },
-      paymentDelay: {
-        instruction: "string"
-      },
-      collectionIgnored: {
-        instruction: "string"
-      }
+      flowId: "aoiuhbndfoiuwan",
+      name: "Default(2)",
+      preCollection: "string",
+      paymentConfirmation: "string",
+      paymentDelay: "string",
+      collectionIgnored: "string"
     }
   ]
 

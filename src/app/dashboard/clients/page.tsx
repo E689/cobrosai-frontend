@@ -11,13 +11,14 @@ import { GetClients } from '@/lib/clientsCalls'
 import { AuthContext } from '@/providers/AuthProvider'
 import LoaderSpiner from '@/components/reusable/LoaderSpiner'
 
-async function getData(id: string): Promise<IClientExtendedParams[] | undefined> {
+async function getData(id: string, setClientsAiOn: Function): Promise<IClientExtendedParams[] | undefined> {
   // Fetch data from your API here.
   let data: IClientExtendedParams[] = []
 
   return await GetClients(id).then((res) => {
     //console.info("Data from req: ", res)
     if (res.status == 200) {
+      setClientsAiOn(res.data.clientsAiOn)
       data = res.data.clients
       return data
     }
@@ -29,17 +30,19 @@ const Clients = () => {
   const [data, setData] = useState<IClientExtendedParams[]>([])
   const { authUser, loading } = useContext(AuthContext) as IAuthContext
   const [isMounted, setIsMounted] = useState<Boolean>(false)
+  const [clientsAiOn, setClientsAiOn] = useState<number>(0)
 
   useEffect(() => {
     // I make sure to just make 1 getData.
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
-      getData(authUser!.id).then((res) => {
+      getData(authUser.id, setClientsAiOn).then((res) => {
         console.info("User: ", authUser)
         console.info("Response: ", res)
         setData(res!)
       }).catch((err) => {
-        console.log("Error")
+        console.log("Error: ", err)
+        return err
       })
     }
   }, [authUser, loading, isMounted])
@@ -61,7 +64,7 @@ const Clients = () => {
             {/**<ClientsStats /> */}
           </div>
           <div className='flex w-[20vw] h-full m-auto'>
-            <AIStats automatedQty={0} automatedMax={data ? data.length : 0} />
+            <AIStats automatedQty={clientsAiOn} automatedMax={data ? data.length : 0} />
           </div>
         </div>
         <div className='flex w-full'>

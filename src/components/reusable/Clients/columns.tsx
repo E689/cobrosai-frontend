@@ -66,12 +66,12 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
           </DialogTrigger>
           <DialogContent className="min-w-[60%]">
             <ClientsForm
-              UID={`blablabla`}
               action="edit"
               client={
                 {
                   clientName: row.getValue("clientName"),
-                  nit: row.getValue("clientId"),
+                  nit: row.getValue("nit"),
+                  clientId: row.original.clientId
                 }
               }
             />
@@ -80,7 +80,7 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
     },
   },
   {
-    accessorKey: "clientId",
+    accessorKey: "nit",
     header: ({ column }) => {
       return (
         <Button
@@ -91,7 +91,7 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("clientId")}</div>,
+    cell: ({ row }) => <div>{row.getValue("nit")}</div>,
   },
   {
     accessorKey: "expired",
@@ -246,13 +246,13 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
     cell: ({ row }) => <div className="flex">
        <ClientFlowSelector
         defaultValue={row.getValue("collectionFlow")}
-        clientId={row.getValue("clientId")}
+        clientId={row.getValue("nit")}
       />
     </div>,
   },
   {
     id: "details",
     header: "Detalle",
-    cell: ({ row }) => <ClientDetailButton clientId={row.getValue("clientId")} />,
+    cell: ({ row }) => <ClientDetailButton clientId={row.getValue("nit")} />,
   },
 ]

@@ -10,23 +10,14 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog"
-// Sheet imports
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
 // General UI components
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 
 import { ArrowUpDown } from "lucide-react"
-import { TbMessageSearch } from "react-icons/tb";
 import ClientsForm from "../Clients/ClientsForm"
 import AISelector from "./AISelector"
+import LogSheet from "./LogSheet"
 
 const getDueDaysColor = (value: number): string => {
   if (value < 0) {
@@ -212,28 +203,11 @@ export const columns: ColumnDef<IBillsParams>[] = [
     </div>
   },
   {
-    id: "logs",
+    accessorKey: "log",
     header: "Historial",
     cell: ({ row }) => {
       return (
-        <Sheet>
-          <SheetTrigger className="flex w-full">
-            <TbMessageSearch
-              size={20}
-              className="m-auto cursor-pointer"
-              onClick={() => { console.log(row.getValue("logs")) }} />
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Are you absolutely sure?</SheetTitle>
-              <SheetDescription>
-                This action cannot be undone. This will permanently delete your account
-                and remove your data from our servers.
-              </SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
-
+        <LogSheet logId={row.getValue("log")} nit={row.getValue("clientId")} />
       )
     },
   },

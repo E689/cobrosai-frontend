@@ -75,7 +75,7 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     // Do something base on the action provided.
-    //console.log("Values: ", values)
+    console.log("Values: ", values)
 
     if (action === "edit") {
       UpdateClient(values!).then((res) => {

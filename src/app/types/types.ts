@@ -96,7 +96,7 @@ export interface IBillsParams extends IAIStatuses {
   billId: string | undefined,
   amount: number | undefined,
   creditDays: number | undefined,
-  logs?: string | undefined
+  log?: string | undefined
 }
 
 export interface ICreateBillManuallyParams {
@@ -106,6 +106,12 @@ export interface ICreateBillManuallyParams {
   clientName?: string,
   billId: string,
   userId: string
+}
+
+export interface IBillLogData {
+  date: string,
+  case: number,
+  message: string
 }
 
 // Clients interfaces
@@ -163,10 +169,22 @@ export interface IFlowCollectionIgnore {
 }
 
 export interface IFlowParams {
-  id: string,
+  flowId?: string,
   name: string,
-  preCollection?: IFlowPreCollection,
-  paymentConfirmation?: IFlowCollectionPaymentConfirmation,
-  paymentDelay?: IFlowCollectionPaymentDelay,
-  collectionIgnored?: IFlowCollectionIgnore
+  preCollection?: string,
+  paymentConfirmation?: string,
+  paymentConfirmationVerify?: string,
+  paymentDelay?: string,
+  paymentDelayNewDate?: string,
+  collectionIgnored?: string
+}
+
+export interface ICreateFlowFormParams {
+  userId: string,
+  action: "edit" | "create",
+  flowId?: string
+}
+
+export interface ICreateFlowRequest extends IFlowParams {
+  userId: string,
 }
