@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog"
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import BillForm from "../QuickSignUp/BillForm"
-import { CreateBillsFromXls } from "@/lib/billsCalls"
+import { CreateBillManually, CreateBillsFromXls } from "@/lib/billsCalls"
 import LoaderSpiner from "../LoaderSpiner"
 
 const UploadBills = ({
@@ -75,6 +75,12 @@ const UploadBills = ({
   useEffect(() => {
     if (date && invoiceNo && NIT && amount && companyName) {
       // TODO: Add create single bill EP call here...
+      CreateBillManually({amount:amount, date: date, clientId: NIT, clientName: companyName, billId: invoiceNo, userId: id!} )
+      .then((res) => {
+        console.log(res)
+        setHasDataChange(true)
+        return res
+      })
 
       // Clean fields
       setDate(undefined)

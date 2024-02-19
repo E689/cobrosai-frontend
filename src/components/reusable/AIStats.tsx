@@ -4,7 +4,7 @@ import { FaCoins } from "react-icons/fa";
 
 const AIStats = ({automatedQty, automatedMax}: IAIStatsProps) => {
 
-  const automatedPercentage = (100 * automatedQty) / automatedMax
+  const automatedPercentage = ((100 * automatedQty) / automatedMax)
   let percentageClassName = "m-auto font-bold text-sm "
 
   if (automatedPercentage >= 0 && automatedPercentage < 25) percentageClassName += "text-red-400"
@@ -19,7 +19,7 @@ const AIStats = ({automatedQty, automatedMax}: IAIStatsProps) => {
           <p className='m-auto text-sm'>Facturas Automatizadas </p>
         </div>
         <div className='flex mb-auto'>
-          <p className={percentageClassName}>{`${automatedQty} / ${automatedMax} - ${automatedPercentage}%`}</p>
+          <p className={percentageClassName}>{`${automatedQty} / ${automatedMax} - ${automatedPercentage.toFixed(0)}%`}</p>
         </div>
       </div>
       <div className='flex w-10 h-10 m-auto'>

@@ -1,3 +1,4 @@
+import { ICreateBillManuallyParams } from '@/app/types/types'
 import axios from 'axios'
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -28,6 +29,35 @@ export const CreateBillsFromXls = async (id: string, file: File): Promise<any> =
           'Content-Type': 'multipart/form-data'
         }
       }
+    ).then((res) => {
+      r(res)
+    }).catch((err => {
+      r(err)
+    }))
+  })
+}
+
+export const CreateBillManually = async ({
+  amount,
+  date,
+  clientId,
+  clientName,
+  billId,
+  userId
+}: ICreateBillManuallyParams): Promise<any> => {
+  let body = {
+    amount: amount,
+    date: date,
+    clientId: clientId,
+    clientName: clientName,
+    billId: billId,
+    userId: userId
+  }
+
+  return await new Promise<any>(async r => {
+    await axios.post(
+      API_URL + '/bills',
+      body,
     ).then((res) => {
       r(res)
     }).catch((err => {

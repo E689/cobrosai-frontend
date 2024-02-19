@@ -14,69 +14,35 @@ async function getData(id: string): Promise<IFlowParams[] | undefined> {
   // Fetch data from your API here.
   let data: IFlowParams[] = [
     {
-      name: "String",
-      preCollection: [
-        {
-          days: 0,
-          actionTime: "antes",
-          channel: "email",
-          instruction: "string"
-        },
-        {
-          days: 100,
-          actionTime: "despues",
-          channel: "whatsapp",
-          instruction: "string"
-        }
-      ],
+      id: "sdfasdfasfee",
+      name: "Default",
+      preCollection: {
+        instruction: "string"
+      },
       paymentConfirmation: {
-        confirmationMessage: "string",
-        confirmationDate: "string",
-        confirmationProof: "string",
-        after: "string"
+        instruction: "string"
       },
       paymentDelay: {
-        delayMessage: "string",
-        delayDate: "string",
-        after: "string"
+        instruction: "string"
       },
       collectionIgnored: {
-        waitTime: 5,
-        after: "string",
-        maxIgnoreCount: 10
+        instruction: "string"
       }
     },
     {
-      name: "Number",
-      preCollection: [
-        {
-          days: 0,
-          actionTime: "antes",
-          channel: "email",
-          instruction: "string"
-        },
-        {
-          days: 100,
-          actionTime: "despues",
-          channel: "whatsapp",
-          instruction: "string"
-        }
-      ],
+      id: "siouhfiouhnfw",
+      name: "Not Default",
+      preCollection: {
+        instruction: "string"
+      },
       paymentConfirmation: {
-        confirmationMessage: "string",
-        confirmationDate: "string",
-        confirmationProof: "string",
-        after: "string"
+        instruction: "string"
       },
       paymentDelay: {
-        delayMessage: "string",
-        delayDate: "string",
-        after: "string"
+        instruction: "string"
       },
       collectionIgnored: {
-        waitTime: 5,
-        after: "string",
-        maxIgnoreCount: 10
+        instruction: "string"
       }
     }
   ]
@@ -113,7 +79,7 @@ const Page = () => {
     }
   }, [authUser, loading, isMounted])
 
-  const selectFlow = (index:string) => {
+  const selectFlow = (index: string) => {
     setSelectedFlow(data[Number(index)])
   }
 
@@ -135,14 +101,14 @@ const Page = () => {
            * TODO: Display Flow information component
            */
             selectedFlow ? (
-              <Collection 
-                name={selectedFlow.name} 
+              <Collection
+                name={selectedFlow.name}
                 preCollection={selectedFlow.preCollection}
                 paymentConfirmation={selectedFlow.paymentConfirmation}
                 paymentDelay={selectedFlow.paymentDelay}
                 collectionIgnored={selectedFlow.collectionIgnored}
               />
-            ) : ( <></>)
+            ) : (<></>)
           }
         </div>
       </div>

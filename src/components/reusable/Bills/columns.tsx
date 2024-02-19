@@ -45,6 +45,7 @@ const getDueDaysColor = (value: number): string => {
 export const columns: ColumnDef<IBillsParams>[] = [
   {
     id: "select",
+    accessorKey: "client",
     header: ({ table }) => (
       <Checkbox
         checked={
@@ -58,6 +59,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     ),
     cell: ({ row }) => (
       <Checkbox
+        id={row.getValue("select")}
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
@@ -103,12 +105,12 @@ export const columns: ColumnDef<IBillsParams>[] = [
           </DialogTrigger>
           <DialogContent className="min-w-[60%]">
             <ClientsForm
-              UID={`blablabla`}
               action="edit"
               client={
                 {
                   clientName: row.getValue("clientName"),
-                  nit: row.getValue("clientId")
+                  nit: row.getValue("clientId"),
+                  clientId: row.getValue("select")
                 }
               }
             />

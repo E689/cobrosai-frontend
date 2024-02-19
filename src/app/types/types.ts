@@ -99,14 +99,24 @@ export interface IBillsParams extends IAIStatuses {
   logs?: string | undefined
 }
 
+export interface ICreateBillManuallyParams {
+  amount: number,
+  date: string,
+  clientId: string,
+  clientName?: string,
+  billId: string,
+  userId: string
+}
+
 // Clients interfaces
 export interface IClientParams {
+  clientId: string,
   clientName: string,
   nit: number,
   creditDays?: number,
   clientCollectionSchedule?: string,
   contactName?: string,
-  contactlastName?: string,
+  contactLastName?: string,
   email?: string,
   phone?: number,
   aIToggle?: boolean
@@ -125,7 +135,6 @@ export interface IClientExtendedParams extends IClientParams {
 }
 
 export interface IClientsFormParams {
-  UID: string,
   action: "edit" | "create",
   client?: IClientParams | undefined
 }
@@ -138,34 +147,25 @@ export interface IClientFlowSelector {
 
 // Flow Interfaces
 export interface IFlowPreCollection {
-  days: number,
-  actionTime: string,
-  channel: string,
   instruction: string
 }
 
 export interface IFlowCollectionPaymentConfirmation {
-  confirmationMessage: string,
-  confirmationDate: string,
-  confirmationProof: string,
-  after: string
+  instruction: string,
 }
 
 export interface IFlowCollectionPaymentDelay {
-  delayMessage: string,
-  delayDate: string,
-  after: string
+  instruction: string,
 }
 
 export interface IFlowCollectionIgnore {
-  waitTime: number,
-  after: string,
-  maxIgnoreCount: number
+  instruction: string,
 }
 
 export interface IFlowParams {
+  id: string,
   name: string,
-  preCollection?: IFlowPreCollection[],
+  preCollection?: IFlowPreCollection,
   paymentConfirmation?: IFlowCollectionPaymentConfirmation,
   paymentDelay?: IFlowCollectionPaymentDelay,
   collectionIgnored?: IFlowCollectionIgnore

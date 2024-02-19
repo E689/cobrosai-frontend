@@ -94,24 +94,6 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
     cell: ({ row }) => <div>{row.getValue("clientId")}</div>,
   },
   {
-    accessorKey: "creditDays",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="w-fit h-full m-0 p-0 whitespace-normal"
-        >
-          Días <br />
-          vencidos
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
-      <p>{row.getValue("creditDays")}</p>
-    </div>,
-  },
-  {
     accessorKey: "expired",
     header: ({ column }) => {
       return (
@@ -142,7 +124,7 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
+    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("lowExpired"))}`}>
       <p>{row.getValue("lowExpired")}</p>
     </div>,
   },
@@ -159,7 +141,7 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
+    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("mediumExpired"))}`}>
       <p>{row.getValue("mediumExpired")}</p>
     </div>,
   },
@@ -176,7 +158,7 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
+    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("highExpired"))}`}>
       <p>{row.getValue("highExpired")}</p>
     </div>,
   },
@@ -193,7 +175,7 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
+    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("criticalExpired"))}`}>
       <p>{row.getValue("criticalExpired")}</p>
     </div>,
   },
@@ -227,7 +209,7 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
+    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("ignoredMsgs"))}`}>
       <p>{row.getValue("ignoredMsgs")}</p>
     </div>,
   },
@@ -244,7 +226,7 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
+    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("brokenPromises"))}`}>
       <p>{row.getValue("brokenPromises")}</p>
     </div>,
   },

@@ -7,21 +7,12 @@ import CollectionSteps from './CollectionSteps'
 
 const Collection = ({
   name,
-  preCollection,
-  paymentConfirmation,
-  paymentDelay,
-  collectionIgnored
+  id
 }: IFlowParams) => {
   const [preCollectionData, setPreCollectionData] = useState<IFlowPreCollection[] | undefined>(undefined)
   const [paymentConfirmationData, setPaymentConfirmationData] = useState<IFlowCollectionPaymentConfirmation | undefined>(undefined)
   const [paymentDelayData, setPaymentDelayData] = useState<IFlowCollectionPaymentDelay | undefined>(undefined)
   const [collectionIgnoredData, setCollectionIgnoredData] = useState<IFlowCollectionIgnore | undefined>(undefined)
-
-  useEffect(() => {
-    if (paymentConfirmation) setPaymentConfirmationData(paymentConfirmation)
-    if (paymentDelay) setPaymentDelayData(paymentDelay)
-    if (collectionIgnored) setCollectionIgnoredData(collectionIgnored)
-  }, [paymentConfirmation, paymentDelay, collectionIgnored])
 
   const handleOnClick = () => {
     // TODO: Update current flow

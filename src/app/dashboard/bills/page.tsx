@@ -64,7 +64,7 @@ const Bills = () => {
         <div className='flex flex-row gap-1 w-full h-[10vh]'>
           <UploadBills id={authUser?.id} setHasDataChange={setHasDataChange}/>
           <div className='flex w-[20vw] h-full m-auto'>
-            <AIStats automatedQty={0} automatedMax={data ? data.length : 0} />
+            <AIStats automatedQty={17} automatedMax={data ? data.length : 0} />
           </div>
         </div>
         <div className='flex w-full'>
