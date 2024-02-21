@@ -89,7 +89,7 @@ const UploadBills = ({
       setAmount(undefined)
       setCompanyName(undefined)
     }
-  }, [date, invoiceNo, NIT, amount, companyName])
+  }, [date, invoiceNo, NIT, amount, companyName, id, setHasDataChange])
 
   if (isUploadin) {
     <div className='w-full h-full flex'>

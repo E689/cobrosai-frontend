@@ -111,7 +111,8 @@ export interface ICreateBillManuallyParams {
 export interface IBillLogData {
   date: string,
   case: number,
-  message: string
+  content: string,
+  role: string
 }
 
 // Clients interfaces
@@ -169,7 +170,7 @@ export interface IFlowCollectionIgnore {
 }
 
 export interface IFlowParams {
-  flowId?: string,
+  _id?: string,
   name: string,
   preCollection?: string,
   paymentConfirmation?: string,

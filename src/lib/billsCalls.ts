@@ -83,7 +83,7 @@ export const GetBillLog = async (billId: string): Promise<IBillLogData[]> => {
   })
 }
 
-// Get Bill Log data
+// Get Bills by client
 export const GetBillsByClient = async (nit: string, UID: string): Promise<any> => {
   const body = {
     userId: UID,

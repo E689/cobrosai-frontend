@@ -8,39 +8,17 @@ import { AuthContext } from '@/providers/AuthProvider'
 import LoaderSpiner from '@/components/reusable/LoaderSpiner'
 import { columns } from '@/components/reusable/Flows/columns'
 import Collection from '@/components/reusable/Flows/Collection'
+import { GetFlows } from '@/lib/flowCalls'
 
 
 async function getData(id: string): Promise<IFlowParams[] | undefined> {
   // Fetch data from your API here.
-  let data: IFlowParams[] = [
-    {
-      flowId: "sdfasdfasfee",
-      name: "Default",
-      preCollection: "string",
-      paymentConfirmation: "string",
-      paymentDelay: "string",
-      collectionIgnored: "string"
-    },
-    {
-      flowId: "aoiuhbndfoiuwan",
-      name: "Default(2)",
-      preCollection: "string",
-      paymentConfirmation: "string",
-      paymentDelay: "string",
-      collectionIgnored: "string"
-    }
-  ]
-
-  {/**
-return await GetFlows(id).then((res) => {
+  //let data: IFlowParams[]
+  
+  return await GetFlows(id).then((res) => {
     //console.info("Data from req: ", res)
-    if (res.status == 200) {
-      data = res.data.bills
-      return data
-    }
+    return res
   })
-*/}
-  return data
 }
 
 const Page = () => {
@@ -48,6 +26,7 @@ const Page = () => {
   const { authUser, loading } = useContext(AuthContext) as IAuthContext
   const [isMounted, setIsMounted] = useState<Boolean>(false)
   const [selectedFlow, setSelectedFlow] = useState<IFlowParams | undefined>(undefined)
+  const [action, setAction] = useState<"edit" | "create">("edit")
 
   useEffect(() => {
     // I make sure to just make 1 getData.
@@ -64,7 +43,13 @@ const Page = () => {
   }, [authUser, loading, isMounted])
 
   const selectFlow = (index: string) => {
-    setSelectedFlow(data[Number(index)])
+    if (index === "Nuevo") {
+      setSelectedFlow({
+        name: "Nuevo"
+      })
+    } else {
+      setSelectedFlow(data[Number(index)])
+    }
   }
 
   useEffect(() => {
@@ -77,20 +62,23 @@ const Page = () => {
     return (
       <div className='w-full min-h-screen flex flex-col md:flex-row gap-8 pt-[7vh] pb-[2vh] px-8 bg-slate-200 dark:bg-blue-950/20'>
         <div className='min-w-[30%] max-h-screen overflow-y-auto h-fit bg-slate-100 dark:bg-blue-950/60 rounded-lg shadow-md py-4 px-2'>
-          <FlowsDataTable selectFlow={selectFlow} columns={columns} data={data} />
+          <FlowsDataTable
+            selectFlow={selectFlow}
+            setAction={setAction}
+            columns={columns}
+            data={data}
+          />
         </div>
         <div className='w-full bg-slate-100 dark:bg-blue-950/60 rounded-lg shadow-md grow'>
           {
             /**
            * TODO: Display Flow information component
            */
-            selectedFlow ? (
+            selectedFlow && authUser ? (
               <Collection
-                name={selectedFlow.name}
-                preCollection={selectedFlow.preCollection}
-                paymentConfirmation={selectedFlow.paymentConfirmation}
-                paymentDelay={selectedFlow.paymentDelay}
-                collectionIgnored={selectedFlow.collectionIgnored}
+                userId={authUser.id}
+                flowId={selectedFlow._id}
+                action={action}
               />
             ) : (<></>)
           }

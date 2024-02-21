@@ -61,7 +61,7 @@ const Drop = () => {
               amount: amount,
               status: "AIOff",
               creditDays: 30,
-              logs: undefined
+              log: undefined
             }
           }
           RegisterBill(params)

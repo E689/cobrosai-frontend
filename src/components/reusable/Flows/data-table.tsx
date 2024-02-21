@@ -29,13 +29,15 @@ import { Button } from "@/components/ui/button"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
-  selectFlow: Function
+  selectFlow: Function,
+  setAction: Function
 }
 
 export function FlowsDataTable<TData, TValue>({
   columns,
   data,
-  selectFlow
+  selectFlow,
+  setAction
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     []
@@ -73,7 +75,10 @@ export function FlowsDataTable<TData, TValue>({
             }
             className="bg-slate-100 dark:bg-blue-950/60 grow"
           />
-          <Button>
+          <Button onClick={() => {
+            setAction("create")
+            selectFlow("Nuevo")
+          }}>
             Agregar
           </Button>
         </div>
@@ -104,6 +109,7 @@ export function FlowsDataTable<TData, TValue>({
                     key={row.id}
                     onClick={() => {
                       selectFlow(row.index)
+                      setAction("edit")
                     }}
                     className="cursor-pointer"
                   >
