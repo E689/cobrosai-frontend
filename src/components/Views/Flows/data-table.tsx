@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input"
 
 import { useEffect, useState } from "react"
 // import { DataTablePagination } from "./data-table-pagination" // Maybe later we'l need this...
-import LoaderSpiner from "../LoaderSpiner"
+import LoaderSpiner from "../../reusable/LoaderSpiner"
 import { Button } from "@/components/ui/button"
 
 interface DataTableProps<TData, TValue> {

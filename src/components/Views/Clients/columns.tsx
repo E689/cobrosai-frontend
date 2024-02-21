@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button"
 
 import { ArrowUpDown } from "lucide-react"
 import { TbMessageSearch } from "react-icons/tb";
-import ClientsForm from "../Clients/ClientsForm"
+import ClientsForm from "./ClientsForm"
 import { redirect } from "next/navigation"
 import ClientDetailButton from "./ClientDetailButton"
 import ClientFlowSelector from "./ClientFlowSelector"

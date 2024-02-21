@@ -3,8 +3,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 
 // Data table stuff
-import { ClientsDataTable } from '@/components/reusable/Clients/data-table'
-import { columns } from '@/components/reusable/Clients/columns'
+import { ClientsDataTable } from '@/components/Views/Clients/data-table'
+import { columns } from '@/components/Views/Clients/columns'
 import { IAuthContext, IClientExtendedParams } from '@/app/types/types'
 import AIStats from '@/components/reusable/AIStats'
 import { GetClients } from '@/lib/clientsCalls'

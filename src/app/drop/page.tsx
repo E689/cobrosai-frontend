@@ -1,11 +1,11 @@
 'use client'
 
-import BillForm from '@/components/reusable/QuickSignUp/BillForm'
-import EmailForm from '@/components/reusable/QuickSignUp/EmailForm'
-import Finish from '@/components/reusable/QuickSignUp/Finish'
-import LoadFile from '@/components/reusable/QuickSignUp/LoadFile'
-import Loading from '@/components/reusable/QuickSignUp/Loading'
-import Select from '@/components/reusable/QuickSignUp/Select'
+import BillForm from '@/components/Views/QuickSignUp/BillForm'
+import EmailForm from '@/components/Views/QuickSignUp/EmailForm'
+import Finish from '@/components/Views/QuickSignUp/Finish'
+import LoadFile from '@/components/Views/QuickSignUp/LoadFile'
+import Loading from '@/components/Views/QuickSignUp/Loading'
+import Select from '@/components/Views/QuickSignUp/Select'
 import { RegisterBill, RegisterFile } from '@/lib/authCalls'
 import React, { useEffect, useState } from 'react'
 

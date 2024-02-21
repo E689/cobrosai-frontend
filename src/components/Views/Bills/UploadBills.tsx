@@ -10,7 +10,7 @@ import {
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import BillForm from "../QuickSignUp/BillForm"
 import { CreateBillManually, CreateBillsFromXls } from "@/lib/billsCalls"
-import LoaderSpiner from "../LoaderSpiner"
+import LoaderSpiner from "../../reusable/LoaderSpiner"
 
 const UploadBills = ({
   id,

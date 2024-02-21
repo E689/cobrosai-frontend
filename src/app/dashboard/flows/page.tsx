@@ -2,12 +2,12 @@
 
 import React, { useContext, useEffect, useState } from 'react'
 
-import { FlowsDataTable } from '@/components/reusable/Flows/data-table'
+import { FlowsDataTable } from '@/components/Views/Flows/data-table'
 import { IAuthContext, IFlowParams } from "@/app/types/types"
 import { AuthContext } from '@/providers/AuthProvider'
 import LoaderSpiner from '@/components/reusable/LoaderSpiner'
-import { columns } from '@/components/reusable/Flows/columns'
-import Collection from '@/components/reusable/Flows/Collection'
+import { columns } from '@/components/Views/Flows/columns'
+import Collection from '@/components/Views/Flows/Collection'
 import { GetFlows } from '@/lib/flowCalls'
 
 

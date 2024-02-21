@@ -13,7 +13,7 @@ import {
 import { TbMessageSearch } from "react-icons/tb";
 import { IBillLogData } from '@/app/types/types';
 import { GetBillLog } from '@/lib/billsCalls';
-import LoaderSpiner from '../LoaderSpiner';
+import LoaderSpiner from '../../reusable/LoaderSpiner';
 
 const LogSheet = ({ logId, nit }: { logId: string, nit: string }) => {
   const [log, setLog] = useState<IBillLogData[] | undefined>(undefined)

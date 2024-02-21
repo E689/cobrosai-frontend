@@ -3,14 +3,14 @@
 import React, { useEffect, useState, useContext } from 'react'
 
 // Data table stuff
-import { BillsDataTable } from '@/components/reusable/Bills/data-table'
-import { columns } from '@/components/reusable/Bills/columns'
+import { BillsDataTable } from '@/components/Views/Bills/data-table'
+import { columns } from '@/components/Views/Bills/columns'
 import { IAuthContext, IBillsParams } from '@/app/types/types'
 import AIStats from '@/components/reusable/AIStats'
 import { GetBills } from '@/lib/billsCalls'
 import { AuthContext } from '@/providers/AuthProvider'
 import LoaderSpiner from '@/components/reusable/LoaderSpiner'
-import UploadBills from '@/components/reusable/Bills/UploadBills'
+import UploadBills from '@/components/Views/Bills/UploadBills'
 
 async function getData(id: string, setBillsAiOn: Function): Promise<IBillsParams[] | undefined> {
   // Fetch data from your API here.

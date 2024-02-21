@@ -3,8 +3,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 
 // Data table stuff
-import { BillsDataTable } from '@/components/reusable/Bills/data-table'
-import { columns } from '@/components/reusable/Bills/columns'
+import { BillsDataTable } from '@/components/Views/Bills/data-table'
+import { columns } from '@/components/Views/Bills/columns'
 import { IAuthContext, IBillsParams } from '@/app/types/types'
 import { GetBillsByClient } from '@/lib/billsCalls'
 import { AuthContext } from '@/providers/AuthProvider'

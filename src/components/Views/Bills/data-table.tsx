@@ -24,14 +24,14 @@ import { Input } from "@/components/ui/input"
 
 import { useEffect, useState } from "react"
 import { DataTablePagination } from "./data-table-pagination"
-import LoaderSpiner from "../LoaderSpiner"
+import LoaderSpiner from "../../reusable/LoaderSpiner"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function ClientsDataTable<TData, TValue>({
+export function BillsDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -40,6 +40,7 @@ export function ClientsDataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     []
   )
+  const [rowSelection, setRowSelection] = useState({})
   const [isMounted, setIsMounted] = useState<Boolean>(false)
 
   const table = useReactTable({
@@ -51,15 +52,17 @@ export function ClientsDataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
+      rowSelection,
     },
   })
 
   useEffect(() => {
     setIsMounted(true)
-  },[])
+  }, [])
 
   if (!isMounted) {
     return (<LoaderSpiner />)
@@ -75,6 +78,10 @@ export function ClientsDataTable<TData, TValue>({
             }
             className="max-w-sm bg-slate-100 dark:bg-blue-950/60"
           />
+          <div className="flex-1 text-sm text-muted-foreground grow">
+            {table.getFilteredSelectedRowModel().rows.length} de{" "}
+            {table.getFilteredRowModel().rows.length} fila(s) seleccionada(s).
+          </div>
         </div>
         <div className="rounded-md border w-full bg-slate-100 dark:bg-blue-950/60">
           <Table>
@@ -83,7 +90,7 @@ export function ClientsDataTable<TData, TValue>({
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="h-[10vh]">
+                      <TableHead key={header.id}>
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -113,7 +120,7 @@ export function ClientsDataTable<TData, TValue>({
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} className="h-24 text-center">
-                    No se encontraron clientes...
+                    No se encontraron facturas...
                   </TableCell>
                 </TableRow>
               )}
