@@ -12,9 +12,6 @@ import { GetFlows } from '@/lib/flowCalls'
 
 
 async function getData(id: string): Promise<IFlowParams[] | undefined> {
-  // Fetch data from your API here.
-  //let data: IFlowParams[]
-  
   return await GetFlows(id).then((res) => {
     //console.info("Data from req: ", res)
     return res
@@ -32,12 +29,12 @@ const Page = () => {
     // I make sure to just make 1 getData.
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
-      getData(authUser!.id).then((res) => {
+      getData(authUser.id).then((res) => {
         console.info("User: ", authUser)
         console.info("Response: ", res)
         setData(res!)
       }).catch((err) => {
-        console.log("Error")
+        console.log("Error: ", err)
       })
     }
   }, [authUser, loading, isMounted])

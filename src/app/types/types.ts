@@ -189,3 +189,10 @@ export interface ICreateFlowFormParams {
 export interface ICreateFlowRequest extends IFlowParams {
   userId: string,
 }
+
+// Use profile interfaces
+export interface IUserProfile {
+  companyName: string,
+  businessLogic: string,
+  assistantContext: string
+ }
