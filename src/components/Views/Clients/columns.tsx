@@ -245,8 +245,8 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
     },
     cell: ({ row }) => <div className="flex">
        <ClientFlowSelector
-        defaultValue={row.getValue("collectionFlow")}
-        clientId={row.getValue("nit")}
+        defaultValue={row.original.flow!}
+        clientId={row.original.clientId}
       />
     </div>,
   },

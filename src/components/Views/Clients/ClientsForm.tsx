@@ -72,9 +72,7 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
 
   function onSubmit(values: IClientParams) {
     if (action === "edit") {
-      UpdateClient(values!).then((res) => {
-        return res
-      })
+      const res = UpdateClient(values!).then((res) => res)
     }
   }
 

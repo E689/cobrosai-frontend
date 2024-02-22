@@ -126,7 +126,8 @@ export interface IClientParams {
   contactLastName?: string,
   email?: string,
   phone?: number,
-  aIToggle?: boolean
+  aIToggle?: boolean,
+  flow?: string
 }
 
 export interface IClientExtendedParams extends IClientParams {

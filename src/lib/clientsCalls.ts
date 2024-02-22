@@ -16,8 +16,8 @@ export const GetClients = async (id: string): Promise<any> => {
 }
 
 // Get Client Data
-export const GetClient = async (clientId: string): Promise<any> => {
-  return await new Promise<any>(async r => {
+export const GetClient = async (clientId: string): Promise<IClientParams> => {
+  return await new Promise<IClientParams>(async r => {
     await axios.get(
       API_URL + `/client/${clientId}`,
     ).then((res) => {
@@ -39,8 +39,9 @@ export const UpdateClient = async ({
   contactLastName,
   email,
   phone,
-  aIToggle
-}: IClientParams): Promise<any> => {
+  aIToggle,
+  flow
+}: IClientParams): Promise<string> => {
   let body = {
     clientName,
     clientId: nit,
@@ -50,14 +51,15 @@ export const UpdateClient = async ({
     contactLastName,
     email,
     phone,
-    ai: aIToggle
+    ai: aIToggle,
+    flow
   }
-  return await new Promise<any>(async r => {
+  return await new Promise<string>(async r => {
     await axios.put(
       API_URL + `/clients/${clientId}`,
       body
     ).then((res) => {
-      r(res)
+      r(res.data.message)
     }).catch((err => {
       r(err)
     }))

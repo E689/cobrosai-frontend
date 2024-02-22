@@ -95,9 +95,8 @@ const CreateFlowForm = ({ userId, action, flowId }: ICreateFlowFormParams) => {
         setLoading(false)
         break;
       case 'edit':
-        // TODO: Add edit call here.
         if (values) {
-          //editFlow(data.flowId!, values, setData)
+          editFlow(data?._id!, values, setData)
         }
         setLoading(false)
         break;
