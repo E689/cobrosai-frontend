@@ -66,7 +66,6 @@ const Drop = () => {
           }
           RegisterBill(params)
             .then((res) => {
-              console.info(res)
               if (res.code === "ERR_BAD_REQUEST" || res.code === "INTERNAL_SERVER_ERROR") {
                 setStep("select") // Send the user back to the start.
               } else if (res.statusText === "OK" || res.statusText === "Created") {
@@ -75,7 +74,7 @@ const Drop = () => {
             })
         }
       } catch (err) {
-        console.log("Error: ", err)
+        console.error("Error: ", err)
         setFile(undefined)
         setStep("select") // Send the user back to the start.
       }
@@ -84,7 +83,8 @@ const Drop = () => {
 
   useEffect(() => {
     if (step === "finish") {
-      console.log("Returning to start...")
+      // TODO: Fix this.
+      console.info("Returning to start...")
       setTimeout(() => {
         // Clean file
         setFile(undefined)

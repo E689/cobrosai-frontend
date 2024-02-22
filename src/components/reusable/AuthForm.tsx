@@ -104,7 +104,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
         Recover({ email: values.email })
           .then((res) => {
             setLoading(false)
-            //console.log(res)
+
             if (res.statusText === "OK") {
               router.push("/auth/signin")
             } else if (res?.code === "ERR_BAD_REQUEST") {
@@ -117,7 +117,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
           ChangePassword({ email: values.email, oldPassword: values.password, newPassword: values.newPassword })
           .then((res) => {
             setLoading(false)
-            console.log(res)
+            
             if (res.statusText === "OK") {
               router.push("/dashboard/bills")
             } else if (res?.code === "ERR_BAD_REQUEST") {
@@ -130,7 +130,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
         }
         break;
       default:
-        console.log("What are you doing user? STAP!")
+        console.error("What are you doing user? STAP!")
         setLoading(true)
     }
   }

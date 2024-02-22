@@ -18,7 +18,6 @@ export default function DashboardLayout({
   const router = useRouter()
 
   useEffect(() => {
-    console.log("Auth changed...")
     if (!loading && !authUser) return (router.push("/auth/signin"))
   }, [authUser, loading, router])
 

@@ -39,9 +39,7 @@ const formSchema = z.object({
 
 // Set profile data
 function SetData(id: string, data: IUserProfile): void {
-  SetProfile(id, data).then((res: any) => {
-    console.info("Data from req: ", res)
-  })
+  SetProfile(id, data)
 }
 
 const ProfileForm = ({ profileData, userId }: { profileData: IUserProfile, userId: string }) => {

@@ -16,7 +16,6 @@ async function getData(id: string, setClientsAiOn: Function): Promise<IClientExt
   let data: IClientExtendedParams[] = []
 
   return await GetClients(id).then((res) => {
-    //console.info("Data from req: ", res)
     if (res.status == 200) {
       setClientsAiOn(res.data.clientsAiOn)
       data = res.data.clients
@@ -37,11 +36,9 @@ const Clients = () => {
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
       getData(authUser.id, setClientsAiOn).then((res) => {
-        console.info("User: ", authUser)
-        console.info("Response: ", res)
         setData(res!)
       }).catch((err) => {
-        console.log("Error: ", err)
+        console.error("Error: ", err)
         return err
       })
     }

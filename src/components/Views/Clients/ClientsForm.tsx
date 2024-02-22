@@ -47,7 +47,6 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
       GetClient(client?.clientId!)
         .then((res) => {
           setFetchedClient(res)
-          console.log(res)
           return res
         })
     }
@@ -72,14 +71,8 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
   })
 
   function onSubmit(values: IClientParams) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // Do something base on the action provided.
-    console.log("Values: ", values)
-
     if (action === "edit") {
       UpdateClient(values!).then((res) => {
-        //console.log(res)
         return res
       })
     }

@@ -60,7 +60,6 @@ const UploadBills = ({
       setIsUploading(true)
       // TODO: Add upload file EP call here...
       CreateBillsFromXls(id!, file).then((res) => {
-        console.info(res)
         setHasDataChange(true)
         return res
       }).finally(() => {
@@ -77,7 +76,6 @@ const UploadBills = ({
       // TODO: Add create single bill EP call here...
       CreateBillManually({amount:amount, date: date, clientId: NIT, clientName: companyName, billId: invoiceNo, userId: id!} )
       .then((res) => {
-        console.log(res)
         setHasDataChange(true)
         return res
       })

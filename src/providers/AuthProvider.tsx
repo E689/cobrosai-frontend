@@ -22,7 +22,7 @@ export function AuthProvider({ children }: Props) {
       setAuthUser(user)
       setIsLoading(false)
     } else {
-      console.log("Auth provider didn't found a user.")
+      console.info("Auth provider didn't found a user.")
       setIsLoggedIn(false)
       setAuthUser(null)
       setIsLoading(false)

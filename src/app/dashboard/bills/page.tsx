@@ -17,7 +17,6 @@ async function getData(id: string, setBillsAiOn: Function): Promise<IBillsParams
   let data: IBillsParams[] = []
 
   return await GetBills(id).then((res) => {
-    //console.info("Data from req: ", res)
     if (res.status == 200) {
       setBillsAiOn(res.data.billsAiOn)
       data = res.data.bills
@@ -40,11 +39,9 @@ const Bills = () => {
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser && hasDataChange) {
       getData(authUser.id, setBillsAiOn).then((res) => {
-        console.info("User: ", authUser)
-        console.info("Response: ", res)
         setData(res!)
       }).catch((err) => {
-        console.log("Error: ", err)
+        console.error("Error: ", err)
         return err
       })
 

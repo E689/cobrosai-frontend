@@ -28,11 +28,9 @@ const ClientDetail = ({ params }: { params: { clientId: string } }) => {
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
       getData(authUser.id, params.clientId).then((res) => {
-        console.info("User: ", authUser)
-        console.info("Response: ", res)
         setData(res)
       }).catch((err) => {
-        console.log("Error")
+        console.error("Error")
       })
     }
   }, [authUser, loading, isMounted, params])

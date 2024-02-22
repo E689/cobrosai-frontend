@@ -13,7 +13,7 @@ import { GetFlows } from '@/lib/flowCalls'
 
 async function getData(id: string): Promise<IFlowParams[] | undefined> {
   return await GetFlows(id).then((res) => {
-    //console.info("Data from req: ", res)
+    //console.log("Data from req: ", res)
     return res
   })
 }
@@ -30,11 +30,9 @@ const Page = () => {
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
       getData(authUser.id).then((res) => {
-        console.info("User: ", authUser)
-        console.info("Response: ", res)
         setData(res!)
       }).catch((err) => {
-        console.log("Error: ", err)
+        console.error("Error: ", err)
       })
     }
   }, [authUser, loading, isMounted])

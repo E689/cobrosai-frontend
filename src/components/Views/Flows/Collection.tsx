@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { 
-  ICreateFlowFormParams,
-  IFlowParams
+  ICreateFlowFormParams
 } from '@/app/types/types'
 import CreateFlowForm from './CreateFlowForm'
 
@@ -11,12 +10,6 @@ const Collection = ({
   action,
   flowId
 }: ICreateFlowFormParams) => {
-
-  const handleOnClick = () => {
-    // TODO: Update current flow
-    console.log("Actualizando el flujo...")
-    
-  }
 
   return (
     <div className='flex w-full max-h-screen overflow-y-auto p-4'>

@@ -22,7 +22,6 @@ const LogSheet = ({ logId, nit }: { logId: string, nit: string }) => {
   const handleOnClick = (id: string) => {
     if (id) {
       GetBillLog(id).then((res) => {
-        console.log(res)
         setLog(res)
       })
     }
