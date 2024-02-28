@@ -53,9 +53,9 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      password: "vWwfm3A+",
-      email: "ale.crts1996@gmail.com",
-      confirm: "vWwfm3A+",
+      password: "vTv2lG/j",
+      email: "guitalex1996@hotmail.com",
+      confirm: "vTv2lG/j",
       newPassword: "e31sFhmY"
     },
   })

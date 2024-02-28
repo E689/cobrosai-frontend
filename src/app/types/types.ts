@@ -191,6 +191,14 @@ export interface ICreateFlowRequest extends IFlowParams {
   userId: string,
 }
 
+export interface IFlowChat {
+  _id: string,
+  case: number,
+  content: string,
+  date: string,
+  role: string
+}
+
 // Use profile interfaces
 export interface IUserProfile {
   companyName: string,

@@ -4,11 +4,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 
 // Interfaces
-import { 
-  IClientFlowSelector, 
-  IAuthContext, 
-  IFlowParams, 
-  IClientParams 
+import {
+  IClientFlowSelector,
+  IAuthContext,
+  IFlowParams,
+  IClientParams
 } from "@/app/types/types"
 
 // ShadCN imports
@@ -43,7 +43,7 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
   const { authUser, loading } = useContext(AuthContext) as IAuthContext
 
   // State values
-  const [value, setValue] = useState<{name: string, id: string}>({name:"Default", id:"-1"})
+  const [value, setValue] = useState<{ name: string, id: string }>({ name: "Default", id: "-1" })
   const [data, setData] = useState<IFlowParams[]>([])
   const [isMounted, setIsMounted] = useState<boolean>(false)
   const [clientData, setClientData] = useState<IClientParams | undefined>(undefined)
@@ -52,6 +52,8 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
     // I make sure to just make 1 getData.
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
+      // TODO: Fix rerender of this component on the sorting of the table.
+      console.log("test")
       getData(authUser.id).then((res) => {
         setData(res!)
       }).catch((err) => {
@@ -84,7 +86,7 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
 
   const handleOnChange = (e: string) => {
     // TODO: Update Bill status
-    setClientData(prevState => ({...prevState!, flow: e}))
+    setClientData(prevState => ({ ...prevState!, flow: e }))
     data.map((flow: IFlowParams) => {
       if (flow._id === e) {
         setValue({
@@ -117,7 +119,7 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
             })
           ) : (<SelectItem value="Default">Default</SelectItem>)
         }
-        
+
       </SelectContent>
     </Select>
   )

@@ -2,18 +2,22 @@
 
 import React, { useContext, useEffect, useState } from 'react'
 
-import { FlowsDataTable } from '@/components/Views/Flows/data-table'
-import { IAuthContext, IFlowParams } from "@/app/types/types"
-import { AuthContext } from '@/providers/AuthProvider'
+// UI components
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
 import LoaderSpiner from '@/components/reusable/LoaderSpiner'
 import { columns } from '@/components/Views/Flows/columns'
 import Collection from '@/components/Views/Flows/Collection'
+import { FlowsDataTable } from '@/components/Views/Flows/data-table'
+
+import { IAuthContext, IFlowParams } from "@/app/types/types"
+import { AuthContext } from '@/providers/AuthProvider'
 import { GetFlows } from '@/lib/flowCalls'
+import FlowTestChat from '@/components/Views/Flows/FlowTestChat'
 
 
 async function getData(id: string): Promise<IFlowParams[] | undefined> {
   return await GetFlows(id).then((res) => {
-    //console.log("Data from req: ", res)
     return res
   })
 }
@@ -70,11 +74,22 @@ const Page = () => {
            * TODO: Display Flow information component
            */
             selectedFlow && authUser ? (
-              <Collection
-                userId={authUser.id}
-                flowId={selectedFlow._id}
-                action={action}
-              />
+              <Tabs defaultValue='flow' className='w-full h-full'>
+                <TabsList className='mx-8 mt-4'>
+                  <TabsTrigger value='flow'>Flujo</TabsTrigger>
+                  <TabsTrigger value='chat'>Chat</TabsTrigger>
+                </TabsList>
+                <TabsContent value='flow'>
+                  <Collection
+                    userId={authUser.id}
+                    flowId={selectedFlow._id}
+                    action={action}
+                  />
+                </TabsContent>
+                <TabsContent value='chat'>
+                  <FlowTestChat flowId={selectedFlow._id!}/>
+                </TabsContent>
+              </Tabs>
             ) : (<></>)
           }
         </div>

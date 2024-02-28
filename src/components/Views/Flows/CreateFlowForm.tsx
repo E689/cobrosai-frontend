@@ -37,7 +37,7 @@ const formSchema = z.object({
 const getFlow = (flowId: string, setData: Function): void => {
   GetFlow(flowId)
     .then((res) => {
-      console.log("Data res: ", res)
+      //console.log("Data res: ", res)
       setData(res)
     })
 }
@@ -45,7 +45,7 @@ const getFlow = (flowId: string, setData: Function): void => {
 const editFlow = (flowId: string, flow: IFlowParams, setData: Function): void => {
   EditFlow(flowId, flow)
   .then((res) => {
-    console.log("Data: ", res)
+    //console.log("Data: ", res)
     setData(undefined)
   })
 }
@@ -54,7 +54,7 @@ const editFlow = (flowId: string, flow: IFlowParams, setData: Function): void =>
 const createFlow = (userId: string, flow: IFlowParams, setData: Function): void => {
   AddFlow(userId, flow)
   .then((res) => {
-    console.log("Data: ", res)
+    //console.log("Data: ", res)
     setData(undefined)
   })
 }
@@ -83,8 +83,6 @@ const CreateFlowForm = ({ userId, action, flowId }: ICreateFlowFormParams) => {
 
   function onSubmit(values: IFlowParams) {
     setLoading(true)
-    console.log(values)
-    console.log(data)
 
     switch (action) {
       case "create":
@@ -109,12 +107,10 @@ const CreateFlowForm = ({ userId, action, flowId }: ICreateFlowFormParams) => {
   useEffect(() => {
     //console.log(userId, flowId, action, data)
     if (action === "edit" && flowId) {
-      console.log("edit")
       getFlow(flowId, setData)
     }
 
     if (action === "create") {
-      console.log("create")
       setData({
         name: "Nuevo Flujo"
       })
