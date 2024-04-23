@@ -10,9 +10,9 @@ import { GetBillsByClient } from '@/lib/billsCalls'
 import { AuthContext } from '@/providers/AuthProvider'
 import LoaderSpiner from '@/components/reusable/LoaderSpiner'
 
-async function getData(uid: string, nit: string): Promise<IBillsParams[]> {
+async function getData(client_id: string, token: string): Promise<IBillsParams[]> {
   // TODO: Change this call for a specific client bills
-  return await GetBillsByClient(nit, uid)
+  return await GetBillsByClient(client_id, token)
   .then((res) => {
     return res.bills
   })
@@ -27,7 +27,7 @@ const ClientDetail = ({ params }: { params: { clientId: string } }) => {
     // I make sure to just make 1 getData.
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
-      getData(authUser.id, params.clientId).then((res) => {
+      getData(params.clientId, authUser.token).then((res) => {
         setData(res)
       }).catch((err) => {
         console.error("Error")
@@ -45,7 +45,7 @@ const ClientDetail = ({ params }: { params: { clientId: string } }) => {
     return (
       <div className='flex flex-col w-screen min-h-screen h-full pt-[7vh] px-8 bg-slate-200 dark:bg-blue-950/20'>
         <div className='flex w-full h-[10vh]'>
-          <p className='text-4xl font-bold mb-auto mr-auto'>{params.clientId} | {data && data.length > 0 ? data[0].clientName : ""}</p>
+          <p className='text-4xl font-bold mb-auto mr-auto'>{params.clientId} | {data && data.length > 0 ? data[0].recipient_name : ""}</p>
         </div>
         <div className='flex flex-row gap-1 w-full h-[10vh]'>
           <div className='grow'>

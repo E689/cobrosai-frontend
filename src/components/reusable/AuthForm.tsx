@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import LoaderSpiner from "@/components/reusable/LoaderSpiner"
+import { toast } from "react-toastify";
 
 // Requests imports
 import { ChangePassword, Recover, Register, SignIn, SignOut } from "@/lib/authCalls"
@@ -53,10 +54,10 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      password: "vTv2lG/j",
-      email: "guitalex1996@hotmail.com",
-      confirm: "vTv2lG/j",
-      newPassword: "e31sFhmY"
+      password: "Aramigo55",
+      email: "jgarcia@devpackgroup.com",
+      confirm: "Aramigo55",
+      newPassword: "Aramigo55"
     },
   })
 
@@ -71,8 +72,10 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
             .then((res) => {
               setLoading(false)
               if (res.statusText === "Created") {
+                toast.success("Cuenta creada con éxito!")
                 router.push("/auth/signin")
               } else if (res?.code === "ERR_BAD_REQUEST") {
+                toast.error("Error")
                 setError("formerror", { type: "Mismatch", message: res.response.data?.message })
               }
             })
@@ -86,9 +89,11 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
           .then((res) => {
             setLoading(false)
             if (res.statusText === "OK") {
+              toast.success("Log in correcto!")
               setIsLoggedIn(true)
               setAuthUser(res.data)
             } else if (res?.code === "ERR_BAD_REQUEST") {
+              toast.error(res.response.data.error)
               setError("formerror", { type: "Mismatch", message: res.response.data?.error })
             }
           })
@@ -98,16 +103,18 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
           setLoading(false)
           setIsLoggedIn(false)
           setAuthUser(null)
+          toast.success("Cerró sesión con éxito!")
         }
         break;
       case "recover":
         Recover({ email: values.email })
           .then((res) => {
             setLoading(false)
-
             if (res.statusText === "OK") {
+              toast.success("Se envió un correo con una contraseña temporal.")
               router.push("/auth/signin")
             } else if (res?.code === "ERR_BAD_REQUEST") {
+              toast.error("Hubo un problema, revisa los datos.")
               setError("formerror", { type: "Mismatch", message: res.response.data?.message })
             }
           })
@@ -115,17 +122,19 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
       case "change":
         if (values.newPassword === values.confirm) {
           ChangePassword({ email: values.email, oldPassword: values.password, newPassword: values.newPassword })
-          .then((res) => {
-            setLoading(false)
-            
-            if (res.statusText === "OK") {
-              router.push("/dashboard/bills")
-            } else if (res?.code === "ERR_BAD_REQUEST") {
-              setError("formerror", { type: "Mismatch", message: res.response.data?.message })
-            }
-          })
+            .then((res) => {
+              setLoading(false)
+              if (res.statusText === "OK") {
+                toast.success("Contraseña actualizada con éxito!")
+                router.push("/dashboard/bills")
+              } else if (res?.code === "ERR_BAD_REQUEST") {
+                toast.error("Error al actualizar la contraseña")
+                setError("formerror", { type: "Mismatch", message: res.response.data?.message })
+              }
+            })
         } else {
           setLoading(false)
+          toast.error("Las contraseñas no coinciden.")
           setError("formerror", { type: "Mismatch", message: "Las contraseñas muevas no coinciden." })
         }
         break;

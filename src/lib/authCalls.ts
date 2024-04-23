@@ -12,10 +12,10 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL
 export const SignIn = async ({ email, password }: ISignInParams): Promise<any> => {
   return await new Promise<any>(async r => {
     const credentials = { email: email, password: password }
-    let user: IUserAccount = { email: "", jwt: undefined, type: 0, id: "" }
+    let user: IUserAccount = { name: "", token: "" }
 
     await axios.post(
-      API_URL + '/users/login',
+      API_URL + '/user/signin/',
       credentials,
       {
         headers: {
@@ -23,11 +23,10 @@ export const SignIn = async ({ email, password }: ISignInParams): Promise<any> =
         }
       }
     ).then((res) => {
+      console.log(res.data)
       if (res.statusText === "OK") {
-        user.email = res.data.email
-        user.id = res.data.id
-        user.jwt = res.data.jwt
-        user.type = res.data.type
+        user.name = res.data.user_name
+        user.token = res.data.token
 
         localStorage.setItem('user', JSON.stringify(user))
       }
@@ -44,6 +43,7 @@ export const SignOut = (): string => {
   return "OK"
 }
 
+// TODO: Make a Register endpoint
 export const Register = async ({ email, password }: IRegisterParams): Promise<any> => {
   const credentials = {
     "email": email,
@@ -72,7 +72,7 @@ export const Recover = async ({ email }: IRecoverParams): Promise<any> => {
   }
   return await new Promise<any>(async r => {
     await axios.post(
-      API_URL + '/users/forgot-password',
+      API_URL + '/user/forgotPassword/',
       credentials,
       {
         headers: {
@@ -118,7 +118,7 @@ export const RegisterFile = async ({ email, file }: IRegisterParams): Promise<an
 
   return await new Promise<any>(async r => {
     await axios.post(
-      API_URL + '/users/register/file',
+      API_URL + '/user/quick_sign_in/',
       body,
       {
         headers: {
@@ -135,16 +135,16 @@ export const RegisterFile = async ({ email, file }: IRegisterParams): Promise<an
 
 export const RegisterBill = async ({ email, bill }: IRegisterParams): Promise<any> => {
   const body = {
-    "date": bill?.date,
+    "date": bill?.issue_date,
     "email": email,
-    "billId": bill?.billId,
-    "amount": bill?.amount!.toString(),
-    "clientId": bill?.clientId!.toString(),
-    "clientName": bill?.clientName
+    "billId": bill?.dte_number,
+    "amount": bill?.total!.toString(),
+    "clientId": bill?.recipient_nit!.toString(),
+    "clientName": bill?.recipient_name
   }
   return await new Promise<any>(async r => {
     await axios.post(
-      API_URL + '/users/register/bill',
+      API_URL + '/user/quick_sign_in_manual/',
       body,
       {
         headers: {

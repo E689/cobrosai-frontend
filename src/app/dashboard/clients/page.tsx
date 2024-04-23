@@ -11,14 +11,14 @@ import { GetClients } from '@/lib/clientsCalls'
 import { AuthContext } from '@/providers/AuthProvider'
 import LoaderSpiner from '@/components/reusable/LoaderSpiner'
 
-async function getData(id: string, setClientsAiOn: Function): Promise<IClientExtendedParams[] | undefined> {
+async function getData(token: string, setClientsAiOn: Function): Promise<IClientExtendedParams[] | undefined> {
   // Fetch data from your API here.
   let data: IClientExtendedParams[] = []
 
-  return await GetClients(id).then((res) => {
+  return await GetClients(token).then((res) => {
     if (res.status == 200) {
-      setClientsAiOn(res.data.clientsAiOn)
-      data = res.data.clients
+      setClientsAiOn(0)
+      data = res.data
       return data
     }
   })
@@ -35,7 +35,7 @@ const Clients = () => {
     // I make sure to just make 1 getData.
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
-      getData(authUser.id, setClientsAiOn).then((res) => {
+      getData(authUser.token, setClientsAiOn).then((res) => {
         setData(res!)
       }).catch((err) => {
         console.error("Error: ", err)

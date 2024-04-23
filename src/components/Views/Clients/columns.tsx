@@ -253,6 +253,6 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
   {
     id: "details",
     header: "Detalle",
-    cell: ({ row }) => <ClientDetailButton clientId={row.getValue("nit")} />,
+    cell: ({ row }) => <ClientDetailButton clientId={row.original.clientId} />,
   },
 ]

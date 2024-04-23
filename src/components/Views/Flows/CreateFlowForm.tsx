@@ -21,6 +21,7 @@ import LoaderSpiner from "@/components/reusable/LoaderSpiner"
 import { ICreateFlowFormParams, IFlowParams } from '@/app/types/types'
 import { AddFlow, EditFlow, GetFlow } from '@/lib/flowCalls'
 import { Input } from '@/components/ui/input'
+import { toast } from "react-toastify";
 
 // Flows form schema
 const formSchema = z.object({
@@ -37,7 +38,6 @@ const formSchema = z.object({
 const getFlow = (flowId: string, setData: Function): void => {
   GetFlow(flowId)
     .then((res) => {
-      //console.log("Data res: ", res)
       setData(res)
     })
 }
@@ -45,7 +45,7 @@ const getFlow = (flowId: string, setData: Function): void => {
 const editFlow = (flowId: string, flow: IFlowParams, setData: Function): void => {
   EditFlow(flowId, flow)
   .then((res) => {
-    //console.log("Data: ", res)
+    toast.success("Flujo editado con éxito!")
     setData(undefined)
   })
 }
@@ -54,7 +54,7 @@ const editFlow = (flowId: string, flow: IFlowParams, setData: Function): void =>
 const createFlow = (userId: string, flow: IFlowParams, setData: Function): void => {
   AddFlow(userId, flow)
   .then((res) => {
-    //console.log("Data: ", res)
+    toast.success("Flujo creado con éxito!")
     setData(undefined)
   })
 }

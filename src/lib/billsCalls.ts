@@ -7,10 +7,15 @@ import axios from 'axios'
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 // Get Bills
-export const GetBills = async (id: string): Promise<any> => {
+export const GetBills = async (token: string): Promise<any> => {
   return await new Promise<any>(async r => {
     await axios.get(
-      API_URL + `/bills/${id}`,
+      API_URL + `/invoice/`,
+      {
+        headers: {
+          "Authorization": token
+        }
+      }
     ).then((res) => {
       r(res)
     }).catch((err => {
@@ -19,18 +24,18 @@ export const GetBills = async (id: string): Promise<any> => {
   })
 }
 
-export const CreateBillsFromXls = async (id: string, file: File): Promise<any> => {
+export const CreateBillsFromXls = async (token: string, file: File): Promise<any> => {
   let body = new FormData()
-  body.append("userId", id!)
   body.append("file", file!)
 
   return await new Promise<any>(async r => {
     await axios.post(
-      API_URL + '/bills/file',
+      API_URL + '/invoice/add_bills_with_file/',
       body,
       {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'Authorization': token
         }
       }
     ).then((res) => {
@@ -47,7 +52,7 @@ export const CreateBillManually = async ({
   clientId,
   clientName,
   billId,
-  userId
+  token
 }: ICreateBillManuallyParams): Promise<any> => {
   let body = {
     amount: amount,
@@ -55,13 +60,17 @@ export const CreateBillManually = async ({
     clientId: clientId,
     clientName: clientName,
     billId: billId,
-    userId: userId
   }
 
   return await new Promise<any>(async r => {
     await axios.post(
-      API_URL + '/bills',
+      API_URL + '/invoice/',
       body,
+      {
+        headers: {
+          'Authorization': token
+        }
+      }
     ).then((res) => {
       r(res)
     }).catch((err => {
@@ -84,16 +93,16 @@ export const GetBillLog = async (billId: string): Promise<IBillLogData[]> => {
 }
 
 // Get Bills by client
-export const GetBillsByClient = async (nit: string, UID: string): Promise<any> => {
-  const body = {
-    userId: UID,
-    nit: nit
-  }
+export const GetBillsByClient = async (client_id: string, token: string): Promise<any> => {
 
   return await new Promise<any>(async r => {
-    await axios.post(
-      API_URL + `/bills/client`,
-      body
+    await axios.get(
+      API_URL + `/invoice/${client_id}/`,
+      {
+        headers: {
+          Authorization: token
+        }
+      }
     ).then((res) => {
       r(res.data)
     }).catch((err => {

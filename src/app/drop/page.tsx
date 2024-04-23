@@ -1,4 +1,5 @@
 'use client'
+import React, { useEffect, useState } from 'react'
 
 import BillForm from '@/components/Views/QuickSignUp/BillForm'
 import EmailForm from '@/components/Views/QuickSignUp/EmailForm'
@@ -7,7 +8,8 @@ import LoadFile from '@/components/Views/QuickSignUp/LoadFile'
 import Loading from '@/components/Views/QuickSignUp/Loading'
 import Select from '@/components/Views/QuickSignUp/Select'
 import { RegisterBill, RegisterFile } from '@/lib/authCalls'
-import React, { useEffect, useState } from 'react'
+
+import { toast } from "react-toastify";
 
 import { IRegisterParams } from '@/app/types/types'
 
@@ -42,10 +44,13 @@ const Drop = () => {
           const params: IRegisterParams = { email: email, file: file }
           RegisterFile(params)
             .then((res) => {
-              if (res.code === "ERR_BAD_REQUEST") {
+              console.log(res)
+              if (res.code !== 200) {
+                toast.error(res.message)
                 setFile(undefined)
                 setStep("select") // Send the user back to the start.
               } else if (res.statusText === "OK") {
+                toast.success("Cuenta creada con éxito!")
                 setTimeout(() => setStep("finish"), 2000)
               }
             })
@@ -66,15 +71,18 @@ const Drop = () => {
           }
           RegisterBill(params)
             .then((res) => {
-              if (res.code === "ERR_BAD_REQUEST" || res.code === "INTERNAL_SERVER_ERROR") {
+              if (res.code !== 200 ) {
+                toast.error(res.message)
                 setStep("select") // Send the user back to the start.
               } else if (res.statusText === "OK" || res.statusText === "Created") {
+                toast.success("Cuenta creada con éxito!")
                 setTimeout(() => setStep("finish"), 2000)
               }
             })
         }
       } catch (err) {
         console.error("Error: ", err)
+        toast.error("Algo salio mal, por favor vuelva a intentar mas tarde.")
         setFile(undefined)
         setStep("select") // Send the user back to the start.
       }
@@ -111,7 +119,7 @@ const Drop = () => {
   )
   if (step === "emailForm") return (<EmailForm setEmail={setEmail} setStep={setStep} />)
   if (step === "loading") return (<Loading setStep={setStep} />)
-  if (step === "finish") return (<Finish />)
+  if (step === "finish") return (<Finish setStep={setStep} />)
 }
 
 export default Drop

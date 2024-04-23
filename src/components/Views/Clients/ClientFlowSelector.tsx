@@ -18,6 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select"
+import { toast } from "react-toastify";
 
 // API Calls
 import { UpdateClient, GetClient } from "@/lib/clientsCalls"
@@ -27,15 +28,27 @@ import { GetFlows } from "@/lib/flowCalls"
 import { AuthContext } from "@/providers/AuthProvider"
 
 // If action is edit, get the flow data
-async function getData(id: string): Promise<IFlowParams[] | undefined> {
-  return await GetFlows(id).then((res) => {
-    return res
-  })
+async function getData(token: string): Promise<IFlowParams[] | undefined> {
+  return await GetFlows(token)
+    .then((res) => {
+      if (res.status !== 200) {
+        toast.error("No se encontro el flujo.")
+      } else {
+        return res.data as IFlowParams[]
+      }
+    })
 }
 
 // Get selected client data to modify it.
-async function getClient(clientId: string): Promise<IClientParams> {
-  return await GetClient(clientId).then((res) => res)
+async function getClient(clientId: string, token: string): Promise<IClientParams | undefined> {
+  return await GetClient(clientId, token)
+  .then((res) => {
+    if (res.status !== 200) {
+      toast.error("No se encontraron clientes.")
+    } else {
+      return res.data as IClientParams
+    }
+  })
 }
 
 const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => {
@@ -53,26 +66,27 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
       // TODO: Fix rerender of this component on the sorting of the table.
-      console.log("test")
-      getData(authUser.id).then((res) => {
+      getData(authUser.token).then((res) => {
         setData(res!)
       }).catch((err) => {
+        toast.error("No se encontro informacion.")
         console.error("Error: ", err)
       })
-      getClient(clientId).then((res: IClientParams) => {
+      getClient(clientId, authUser.token).then((res: IClientParams | undefined) => {
         setClientData(res)
       })
     }
   }, [authUser, loading, isMounted, clientId])
 
   useEffect(() => {
-    if (clientData && value.id !== "-1") {
-      const res = UpdateClient(clientData!).then((res) => res)
+    if (clientData && value.id !== "-1" && authUser?.token) {
+      const res = UpdateClient(clientData!, authUser?.token)
+        .then((res) => res)
     }
-  }, [clientData, value, defaultValue])
+  }, [clientData, value, defaultValue, authUser])
 
   useEffect(() => {
-    if (clientData) {
+    if (clientData && data && data.length > 0) {
       data.map((flow: IFlowParams) => {
         if (flow._id === clientData.flow) {
           setValue({
@@ -102,27 +116,29 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
   }, [])
 
   if (!isMounted) return (<>{defaultValue}</>)
-  else return (
-    <Select
-      onValueChange={handleOnChange}
-    >
-      <SelectTrigger
-        className="m-auto p-1 rounded-md w-fit px-2 font-medium"
+  else {
+    return (
+      <Select
+        onValueChange={handleOnChange}
       >
-        <p className="my-auto mx-2">{value.name}</p>
-      </SelectTrigger>
-      <SelectContent>
-        {
-          data ? (
-            data.map((flow, index) => {
-              return (<SelectItem key={index} value={flow._id!}>{flow.name}</SelectItem>)
-            })
-          ) : (<SelectItem value="Default">Default</SelectItem>)
-        }
+        <SelectTrigger
+          className="m-auto p-1 rounded-md w-fit px-2 font-medium"
+        >
+          <p className="my-auto mx-2">{value.name}</p>
+        </SelectTrigger>
+        <SelectContent>
+          {
+            (data && data.length > 0) ? (
+              data.map((flow, index) => {
+                return (<SelectItem key={index} value={flow._id!}>{flow.name}</SelectItem>)
+              })
+            ) : (<SelectItem value="Default">Default</SelectItem>)
+          }
 
-      </SelectContent>
-    </Select>
-  )
+        </SelectContent>
+      </Select>
+    )
+  }
 }
 
 export default ClientFlowSelector

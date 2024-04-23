@@ -35,8 +35,8 @@ const getDueDaysColor = (value: number): string => {
 
 export const columns: ColumnDef<IBillsParams>[] = [
   {
-    id: "select",
-    accessorKey: "client",
+    id: "id",
+    accessorKey: "client_id",
     header: ({ table }) => (
       <Checkbox
         checked={
@@ -50,7 +50,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     ),
     cell: ({ row }) => (
       <Checkbox
-        id={row.getValue("select")}
+        id={row.getValue("id")}
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
@@ -60,7 +60,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "date",
+    accessorKey: "issue_date",
     header: ({ column }) => {
       return (
         <Button
@@ -74,7 +74,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     }
   },
   {
-    accessorKey: "clientName",
+    accessorKey: "recipient_name",
     header: ({ column }) => {
       return (
         <Button
@@ -92,16 +92,16 @@ export const columns: ColumnDef<IBillsParams>[] = [
           <DialogTrigger
             className="h-[80%] my-auto px-2 rounded-lg"
           >
-            {row.getValue("clientName")}
+            {row.getValue("recipient_name")}
           </DialogTrigger>
           <DialogContent className="min-w-[60%]">
             <ClientsForm
               action="edit"
               client={
                 {
-                  clientName: row.getValue("clientName"),
-                  nit: row.getValue("clientId"),
-                  clientId: row.getValue("select")
+                  clientName: row.getValue("recipient_name"),
+                  nit: row.getValue("recipient_nit"),
+                  clientId: row.getValue("id")
                 }
               }
             />
@@ -110,7 +110,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     },
   },
   {
-    accessorKey: "clientId",
+    accessorKey: "recipient_nit",
     header: ({ column }) => {
       return (
         <Button
@@ -122,10 +122,10 @@ export const columns: ColumnDef<IBillsParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("clientId")}</div>,
+    cell: ({ row }) => <div>{row.getValue("recipient_nit")}</div>,
   },
   {
-    accessorKey: "billId",
+    accessorKey: "dte_number",
     header: ({ column }) => {
       return (
         <Button
@@ -137,10 +137,10 @@ export const columns: ColumnDef<IBillsParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className="text-center">{row.getValue("billId")}</div>,
+    cell: ({ row }) => <div className="text-center">{row.getValue("dte_number")}</div>,
   },
   {
-    accessorKey: "amount",
+    accessorKey: "total",
     header: ({ column }) => {
       return (
         <Button
@@ -153,7 +153,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
       )
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
+      const amount = parseFloat(row.getValue("total"))
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
@@ -165,7 +165,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     },
   },
   {
-    accessorKey: "status",
+    accessorKey: "invoice_status",
     header: ({ column }) => {
       return (
         <Button
@@ -179,14 +179,14 @@ export const columns: ColumnDef<IBillsParams>[] = [
     },
     cell: ({ row }) => <div className="flex">
       <AISelector
-        defaultValue={row.getValue("status")}
-        billId={row.getValue("billId")}
-        clientId={row.getValue("clientId")}
+        defaultValue={row.getValue("invoice_status")}
+        billId={row.getValue("dte_number")}
+        clientId={row.getValue("id")}
       />
     </div>,
   },
   {
-    accessorKey: "creditDays",
+    accessorKey: "days_overdue",
     header: ({ column }) => {
       return (
         <Button
@@ -198,8 +198,8 @@ export const columns: ColumnDef<IBillsParams>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("creditDays"))}`}>
-      <p>{row.getValue("creditDays")}</p>
+    cell: ({ row }) => <div className={`text-center ${getDueDaysColor(row.getValue("days_overdue"))}`}>
+      <p>{row.getValue("days_overdue")}</p>
     </div>
   },
   {
@@ -207,7 +207,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
     header: "Historial",
     cell: ({ row }) => {
       return (
-        <LogSheet logId={row.getValue("log")} nit={row.getValue("clientId")} />
+        <LogSheet logId={row.getValue("log")} nit={row.getValue("id")} />
       )
     },
   },

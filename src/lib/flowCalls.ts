@@ -1,5 +1,5 @@
 import { IFlowChat, IFlowParams } from '@/app/types/types'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -9,17 +9,17 @@ export const GetFlow = async (flowId: string): Promise<IFlowParams> => {
     await axios.get(
       API_URL + `/flows/${flowId}`)
     .then((res) => r(res.data.flow))
-    .catch((err) => r(err))
+    .catch((err) => r(err.response))
   })
 }
 
 // Get all Flows for userId
-export const GetFlows = async (userId: string): Promise<IFlowParams[]> => {
-  return await new Promise<IFlowParams[]>(async r => {
+export const GetFlows = async (userId: string): Promise<any> => {
+  return await new Promise<any>(async r => {
     await axios.get(
       API_URL + `/flows/user/${userId}`)
-    .then((res) => r(res.data.flows))
-    .catch((err) => r(err))
+    .then((res) => r(res))
+    .catch((err) => r(err.response))
   })
 }
 
@@ -37,7 +37,7 @@ export const AddFlow = async (UID: string, flow: IFlowParams): Promise<any> => {
     ).then((res) => {
       r(res.data)
     }).catch((err => {
-      r(err)
+      r(err.response)
     }))
   })
 }
@@ -55,18 +55,18 @@ export const EditFlow = async (flowId: string, flow: IFlowParams): Promise<any> 
     ).then((res) => {
       r(res.data)
     }).catch((err => {
-      r(err)
+      r(err.response)
     }))
   })
 }
 
 // Get Flow chat.
 export const GetFlowChat = async (flowId: string): Promise<any> => {
-  return await new Promise<IFlowChat[]>(async r => {
+  return await new Promise<any>(async r => {
     await axios.get(
       API_URL + `/flow/test/${flowId}`)
-    .then((res) => r(res.data.testLog))
-    .catch((err) => r(err))
+    .then((res) => r(res))
+    .catch((err) => r(err.response))
   })
 }
 
@@ -87,17 +87,17 @@ export const SendFlowTestMessage = async (id: string, text: string): Promise<any
     ).then((res) => {
       r(res)
     }).catch((err => {
-      r(err)
+      r(err.response)
     }))
   })
 }
 
 // Delete current chat history.
 export const DeleteFlowChat = async (flowId: string): Promise<string> => {
-  return await new Promise<string>(async r => {
+  return await new Promise<any>(async r => {
     await axios.delete(
       API_URL + `/flow/test/${flowId}`)
-    .then((res) => r(res.data.message))
-    .catch((err) => r(err))
+    .then((res) => r(res))
+    .catch((err) => r(err.response))
   })
 }

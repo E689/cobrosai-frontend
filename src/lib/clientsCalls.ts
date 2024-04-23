@@ -1,12 +1,18 @@
 import { IClientParams } from '@/app/types/types'
 import axios from 'axios'
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 // Get User Clients
-export const GetClients = async (id: string): Promise<any> => {
+export const GetClients = async (token: string): Promise<any> => {
   return await new Promise<any>(async r => {
     await axios.get(
-      API_URL + `/clients/user/${id}`,
+      API_URL + `/client/`,
+      {
+        headers: {
+          "Authorization": token
+        }
+      }
     ).then((res) => {
       r(res)
     }).catch((err => {
@@ -16,12 +22,17 @@ export const GetClients = async (id: string): Promise<any> => {
 }
 
 // Get Client Data
-export const GetClient = async (clientId: string): Promise<IClientParams> => {
-  return await new Promise<IClientParams>(async r => {
+export const GetClient = async (clientId: string, token: string): Promise<any> => {
+  return await new Promise<any>(async r => {
     await axios.get(
-      API_URL + `/client/${clientId}`,
+      API_URL + `/client/${clientId}/`,
+      {
+        headers: {
+          "Authorization": token
+        }
+      }
     ).then((res) => {
-      r(res.data.client)
+      r(res)
     }).catch((err => {
       r(err)
     }))
@@ -29,35 +40,31 @@ export const GetClient = async (clientId: string): Promise<IClientParams> => {
 }
 
 // Update client info
-export const UpdateClient = async ({
-  clientId,
-  clientName,
-  nit,
-  creditDays,
-  clientCollectionSchedule,
-  contactName,
-  contactLastName,
-  email,
-  phone,
-  aIToggle,
-  flow
-}: IClientParams): Promise<string> => {
+export const UpdateClient = async (
+  client: IClientParams,
+  token: string
+): Promise<string> => {
   let body = {
-    clientName,
-    clientId: nit,
-    creditDays,
-    clientCollectionSchedule,
-    contactName,
-    contactLastName,
-    email,
-    phone,
-    ai: aIToggle,
-    flow
+    clientId: client.clientId,
+    clientName: client.clientName,
+    creditDays: client.creditDays,
+    clientCollectionSchedule: client.clientCollectionSchedule,
+    contactName: client.contactName,
+    contactLastName: client.contactLastName,
+    email: client.email,
+    phone: client.phone,
+    aIToggle: client.aIToggle,
+    flow: client.flow
   }
   return await new Promise<string>(async r => {
-    await axios.put(
-      API_URL + `/clients/${clientId}`,
-      body
+    await axios.post(
+      API_URL + `/client/update_client/`,
+      body,
+      {
+        headers: {
+          "Authorization": token
+        }
+      }
     ).then((res) => {
       r(res.data.message)
     }).catch((err => {

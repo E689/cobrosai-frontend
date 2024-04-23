@@ -72,9 +72,9 @@ export function BillsDataTable<TData, TValue>({
         <div className="flex flex-row-reverse items-center py-4">
           <Input
             placeholder="Buscar por empresa..."
-            value={(table.getColumn("clientName")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn("recipient_name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("clientName")?.setFilterValue(event.target.value)
+              table.getColumn("recipient_name")?.setFilterValue(event.target.value)
             }
             className="max-w-sm bg-slate-100 dark:bg-blue-950/60"
           />

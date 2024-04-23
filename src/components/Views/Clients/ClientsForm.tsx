@@ -18,9 +18,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import LoaderSpiner from "@/components/reusable/LoaderSpiner"
+import { toast } from "react-toastify";
 
-import { useEffect, useState } from "react"
-import { IClientParams, IClientsFormParams } from "@/app/types/types"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from '@/providers/AuthProvider'
+import { IAuthContext, IClientParams, IClientsFormParams } from "@/app/types/types"
 import { GetClient, UpdateClient } from "@/lib/clientsCalls"
 
 const formSchema = z.object({
@@ -37,16 +39,28 @@ const formSchema = z.object({
 })
 
 const ClientsForm = ({ client, action }: IClientsFormParams) => {
+  const { authUser, loading } = useContext(AuthContext) as IAuthContext
   const [isMounted, setIsMounted] = useState(false)
   const [fetchedClient, setFetchedClient] = useState<IClientParams | undefined>(undefined)
   let form: any | undefined = undefined
 
   // 0. Try to get current info for this client:
   useEffect(() => {
-    if (client) {
-      GetClient(client?.clientId!)
+    if (client && authUser?.token) {
+      GetClient(client?.clientId!, authUser.token)
         .then((res) => {
-          setFetchedClient(res)
+          setFetchedClient({
+            clientId: res.clientId ? client.clientId : "",
+            clientName: res.clientName ? client.clientName : "",
+            nit: res.nit ? res.nit : 0,
+            creditDays: res.creditDays ? res.creditDays : 0,
+            clientCollectionSchedule: res.clientCollectionSchedule ? res.clientCollectionSchedule : "Default",
+            contactName: res.contactName ? res.contactName : "",
+            contactLastName: res.contactLastName ? res.contactLastName : "",
+            email: res.email ? res.email : "",
+            phone: res.phone ? res.phone : 0,
+            aIToggle: res.aIToggle ? res.aIToggle : true,
+          })
           return res
         })
     }
@@ -71,8 +85,10 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
   })
 
   function onSubmit(values: IClientParams) {
-    if (action === "edit") {
-      const res = UpdateClient(values!).then((res) => res)
+    if (action === "edit" && authUser?.token) {
+      UpdateClient(values!, authUser?.token)
+        .then((res) => res)
+      toast.success("Cliente actualizado con éxito!")
     }
   }
 
@@ -80,7 +96,7 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
     setIsMounted(true)
   }, [])
 
-  if (!isMounted && !form) {
+  if (!isMounted || !form || loading) {
     return (<LoaderSpiner />)
   } else {
     return (
@@ -111,7 +127,7 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
                   <FormItem>
                     <FormLabel className='font-bold'>NIT receptor</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="" {...field} />
+                      <Input type="number" placeholder="" disabled {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

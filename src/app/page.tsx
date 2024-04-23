@@ -19,7 +19,7 @@ export default function Home() {
         <ThemeToggle />
         <div className="flex flex-col items-start justify-center gap-2">
           <div>
-          <p>El usuario: {`${authUser?.email}`} esta registrado</p>
+          <p>El usuario: {`${authUser?.name}`} esta registrado</p>
           </div>
           <p>Vistas Auth: </p>
           <Tabs className="w-full">

@@ -37,10 +37,8 @@ export interface IAuthContext {
 
 // General types
 export interface IUserAccount {
-  email: string,
-  jwt: string | undefined,
-  type: number,
-  id: string
+  name: string,
+  token: string
 }
 
 // Auth Form 
@@ -51,7 +49,7 @@ export interface IAuthFormProps {
 
 // DropZone component
 export interface IDropZoneViewElements {
-  setStep?: Function,
+  setStep: Function,
 }
 
 export interface IDropZoneProps extends IDropZoneViewElements {
@@ -72,7 +70,7 @@ export interface IDropZoneEmailForm extends IDropZoneViewElements {
 
 // AI Statuses
 export interface IAIStatuses {
-  status: "AIOff" | "Human" | "Paid" | "Process" | "Anulada"
+  invoice_status: "AI OFF" | "HUMAN" | "PAID" | "IN PROGRESS" | "Anulada"
 }
 
 // AIStats interface
@@ -90,12 +88,15 @@ export interface IAISelector {
 
 // Bills interfaces
 export interface IBillsParams extends IAIStatuses {
-  date: string | undefined,
-  clientName: string | undefined,
-  clientId: number | undefined,
-  billId: string | undefined,
-  amount: number | undefined,
-  creditDays: number | undefined,
+  id: number,
+  client_id: string,
+  issue_date: string | undefined,
+  recipient_name: string | undefined,
+  recipient_nit: number | undefined,
+  dte_number: string | undefined,
+  total: number | undefined,
+  cancellation_date: string | null,
+  days_overdue: number | undefined,
   log?: string | undefined
 }
 
@@ -105,7 +106,7 @@ export interface ICreateBillManuallyParams {
   clientId: string,
   clientName?: string,
   billId: string,
-  userId: string
+  token: string
 }
 
 export interface IBillLogData {
@@ -120,14 +121,14 @@ export interface IClientParams {
   clientId: string,
   clientName: string,
   nit: number,
-  creditDays?: number,
-  clientCollectionSchedule?: string,
-  contactName?: string,
-  contactLastName?: string,
-  email?: string,
-  phone?: number,
-  aIToggle?: boolean,
-  flow?: string
+  creditDays?: number | null,
+  clientCollectionSchedule?: string  | null,
+  contactName?: string | null,
+  contactLastName?: string | null,
+  email?: string | null,
+  phone?: number | null,
+  aIToggle?: boolean | null,
+  flow?: string | null
 }
 
 export interface IClientExtendedParams extends IClientParams {

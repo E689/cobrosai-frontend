@@ -1,7 +1,15 @@
-import React from 'react'
+import { IDropZoneViewElements } from '@/app/types/types';
+import React, { useEffect } from 'react'
 import { GrSend } from "react-icons/gr";
 
-const Finish = () => {
+const Finish = ({ setStep }: IDropZoneViewElements) => {
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStep("select")
+    }, 30000)
+  }, [setStep])
+
   return (
     <div className='w-full h-screen flex p-5'>
       <div className='w-[30%] m-auto bg-slate-400/60 dark:bg-blue-950/50 rounded-lg shadow-md p-4 flex flex-col gap-4'>

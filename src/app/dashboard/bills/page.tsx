@@ -12,14 +12,15 @@ import { AuthContext } from '@/providers/AuthProvider'
 import LoaderSpiner from '@/components/reusable/LoaderSpiner'
 import UploadBills from '@/components/Views/Bills/UploadBills'
 
-async function getData(id: string, setBillsAiOn: Function): Promise<IBillsParams[] | undefined> {
+async function getData(token: string, setBillsAiOn: Function): Promise<IBillsParams[] | undefined> {
   // Fetch data from your API here.
   let data: IBillsParams[] = []
 
-  return await GetBills(id).then((res) => {
+  return await GetBills(token).then((res) => {
     if (res.status == 200) {
-      setBillsAiOn(res.data.billsAiOn)
-      data = res.data.bills
+      // TODO: Get bills with AI on
+      setBillsAiOn(0)
+      data = res.data
       return data
     }
   })
@@ -38,7 +39,7 @@ const Bills = () => {
     // I make sure to just make 1 getData.
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser && hasDataChange) {
-      getData(authUser.id, setBillsAiOn).then((res) => {
+      getData(authUser.token, setBillsAiOn).then((res) => {
         setData(res!)
       }).catch((err) => {
         console.error("Error: ", err)
@@ -62,7 +63,7 @@ const Bills = () => {
           <p className='text-4xl font-bold mb-auto mr-auto'>COBROS | Facturas</p>
         </div>
         <div className='flex flex-row gap-1 w-full h-[10vh]'>
-          <UploadBills id={authUser?.id} setHasDataChange={setHasDataChange}/>
+          <UploadBills token={authUser?.token} setHasDataChange={setHasDataChange}/>
           <div className='flex w-[20vw] h-full m-auto'>
             <AIStats automatedQty={billsAiOn} automatedMax={data ? data.length : 0} />
           </div>

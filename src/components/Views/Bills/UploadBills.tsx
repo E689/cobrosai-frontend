@@ -3,20 +3,19 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import BillForm from "../QuickSignUp/BillForm"
 import { CreateBillManually, CreateBillsFromXls } from "@/lib/billsCalls"
 import LoaderSpiner from "../../reusable/LoaderSpiner"
+import { toast } from "react-toastify";
 
 const UploadBills = ({
-  id,
+  token,
   setHasDataChange
 }: {
-  id: string | undefined,
+  token: string | undefined,
   setHasDataChange: Function
 }) => {
   // File loading state.
@@ -59,23 +58,30 @@ const UploadBills = ({
     if (file) {
       setIsUploading(true)
       // TODO: Add upload file EP call here...
-      CreateBillsFromXls(id!, file).then((res) => {
+      CreateBillsFromXls(token!, file).then((res) => {
+        toast.success("Archivo cargado con éxito!")
         setHasDataChange(true)
         return res
-      }).finally(() => {
+      })
+      .catch((err) => {
+        toast.error("Error al cargar el archivo.")
+        console.error(err)
+      })
+      .finally(() => {
         setIsUploading(false)
       })
       // Clean file
       setFile(undefined)
     }
-  }, [file, id, setHasDataChange])
+  }, [file, token, setHasDataChange])
 
   // Manual single bill hook.
   useEffect(() => {
     if (date && invoiceNo && NIT && amount && companyName) {
       // TODO: Add create single bill EP call here...
-      CreateBillManually({amount:amount, date: date, clientId: NIT, clientName: companyName, billId: invoiceNo, userId: id!} )
+      CreateBillManually({amount:amount, date: date, clientId: NIT, clientName: companyName, billId: invoiceNo, token: token!} )
       .then((res) => {
+        toast.success("Factura creada con éxito!")
         setHasDataChange(true)
         return res
       })
@@ -87,7 +93,7 @@ const UploadBills = ({
       setAmount(undefined)
       setCompanyName(undefined)
     }
-  }, [date, invoiceNo, NIT, amount, companyName, id, setHasDataChange])
+  }, [date, invoiceNo, NIT, amount, companyName, token, setHasDataChange])
 
   if (isUploadin) {
     <div className='w-full h-full flex'>
@@ -118,6 +124,7 @@ const UploadBills = ({
                 setNIT={setNIT}
                 setAmount={setAmount}
                 setCompanyName={setCompanyName}
+                setStep={() => true}
               />
             </DialogContent>
           </Dialog>
