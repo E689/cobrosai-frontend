@@ -11,20 +11,20 @@ import { AuthContext } from "@/providers/AuthProvider"
 
 import React, { useContext, useEffect, useState } from 'react'
 
-const AISelector = ({ defaultValue, billId, clientId }: IAISelector) => {
+const AISelector = ({ defaultValue, billId, clientId, isDisabled }: IAISelector) => {
   const [value, setValue] = useState<string>(defaultValue.toString())
   const { authUser } = useContext(AuthContext) as IAuthContext
   const [isMounted, setIsMounted] = useState<boolean>(false)
 
   const getAIColor = (value: string): string => {
     switch (value) {
-      case "AIOff":
+      case "AI OFF":
         return "bg-gray-400"
-      case "Human":
+      case "HUMAN":
         return "bg-blue-400"
-      case "Paid":
+      case "PAID":
         return "bg-green-400"
-      case "Process":
+      case "IN PROGRESS":
         return "bg-yellow-400"
       case "Anulada":
         return "bg-red-400"
@@ -48,6 +48,7 @@ const AISelector = ({ defaultValue, billId, clientId }: IAISelector) => {
     <Select
       defaultValue={value}
       onValueChange={handleOnChange}
+      disabled={isDisabled}
     >
       <SelectTrigger
         className={
@@ -58,10 +59,10 @@ const AISelector = ({ defaultValue, billId, clientId }: IAISelector) => {
         <p className="m-auto text-black">{value}</p>
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="AIOff">AIOff</SelectItem>
-        <SelectItem value="Human">Human</SelectItem>
-        <SelectItem value="Paid">Paid</SelectItem>
-        <SelectItem value="Process">Process</SelectItem>
+        <SelectItem value="AI OFF">AIOff</SelectItem>
+        <SelectItem value="HUMAN">Human</SelectItem>
+        <SelectItem value="PAID">Paid</SelectItem>
+        <SelectItem value="IN PROGRESS">Process</SelectItem>
         <SelectItem value="Anulada">Anulada</SelectItem>
       </SelectContent>
     </Select>

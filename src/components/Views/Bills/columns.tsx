@@ -20,13 +20,13 @@ import AISelector from "./AISelector"
 import LogSheet from "./LogSheet"
 
 const getDueDaysColor = (value: number): string => {
-  if (value < 0) {
+  if (value > 0) {
     return "text-green-400"
-  } else if (value >= 0 && value < 30) {
+  } else if (value <= 0 && value > -30) {
     return "text-yellow-400"
-  } else if (value >= 30 && value < 60) {
+  } else if (value <= -30 && value > -60) {
     return "text-orange-400"
-  } else if (value >= 60 && value < 90) {
+  } else if (value <= -60 && value > -90) {
     return "text-red-400"
   } else {
     return "text-red-800"
@@ -182,6 +182,7 @@ export const columns: ColumnDef<IBillsParams>[] = [
         defaultValue={row.getValue("invoice_status")}
         billId={row.getValue("dte_number")}
         clientId={row.getValue("id")}
+        isDisabled={true}
       />
     </div>,
   },

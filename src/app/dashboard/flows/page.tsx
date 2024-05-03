@@ -16,8 +16,8 @@ import { GetFlows } from '@/lib/flowCalls'
 import FlowTestChat from '@/components/Views/Flows/FlowTestChat'
 
 
-async function getData(id: string): Promise<IFlowParams[] | undefined> {
-  return await GetFlows(id).then((res) => {
+async function getData(token: string): Promise<IFlowParams[] | undefined> {
+  return await GetFlows(token).then((res) => {
     return res
   })
 }
@@ -33,7 +33,7 @@ const Page = () => {
     // I make sure to just make 1 getData.
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
-      getData(authUser.id).then((res) => {
+      getData(authUser.token).then((res) => {
         setData(res!)
       }).catch((err) => {
         console.error("Error: ", err)
@@ -44,6 +44,7 @@ const Page = () => {
   const selectFlow = (index: string) => {
     if (index === "Nuevo") {
       setSelectedFlow({
+        id: 0,
         name: "Nuevo"
       })
     } else {
@@ -81,13 +82,13 @@ const Page = () => {
                 </TabsList>
                 <TabsContent value='flow'>
                   <Collection
-                    userId={authUser.id}
-                    flowId={selectedFlow._id}
+                    userId={authUser.token}
+                    flowId={selectedFlow.id}
                     action={action}
                   />
                 </TabsContent>
                 <TabsContent value='chat'>
-                  <FlowTestChat flowId={selectedFlow._id!}/>
+                  <FlowTestChat flowId={selectedFlow.id!}/>
                 </TabsContent>
               </Tabs>
             ) : (<></>)

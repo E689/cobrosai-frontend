@@ -55,7 +55,7 @@ const AuthForm = ({ submitText, formType }: IAuthFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       password: "Aramigo55",
-      email: "jgarcia@devpackgroup.com",
+      email: "ale.crts1996@gmail.com",
       confirm: "Aramigo55",
       newPassword: "Aramigo55"
     },

@@ -13,7 +13,7 @@ export const GetBills = async (token: string): Promise<any> => {
       API_URL + `/invoice/`,
       {
         headers: {
-          "Authorization": token
+          "Authorization": `Token ${token}`
         }
       }
     ).then((res) => {
@@ -35,7 +35,7 @@ export const CreateBillsFromXls = async (token: string, file: File): Promise<any
       {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': token
+          "Authorization": `Token ${token}`
         }
       }
     ).then((res) => {
@@ -68,7 +68,7 @@ export const CreateBillManually = async ({
       body,
       {
         headers: {
-          'Authorization': token
+          "Authorization": `Token ${token}`
         }
       }
     ).then((res) => {
@@ -100,7 +100,7 @@ export const GetBillsByClient = async (client_id: string, token: string): Promis
       API_URL + `/invoice/${client_id}/`,
       {
         headers: {
-          Authorization: token
+          "Authorization": `Token ${token}`
         }
       }
     ).then((res) => {

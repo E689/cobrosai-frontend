@@ -26,7 +26,7 @@ import { IAuthContext, IClientParams, IClientsFormParams } from "@/app/types/typ
 import { GetClient, UpdateClient } from "@/lib/clientsCalls"
 
 const formSchema = z.object({
-  clientId: z.string(),
+  clientId: z.number(),
   clientName: z.string().min(2),
   nit: z.coerce.number().min(6),
   creditDays: z.coerce.number().min(1),
@@ -42,39 +42,27 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
   const { authUser, loading } = useContext(AuthContext) as IAuthContext
   const [isMounted, setIsMounted] = useState(false)
   const [fetchedClient, setFetchedClient] = useState<IClientParams | undefined>(undefined)
-  let form: any | undefined = undefined
+  //let form: IClientParams | undefined = undefined
 
   // 0. Try to get current info for this client:
   useEffect(() => {
     if (client && authUser?.token) {
       GetClient(client?.clientId!, authUser.token)
         .then((res) => {
-          setFetchedClient({
-            clientId: res.clientId ? client.clientId : "",
-            clientName: res.clientName ? client.clientName : "",
-            nit: res.nit ? res.nit : 0,
-            creditDays: res.creditDays ? res.creditDays : 0,
-            clientCollectionSchedule: res.clientCollectionSchedule ? res.clientCollectionSchedule : "Default",
-            contactName: res.contactName ? res.contactName : "",
-            contactLastName: res.contactLastName ? res.contactLastName : "",
-            email: res.email ? res.email : "",
-            phone: res.phone ? res.phone : 0,
-            aIToggle: res.aIToggle ? res.aIToggle : true,
-          })
-          return res
+          setFetchedClient((res.data as IClientParams))
         })
     }
   }, [client])
 
   // 1. Define your form.
-  form = useForm<IClientParams>({
+  const form = useForm<IClientParams>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      clientId: client ? client.clientId : "",
-      clientName: client ? client.clientName : "",
-      nit: client ? client.nit : 0,
-      creditDays: 0,
-      clientCollectionSchedule: "",
+      clientId: "0",
+      clientName: "",
+      nit: 0,
+      creditDays: 30,
+      clientCollectionSchedule: "Default",
       contactName: "",
       contactLastName: "",
       email: "",
@@ -85,12 +73,17 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
   })
 
   function onSubmit(values: IClientParams) {
+    console.log(values)
     if (action === "edit" && authUser?.token) {
       UpdateClient(values!, authUser?.token)
         .then((res) => res)
       toast.success("Cliente actualizado con éxito!")
     }
   }
+
+  useEffect(() => {
+    console.info(form)
+  }, [form])
 
   useEffect(() => {
     setIsMounted(true)
@@ -114,7 +107,11 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
                   <FormItem>
                     <FormLabel className='font-bold'>Nombre de la empresa</FormLabel>
                     <FormControl>
-                      <Input type="text" placeholder="" {...field} />
+                      <Input 
+                        type="text" 
+                        placeholder="" 
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -140,7 +137,7 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
                   <FormItem>
                     <FormLabel className='font-bold'>Días crédito</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="" {...field} />
+                      <Input type="number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -10,7 +10,7 @@ export const GetClients = async (token: string): Promise<any> => {
       API_URL + `/client/`,
       {
         headers: {
-          "Authorization": token
+          "Authorization": `Token ${token}`
         }
       }
     ).then((res) => {
@@ -28,7 +28,7 @@ export const GetClient = async (clientId: string, token: string): Promise<any> =
       API_URL + `/client/${clientId}/`,
       {
         headers: {
-          "Authorization": token
+          "Authorization": `Token ${token}`
         }
       }
     ).then((res) => {
@@ -62,7 +62,7 @@ export const UpdateClient = async (
       body,
       {
         headers: {
-          "Authorization": token
+          "Authorization": `Token ${token}`
         }
       }
     ).then((res) => {

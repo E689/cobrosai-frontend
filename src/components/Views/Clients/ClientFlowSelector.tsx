@@ -56,7 +56,7 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
   const { authUser, loading } = useContext(AuthContext) as IAuthContext
 
   // State values
-  const [value, setValue] = useState<{ name: string, id: string }>({ name: "Default", id: "-1" })
+  const [value, setValue] = useState<{ name: string, id: number }>({ name: "Default", id: -1 })
   const [data, setData] = useState<IFlowParams[]>([])
   const [isMounted, setIsMounted] = useState<boolean>(false)
   const [clientData, setClientData] = useState<IClientParams | undefined>(undefined)
@@ -79,7 +79,7 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
   }, [authUser, loading, isMounted, clientId])
 
   useEffect(() => {
-    if (clientData && value.id !== "-1" && authUser?.token) {
+    if (clientData && value.id !== -1 && authUser?.token) {
       const res = UpdateClient(clientData!, authUser?.token)
         .then((res) => res)
     }
@@ -88,24 +88,24 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
   useEffect(() => {
     if (clientData && data && data.length > 0) {
       data.map((flow: IFlowParams) => {
-        if (flow._id === clientData.flow) {
+        if (flow.id === clientData.flow) {
           setValue({
             name: flow.name,
-            id: flow._id!
+            id: flow.id!
           })
         }
       })
     }
   }, [clientData, data])
 
-  const handleOnChange = (e: string) => {
+  const handleOnChange = (e: any) => {
     // TODO: Update Bill status
     setClientData(prevState => ({ ...prevState!, flow: e }))
     data.map((flow: IFlowParams) => {
-      if (flow._id === e) {
+      if (flow.id.toString() === e) {
         setValue({
           name: flow.name,
-          id: flow._id
+          id: flow.id
         })
       }
     })
@@ -130,7 +130,7 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
           {
             (data && data.length > 0) ? (
               data.map((flow, index) => {
-                return (<SelectItem key={index} value={flow._id!}>{flow.name}</SelectItem>)
+                return (<SelectItem key={index} value={flow.id!.toString()}>{flow.name}</SelectItem>)
               })
             ) : (<SelectItem value="Default">Default</SelectItem>)
           }

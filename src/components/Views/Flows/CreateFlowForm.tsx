@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 // Zod and validation stuff
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -18,10 +18,11 @@ import {
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import LoaderSpiner from "@/components/reusable/LoaderSpiner"
-import { ICreateFlowFormParams, IFlowParams } from '@/app/types/types'
+import { IAuthContext, ICreateFlowFormParams, IFlowParams } from '@/app/types/types'
 import { AddFlow, EditFlow, GetFlow } from '@/lib/flowCalls'
 import { Input } from '@/components/ui/input'
 import { toast } from "react-toastify";
+import { AuthContext } from '@/providers/AuthProvider'
 
 // Flows form schema
 const formSchema = z.object({
@@ -35,23 +36,23 @@ const formSchema = z.object({
 })
 
 // If action is edit, get the flow data
-const getFlow = (flowId: string, setData: Function): void => {
-  GetFlow(flowId)
+const getFlow = (flowId: number, setData: Function, token: string): void => {
+  GetFlow(flowId, token)
     .then((res) => {
       setData(res)
     })
 }
 
-const editFlow = (flowId: string, flow: IFlowParams, setData: Function): void => {
-  EditFlow(flowId, flow)
+const editFlow = (flowId: number, flow: IFlowParams, setData: Function, token: string): void => {
+  EditFlow(flowId, flow, token)
   .then((res) => {
     toast.success("Flujo editado con éxito!")
-    setData(undefined)
+    setData(res)
   })
 }
 
 // If action is create, add the flow to the user.
-const createFlow = (userId: string, flow: IFlowParams, setData: Function): void => {
+const createFlow = (userId: string, flow: IFlowParams, setData: Function, token: string): void => {
   AddFlow(userId, flow)
   .then((res) => {
     toast.success("Flujo creado con éxito!")
@@ -65,6 +66,8 @@ const CreateFlowForm = ({ userId, action, flowId }: ICreateFlowFormParams) => {
 
   const [isMounted, setIsMounted] = useState(false)
   const [data, setData] = useState<IFlowParams | undefined>(undefined)
+
+  const { authUser } = useContext(AuthContext) as IAuthContext
 
   // 1. Define your form.
   const form = useForm<IFlowParams>({
@@ -88,13 +91,14 @@ const CreateFlowForm = ({ userId, action, flowId }: ICreateFlowFormParams) => {
       case "create":
         // TODO: Add create call here.
         if (values) {
-          createFlow(userId, values, setData)
+          createFlow(userId, values, setData, authUser?.token!)
         }
         setLoading(false)
         break;
       case 'edit':
+        console.log(values)
         if (values) {
-          editFlow(data?._id!, values, setData)
+          editFlow(data?.id!, values, setData, authUser?.token!)
         }
         setLoading(false)
         break;
@@ -107,11 +111,12 @@ const CreateFlowForm = ({ userId, action, flowId }: ICreateFlowFormParams) => {
   useEffect(() => {
     //console.log(userId, flowId, action, data)
     if (action === "edit" && flowId) {
-      getFlow(flowId, setData)
+      getFlow(flowId, setData, authUser?.token!)
     }
 
     if (action === "create") {
       setData({
+        id: -1,
         name: "Nuevo Flujo"
       })
     }

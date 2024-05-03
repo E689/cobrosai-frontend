@@ -8,7 +8,7 @@ import { DeleteFlowChat, GetFlowChat, SendFlowTestMessage } from '@/lib/flowCall
 import React, { useEffect, useRef, useState } from 'react'
 
 // If action is edit, get the flow data
-const getChat = (flowId: string, setData: Function): void => {
+const getChat = (flowId: number, setData: Function): void => {
   GetFlowChat(flowId)
     .then((res) => {
       console.log("Data res: ", res)
@@ -16,7 +16,7 @@ const getChat = (flowId: string, setData: Function): void => {
     })
 }
 
-const FlowTestChat = ({ flowId }: { flowId: string }) => {
+const FlowTestChat = ({ flowId }: { flowId: number }) => {
   const [isMounted, setIsMounted] = useState(false)
   const [data, setData] = useState<IFlowChat[] | undefined>(undefined)
   const [isSendig, setIsSending] = useState<boolean | undefined>(false)

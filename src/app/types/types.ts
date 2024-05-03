@@ -83,7 +83,8 @@ export interface IAIStatsProps {
 export interface IAISelector {
   defaultValue: IAIStatuses,
   billId: string,
-  clientId: string
+  clientId: string,
+  isDisabled: boolean,
 }
 
 // Bills interfaces
@@ -121,14 +122,14 @@ export interface IClientParams {
   clientId: string,
   clientName: string,
   nit: number,
-  creditDays?: number | null,
-  clientCollectionSchedule?: string  | null,
-  contactName?: string | null,
-  contactLastName?: string | null,
-  email?: string | null,
-  phone?: number | null,
-  aIToggle?: boolean | null,
-  flow?: string | null
+  creditDays: number,
+  clientCollectionSchedule: string,
+  contactName: string,
+  contactLastName: string,
+  email: string,
+  phone: number,
+  aIToggle: boolean,
+  flow?: number,
 }
 
 export interface IClientExtendedParams extends IClientParams {
@@ -172,7 +173,7 @@ export interface IFlowCollectionIgnore {
 }
 
 export interface IFlowParams {
-  _id?: string,
+  id: number,
   name: string,
   preCollection?: string,
   paymentConfirmation?: string,
@@ -185,7 +186,7 @@ export interface IFlowParams {
 export interface ICreateFlowFormParams {
   userId: string,
   action: "edit" | "create",
-  flowId?: string
+  flowId?: number
 }
 
 export interface ICreateFlowRequest extends IFlowParams {
