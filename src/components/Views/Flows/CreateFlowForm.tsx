@@ -52,15 +52,15 @@ const editFlow = (flowId: number, flow: IFlowParams, setData: Function, token: s
 }
 
 // If action is create, add the flow to the user.
-const createFlow = (userId: string, flow: IFlowParams, setData: Function, token: string): void => {
-  AddFlow(userId, flow)
+const createFlow = (flow: IFlowParams, setData: Function, token: string): void => {
+  AddFlow(token, flow)
   .then((res) => {
     toast.success("Flujo creado con éxito!")
     setData(undefined)
   })
 }
 
-const CreateFlowForm = ({ userId, action, flowId }: ICreateFlowFormParams) => {
+const CreateFlowForm = ({ action, flowId }: ICreateFlowFormParams) => {
   // Loading misc
   const [loading, setLoading] = useState(false);
 
@@ -91,7 +91,7 @@ const CreateFlowForm = ({ userId, action, flowId }: ICreateFlowFormParams) => {
       case "create":
         // TODO: Add create call here.
         if (values) {
-          createFlow(userId, values, setData, authUser?.token!)
+          createFlow(values, setData, authUser?.token!)
         }
         setLoading(false)
         break;
@@ -120,7 +120,7 @@ const CreateFlowForm = ({ userId, action, flowId }: ICreateFlowFormParams) => {
         name: "Nuevo Flujo"
       })
     }
-  }, [action, flowId])
+  }, [action, flowId, authUser?.token])
 
   useEffect(() => {
     setIsMounted(true)

@@ -246,13 +246,13 @@ export const columns: ColumnDef<IClientExtendedParams>[] = [
     cell: ({ row }) => <div className="flex">
        <ClientFlowSelector
         defaultValue={row.original.flow!}
-        clientId={row.original.clientId}
+        clientId={row.original.clientId!}
       />
     </div>,
   },
   {
     id: "details",
     header: "Detalle",
-    cell: ({ row }) => <ClientDetailButton clientId={row.original.clientId} />,
+    cell: ({ row }) => <ClientDetailButton clientId={row.original.clientId!} />,
   },
 ]

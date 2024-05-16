@@ -23,6 +23,7 @@ import { Input } from '@/components/ui/input'
 
 // Components
 import LoaderSpiner from "@/components/reusable/LoaderSpiner"
+import { toast } from "react-toastify";
 
 // Interfaces
 import { IUserProfile } from '@/app/types/types'
@@ -32,17 +33,24 @@ import { SetProfile } from '@/lib/profileCalls'
 
 // Flows form schema
 const formSchema = z.object({
-  companyName: z.string().min(2).max(50),
-  businessLogic: z.string().min(10).max(500),
-  assistantContext: z.string().min(10).max(500)
+  user_companyName: z.string().min(2).max(50),
+  user_businessLogic: z.string().min(10).max(500),
+  user_assistantContext: z.string().min(10).max(500)
 })
 
 // Set profile data
-function SetData(id: string, data: IUserProfile): void {
-  SetProfile(id, data)
+async function SetData(token: string, data: IUserProfile): Promise<string> {
+  return await SetProfile(token, data)
+  .then((res) => {
+    toast.success(res)
+    return res
+  })
 }
 
-const ProfileForm = ({ profileData, userId }: { profileData: IUserProfile, userId: string }) => {
+const ProfileForm = (
+  { profileData, token } : 
+  { profileData: IUserProfile, token: string }
+) => {
   // Loading misc
   const [loading, setLoading] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
@@ -51,9 +59,9 @@ const ProfileForm = ({ profileData, userId }: { profileData: IUserProfile, userI
   const form = useForm<IUserProfile>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      companyName: "Nombre Empresa",
-      businessLogic: "Somos una empresa que vende productos.",
-      assistantContext: "Eres un asistente de ventas que se llama Jose Pérez, tienes 30 años y tratas con mucha amabilidad a los clientes, tu trabajo principal es realizar la cobranza de facturas.",
+      user_companyName: "Nombre Empresa",
+      user_businessLogic: "Somos una empresa que vende productos.",
+      user_assistantContext: "Eres un asistente de ventas que se llama Jose Pérez, tienes 30 años y tratas con mucha amabilidad a los clientes, tu trabajo principal es realizar la cobranza de facturas.",
     },
     values: profileData
   })
@@ -61,8 +69,10 @@ const ProfileForm = ({ profileData, userId }: { profileData: IUserProfile, userI
   // 2. On submit function
   function onSubmit(values: IUserProfile) {
     setLoading(true)
-
-    SetData(userId, values)
+    SetData(token, values)
+    .then((res) => {
+      setLoading(false)
+    })
   }
 
   useEffect(() => {
@@ -81,7 +91,7 @@ const ProfileForm = ({ profileData, userId }: { profileData: IUserProfile, userI
         >
           <FormField
             control={form.control}
-            name="companyName"
+            name="user_companyName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className='font-bold'>Nombre de la empresa</FormLabel>
@@ -96,7 +106,7 @@ const ProfileForm = ({ profileData, userId }: { profileData: IUserProfile, userI
           />
           <FormField
             control={form.control}
-            name="businessLogic"
+            name="user_businessLogic"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className='font-bold'>Giro de negocio</FormLabel>
@@ -111,7 +121,7 @@ const ProfileForm = ({ profileData, userId }: { profileData: IUserProfile, userI
           />
           <FormField
             control={form.control}
-            name="assistantContext"
+            name="user_assistantContext"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className='font-bold'>Contexto del asistente</FormLabel>

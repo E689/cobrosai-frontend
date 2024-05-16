@@ -31,11 +31,7 @@ import { AuthContext } from "@/providers/AuthProvider"
 async function getData(token: string): Promise<IFlowParams[] | undefined> {
   return await GetFlows(token)
     .then((res) => {
-      if (res.status !== 200) {
-        toast.error("No se encontro el flujo.")
-      } else {
-        return res.data as IFlowParams[]
-      }
+      return res
     })
 }
 
@@ -87,28 +83,14 @@ const ClientFlowSelector = ({ defaultValue, clientId }: IClientFlowSelector) => 
 
   useEffect(() => {
     if (clientData && data && data.length > 0) {
-      data.map((flow: IFlowParams) => {
-        if (flow.id === clientData.flow) {
-          setValue({
-            name: flow.name,
-            id: flow.id!
-          })
-        }
-      })
+      console.info("data:", data)
+      console.info("clientData:", clientData)
     }
   }, [clientData, data])
 
   const handleOnChange = (e: any) => {
     // TODO: Update Bill status
-    setClientData(prevState => ({ ...prevState!, flow: e }))
-    data.map((flow: IFlowParams) => {
-      if (flow.id.toString() === e) {
-        setValue({
-          name: flow.name,
-          id: flow.id
-        })
-      }
-    })
+    console.log(e)
   }
 
   useEffect(() => {

@@ -71,9 +71,6 @@ const Page = () => {
         </div>
         <div className='w-full bg-slate-100 dark:bg-blue-950/60 rounded-lg shadow-md grow'>
           {
-            /**
-           * TODO: Display Flow information component
-           */
             selectedFlow && authUser ? (
               <Tabs defaultValue='flow' className='w-full h-full'>
                 <TabsList className='mx-8 mt-4'>
@@ -88,7 +85,7 @@ const Page = () => {
                   />
                 </TabsContent>
                 <TabsContent value='chat'>
-                  <FlowTestChat flowId={selectedFlow.id!}/>
+                  <FlowTestChat flowId={selectedFlow.id!} token={authUser.token} />
                 </TabsContent>
               </Tabs>
             ) : (<></>)

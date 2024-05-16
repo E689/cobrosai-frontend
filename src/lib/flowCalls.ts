@@ -1,5 +1,5 @@
-import { IFlowChat, IFlowParams } from '@/app/types/types'
-import axios, { AxiosResponse } from 'axios'
+import { IFlowChat, IFlowNewChat, IFlowParams } from '@/app/types/types'
+import axios from 'axios'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -20,7 +20,7 @@ export const GetFlow = async (flowId: number, token: string): Promise<IFlowParam
 }
 
 // Get all Flows for userId
-export const GetFlows = async (token: string): Promise<any> => {
+export const GetFlows = async (token: string): Promise<IFlowParams[]> => {
   return await new Promise<any>(async r => {
     await axios.get(
       API_URL + `/flow/`,
@@ -36,16 +36,16 @@ export const GetFlows = async (token: string): Promise<any> => {
 }
 
 // Add Flow
-export const AddFlow = async (UID: string, flow: IFlowParams): Promise<any> => {
-  const body = {
-    userId: UID,
-    flow: flow
-  }
-
+export const AddFlow = async (token: string, flow: IFlowParams): Promise<any> => {
   return await new Promise<any>(async r => {
     await axios.post(
       API_URL + `/flow/`,
-      body
+      flow,
+      {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      }
     ).then((res) => {
       r(res.data)
     }).catch((err => {
@@ -60,14 +60,11 @@ export const EditFlow = async (
   flow: IFlowParams, 
   token: string
 ): Promise<any> => {
-  const body = {
-    flow
-  }
 
   return await new Promise<any>(async r => {
     await axios.patch(
       API_URL + `/flow/${flowId}/`,
-      body,
+      flow,
       {
         headers: {
           Authorization: `Token ${token}`
@@ -92,23 +89,24 @@ export const GetFlowChat = async (flowId: number): Promise<any> => {
 }
 
 // Send Flow test chat message
-export const SendFlowTestMessage = async (id: number, text: string): Promise<any> => {
-  return await new Promise<any>(async r => {
-    await axios.post(
-      API_URL + '/flow/test',
+export const SendFlowTestMessage = async (id: number, text: string, token: string): Promise<IFlowChat> => {
+  return await new Promise<IFlowChat>(async r => {
+    return await axios.post(
+      API_URL + '/flow/chat/',
       {
-        id,
+        flow: id,
         text
       },
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`
         }
       }
     ).then((res) => {
-      r(res)
+      r(res.data)
     }).catch((err => {
-      r(err.response)
+      r(err)
     }))
   })
 }

@@ -52,7 +52,7 @@ const ClientsForm = ({ client, action }: IClientsFormParams) => {
           setFetchedClient((res.data as IClientParams))
         })
     }
-  }, [client])
+  }, [client, authUser?.token])
 
   // 1. Define your form.
   const form = useForm<IClientParams>({

@@ -8,27 +8,33 @@ import { IUserProfile } from '@/app/types/types'
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 // Get User profile information
-export const GetProfile = async (userId: string): Promise<IUserProfile> => {
+export const GetProfile = async (token: string): Promise<IUserProfile> => {
   return await new Promise<IUserProfile>(async r => {
     await axios.get(
-      API_URL + `/users/${userId}`)
-      .then((res) => r(res.data.user))
+      API_URL + `/user/user_extended/`,
+      {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      }
+    )
+      .then((res) => r(res.data))
       .catch((err) => r(err))
   })
 }
 
 // Set User Profile information
-export const SetProfile = async (userId: string, profile: IUserProfile): Promise<string> => {
-  const body = {
-    companyName: profile.companyName,
-    businessLogic: profile.businessLogic,
-    assistantContext: profile.assistantContext
-  }
+export const SetProfile = async (token: string, profile: IUserProfile): Promise<string> => {
 
   return await new Promise<string>(async r => {
-    await axios.put(
-      API_URL + `/users/${userId}`,
-      body
+    await axios.post(
+      API_URL + `/user/update_user/`,
+      profile,
+      {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      }
     )
       .then((res) => r(res.data.message))
       .catch((err) => r(err))

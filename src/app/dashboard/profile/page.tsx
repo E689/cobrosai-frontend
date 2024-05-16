@@ -21,8 +21,8 @@ import { GetProfile } from '@/lib/profileCalls'
 import { RunCron } from '@/lib/testCalls'
 
 // Get user profile data function
-async function getData(id: string): Promise<IUserProfile | undefined> {
-  return await GetProfile(id).then((res) => {
+async function getData(token: string): Promise<IUserProfile | undefined> {
+  return await GetProfile(token).then((res) => {
     return res
   })
 }
@@ -41,7 +41,7 @@ const UserProfile = () => {
     // I make sure to just make 1 getData.
     // Has to be mounted, not loading and with a valid user.
     if (isMounted && !loading && authUser) {
-      getData(authUser.id).then((res) => {
+      getData(authUser.token).then((res) => {
         setData(res!)
       }).catch((err) => {
         console.error("Error: ", err)
@@ -49,8 +49,8 @@ const UserProfile = () => {
     }
   }, [authUser, loading, isMounted])
 
-  const handleRunCron = (userId: string): void => {
-    RunCron(userId)
+  const handleRunCron = (token: string): void => {
+    RunCron(token)
   }
 
   useEffect(() => {
@@ -63,14 +63,14 @@ const UserProfile = () => {
     return (
       <div className='flex flex-col gap-2 w-screen min-h-screen h-full pt-[7vh] px-8 bg-slate-200 dark:bg-blue-950/20'>
         <div className='flex w-full h-[10vh]'>
-          <p className='text-md md:text-xl lg:text-xl xl:text-4xl font-bold mb-auto mr-auto uppercase'>Perfil | {authUser?.email}</p>
+          <p className='text-md md:text-xl lg:text-xl xl:text-4xl font-bold mb-auto mr-auto uppercase'>Perfil | {authUser?.name}</p>
         </div>
         <div className='flex w-full bg-slate-100 dark:bg-blue-950/60 rounded-lg shadow-md'>
-          <ProfileForm profileData={data!} userId={authUser?.id!} />
+          <ProfileForm profileData={data!} token={authUser?.token!} />
         </div>
         <div
           className='flex w-fit p-2 bg-slate-100 dark:bg-blue-950/60 rounded-lg shadow-md cursor-pointer'
-          onClick={() => { handleRunCron(authUser?.id!) }}
+          onClick={() => { handleRunCron(authUser?.token!) }}
         >
           Run Cron
         </div>

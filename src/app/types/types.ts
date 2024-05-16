@@ -96,7 +96,7 @@ export interface IBillsParams extends IAIStatuses {
   recipient_nit: number | undefined,
   dte_number: string | undefined,
   total: number | undefined,
-  cancellation_date: string | null,
+  cancellation_date?: string | null,
   days_overdue: number | undefined,
   log?: string | undefined
 }
@@ -119,16 +119,16 @@ export interface IBillLogData {
 
 // Clients interfaces
 export interface IClientParams {
-  clientId: string,
+  clientId?: string,
   clientName: string,
   nit: number,
-  creditDays: number,
-  clientCollectionSchedule: string,
-  contactName: string,
-  contactLastName: string,
-  email: string,
-  phone: number,
-  aIToggle: boolean,
+  creditDays?: number,
+  clientCollectionSchedule?: string,
+  contactName?: string,
+  contactLastName?: string,
+  email?: string,
+  phone?: number,
+  aIToggle?: boolean,
   flow?: number,
 }
 
@@ -151,7 +151,7 @@ export interface IClientsFormParams {
 
 // Client Flow Selector interface
 export interface IClientFlowSelector {
-  defaultValue: string,
+  defaultValue: number,
   clientId: string
 }
 
@@ -194,16 +194,19 @@ export interface ICreateFlowRequest extends IFlowParams {
 }
 
 export interface IFlowChat {
-  _id: string,
-  case: number,
-  content: string,
-  date: string,
   role: string
+  platica_elegida?: string
+  respuesta_al_usuario?: string
+}
+
+export interface IFlowNewChat {
+  platica_elegida: string,
+  respuesta_el_usuario: string
 }
 
 // Use profile interfaces
 export interface IUserProfile {
-  companyName: string,
-  businessLogic: string,
-  assistantContext: string
+  user_companyName: string,
+  user_businessLogic: string,
+  user_assistantContext: string
  }

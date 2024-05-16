@@ -59,13 +59,15 @@ const Drop = () => {
           const params: IRegisterParams = {
             email: email,
             bill: {
-              date: date,
-              clientName: companyName,
-              clientId: NIT,
-              billId: invoiceNo,
-              amount: amount,
-              status: "AIOff",
-              creditDays: 30,
+              id: 0,
+              client_id: "",
+              issue_date: date,
+              recipient_name: companyName,
+              recipient_nit: NIT!,
+              dte_number: invoiceNo,
+              total: amount,
+              invoice_status: "AI OFF",
+              days_overdue: 30,
               log: undefined
             }
           }
